@@ -10,12 +10,17 @@ const UserModelSchema = new Schema(
       require: true,
       trim: true,
     },
-    firstname: {
+    penName: {
       type: String,
       require: true,
       trim: true,
     },
-    lastname: {
+    firstName: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    lastName: {
       type: String,
       require: true,
       trim: true,
@@ -35,10 +40,13 @@ const UserModelSchema = new Schema(
       type: Date,
       require: true,
     },
-    interestedTag: {
-      type: Array,
-      trim: true,
-    },
+    interestedTag: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tag",
+        default: null,
+      },
+    ],
   },
   { timestamps: true }
 );
