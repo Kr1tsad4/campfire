@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -43,6 +43,4 @@ const UserModelSchema = new Schema(
   { timestamps: true }
 );
 
-const UserModel = mongoose.model("UserModel", UserModelSchema);
-
-export default UserModel;
+module.exports = mongoose.model("User", UserModelSchema);

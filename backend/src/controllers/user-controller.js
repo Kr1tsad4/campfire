@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const userServices = require('../services/user-services');
+const userServices = require('../services/user-service');
 
 const getUsers = asyncHandler( async (req, res) => {
   const users = await userServices.findAll();
