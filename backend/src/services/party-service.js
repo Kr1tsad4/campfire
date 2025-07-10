@@ -29,16 +29,6 @@ const update = async (id, party) => {
   if (!existingParty) {
     throw createError(404, `Party not found.`);
   }
-
-  const update = async (id, party) => {
-    const { name, ownerId, members, description, start, end, tags, status } =
-      party;
-
-    const existingParty = await Party.findById(id).select("-__v");
-    if (!existingParty) {
-      throw createError(404, `Party not found.`);
-    }
-
     if (name !== undefined) existingParty.name = name;
     if (ownerId !== undefined) existingParty.ownerId = ownerId;
     if (members !== undefined) existingParty.members = members;
@@ -51,10 +41,6 @@ const update = async (id, party) => {
     const updatedParty = await existingParty.save();
     return updatedParty; 
   };
-
-  const updatedParty = await existingParty.save();
-  return updatedParty;
-};
 
 const deleteById = async (id) => {
   const existingParty = await Party.findById(id);
