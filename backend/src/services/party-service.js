@@ -13,12 +13,48 @@ const findById = async (id) => {
   return existingParty;
 };
 const create = async (party) => {
-
+  const { name } = party;
+  if (!name) {
+    throw createError(400, `Name is required.`);
+  }
+  const createdParty = await Party.create(party);
+  return createdParty;
 };
-const update = async(id,party) =>{
 
-}
+const update = async (id, party) => {
+  const { name, ownerId, members, description, start, end, tags, status } =
+    party;
 
+  const existingParty = await Party.findById(id).select("-__v");
+  if (!existingParty) {
+    throw createError(404, `Party not found.`);
+  }
+
+  const update = async (id, party) => {
+    const { name, ownerId, members, description, start, end, tags, status } =
+      party;
+
+    const existingParty = await Party.findById(id).select("-__v");
+    if (!existingParty) {
+      throw createError(404, `Party not found.`);
+    }
+
+    if (name !== undefined) existingParty.name = name;
+    if (ownerId !== undefined) existingParty.ownerId = ownerId;
+    if (members !== undefined) existingParty.members = members;
+    if (description !== undefined) existingParty.description = description;
+    if (start !== undefined) existingParty.start = start;
+    if (end !== undefined) existingParty.end = end;
+    if (tags !== undefined) existingParty.tags = tags;
+    if (status !== undefined) existingParty.status = status;
+
+    const updatedParty = await existingParty.save();
+    return updatedParty; 
+  };
+
+  const updatedParty = await existingParty.save();
+  return updatedParty;
+};
 
 const deleteById = async (id) => {
   const existingParty = await Party.findById(id);

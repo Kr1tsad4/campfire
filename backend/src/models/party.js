@@ -7,7 +7,7 @@ const partySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    owner: {
+    ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -22,6 +22,7 @@ const partySchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
+      default: null,
     },
     start: {
       type: Date,
@@ -33,6 +34,7 @@ const partySchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tag",
+        default: null,
       },
     ],
     status: {
