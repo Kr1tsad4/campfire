@@ -5,6 +5,7 @@ function Header({
   searchValue,
   setSearchValue,
   hideNavBar,
+  hideSearchBar,
 }) {
   const handleKeyUp = (e) => {
     if (e.key === "Enter") {
@@ -15,14 +16,14 @@ function Header({
   return (
     <>
       <div className="h-[88px] w-full fixed pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 ml-[120px]">
-        
         <div
           className={`${
             hideNavBar ? "-ml-[50px]" : ""
-          } w-full h-[88px] flex justify-between items-center `}
+          } w-full h-[88px] flex  items-center ${
+            hideSearchBar ? "justify-end" : "justify-between"
+          }`}
         >
-
-          <div className="flex mr-20">
+          <div className={`flex mr-20 ${hideSearchBar ? "hidden" : ""}`}>
             <div
               className="flex items-center w-[600px]  max-[426px]:w-[280px] max-[376px]:w-[180px] 
             bg-[#EDE7F6] rounded-full px-4 py-2 "
@@ -39,9 +40,13 @@ function Header({
             </div>
           </div>
 
-          <div className={` pr-5 cursor-pointer ${hideNavBar ? "mr-[30px]" : "mr-[80px]"}`}>
-            <div class="avatar">
-              <div class="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring-2 ring-offset-2">
+          <div
+            className={` pr-5 cursor-pointer ${
+              hideNavBar ? "mr-[30px]" : "mr-[80px]"
+            } `}
+          >
+            <div className="avatar">
+              <div className="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring-2 ring-offset-2">
                 <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
               </div>
             </div>

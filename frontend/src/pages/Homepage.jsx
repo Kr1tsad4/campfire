@@ -1,9 +1,9 @@
 import Header from "../components/Header";
-import NavigationMenu from "../components/NavigationMenu";
+import SideNavContainer from "../components/SideNavContainer";
 import ListParty from "../components/ListParty";
 import { useParty } from "../hooks/useParty";
+import { useNavigationBar } from "../hooks/useNavigationBar";
 import { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
 
 function Homepage() {
   const {
@@ -12,41 +12,21 @@ function Homepage() {
     handleSearchParty,
     searchValue,
     setSearchValue,
+    viewPartyDetails,
   } = useParty();
-  const [hideNavBar, setHideNavBar] = useState(false);
+  const { hideNavBar, toggleSideNavBar } = useNavigationBar();
 
-  const toggleSideNavBar = (hideNavBar) => {
-    setHideNavBar(!hideNavBar);
-  };
   useEffect(() => {
     fetchParties();
   }, []);
   return (
     <>
       <div className="flex bg-[#fff7f8] min-h-screen w-auto">
-        {!hideNavBar && (
-          <div>
-            <NavigationMenu
-              toggleSideNavBar={toggleSideNavBar}
-              hideNavBar={hideNavBar}
-            />
-          </div>
-        )}
-        {hideNavBar && (
-          <div
-            className={`${hideNavBar ? "block" : ""} pt-6  pl-6  z-50 fixed`}
-          >
-            <div className="flex gap-4 w-[200px]">
-              <button
-                className="cursor-pointer"
-                onClick={() => toggleSideNavBar(hideNavBar)}
-              >
-                <FaBars size={25} color="black" />
-              </button>
-              <p className="font-bold text-[22px] text-black">MAAM PARTY</p>
-            </div>
-          </div>
-        )}
+        <SideNavContainer
+          hideNavBar={hideNavBar}
+          toggleSideNavBar={toggleSideNavBar}
+        />
+
 
         <div className={`flex flex-col w-full items-center`}>
           <Header
@@ -54,9 +34,14 @@ function Homepage() {
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             hideNavBar={hideNavBar}
+            hideSearchBar={false}
           />
           <div>
-            <ListParty parties={parties} hideNavBar={hideNavBar} />
+            <ListParty
+              parties={parties}
+              hideNavBar={hideNavBar}
+              viewPartyDetails={viewPartyDetails}
+            />
           </div>
         </div>
       </div>
