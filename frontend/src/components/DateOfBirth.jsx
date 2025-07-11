@@ -1,9 +1,7 @@
 import { useState } from "react";
 
-function DateOfBirth() {
+function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedMonth, selectedDay, setSelectedDay}) {
 
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
   const [daysInMonth, setDaysInMonth] = useState([]);
 
   const currentYear = new Date().getFullYear();
@@ -36,6 +34,7 @@ function DateOfBirth() {
   const handleYearChange = (eventObject) => {
     const year = parseInt(eventObject.target.value);
     setSelectedYear(year);
+    console.log(selectedYear);
     updateDays(year, selectedMonth);
   };
 
@@ -93,6 +92,7 @@ function DateOfBirth() {
         className={`border border-gray-400 px-2 py-2 rounded-md w-26 mr-2
         ${!selectedYear || !selectedMonth ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white cursor-auto'}`}
         disabled={!selectedYear || !selectedMonth}
+        onChange={(e) => setSelectedDay(e.target.value)}
 
       >
         <option value="">-- day --</option>
@@ -102,5 +102,4 @@ function DateOfBirth() {
     </div>
   );
 }
-
 export default DateOfBirth;
