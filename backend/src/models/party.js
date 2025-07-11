@@ -24,11 +24,14 @@ const partySchema = new mongoose.Schema(
       trim: true,
       default: null,
     },
-    start: {
-      type: Date,
+    date:{
+      type:String
     },
-    end: {
-      type: Date,
+    startTime: {
+      type: String,
+    },
+    endTime: {
+      type: String,
     },
     tags: [
       {

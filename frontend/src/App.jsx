@@ -4,7 +4,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<Homepage />} />
+        <Route path="/home" element={<Homepage />} /> 
       </Routes>
     </Router>
   );
