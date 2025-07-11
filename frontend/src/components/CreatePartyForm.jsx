@@ -28,7 +28,10 @@ function CreatePartyForm({
         <h1 className="text-[30px] font-bold">Create your party</h1>
       </div>
       <div className="flex flex-col items-center">
-        <label className="-ml-[420px] mb-2">Party Name</label>
+        <label className="-ml-[410px] mb-2">
+          Party Name {""}
+          <span className="text-red-500">*</span>
+        </label>
         <InputComponent
           id="party-name"
           placeholder="Enter party name"
@@ -45,7 +48,10 @@ function CreatePartyForm({
           value={description}
           handleInput={(e) => setDescription(e)}
         />
-        <label className="-ml-[420px] mb-2">Pick a date</label>
+        <label className="-ml-[420px] mb-2">
+          Pick a date {""}
+          <span className="text-red-500">*</span>
+        </label>
 
         <MyCalender
           selectedDate={selectedDate}
@@ -59,6 +65,7 @@ function CreatePartyForm({
           />
           <TimePicker label="End Time" value={endTime} onChange={setEndTime} />
         </div>
+        <label className="-ml-[390px] mb-2">Select party tags</label>
 
         <InputComponent
           id="tags"
