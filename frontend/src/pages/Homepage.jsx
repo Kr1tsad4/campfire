@@ -23,7 +23,7 @@ function Homepage() {
   }, []);
   return (
     <>
-      <div className="flex bg-white min-h-screen w-auto">
+      <div className="flex bg-[#fff7f8] min-h-screen w-auto">
         {!hideNavBar && (
           <div>
             <NavigationMenu
