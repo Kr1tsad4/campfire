@@ -4,7 +4,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   return (
     <>
       <div
-        className="w-[250px] min-h-screen bg-[#3B82F6] fixed z-20 
+        className="w-[250px] min-h-screen bg-[#c86e5a] fixed z-20 
           max-[1025px]:min-h-full max-[1025px]:w-[200px] max-[769px]:hidden max-[426px]:hidden"
       >
         <div className="flex gap-4 px-5">
