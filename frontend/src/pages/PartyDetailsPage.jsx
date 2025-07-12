@@ -4,10 +4,13 @@ import { useParty } from "../hooks/useParty";
 import { getPartyById } from "../libs/fetchPartyUtils";
 import { getTagById } from "../libs/fetchTagsUtils";
 import { API_URL } from "../libs/api";
+import { useUser } from "../hooks/useUser";
 
 function PartyDetailsPage() {
   const { id } = useParams();
   const { party, setParty, joinParty } = useParty();
+  const { loginUser, getLoginUser } = useUser();
+
   useEffect(() => {
     const fetch = async () => {
       const res = await getPartyById(API_URL, id);
@@ -25,6 +28,10 @@ function PartyDetailsPage() {
     fetch();
   }, [id]);
 
+  useEffect(() => {
+    getLoginUser();
+  }, []);
+
   if (!party) return <div>Loading...</div>;
 
   return (
@@ -38,7 +45,7 @@ function PartyDetailsPage() {
       <p>Members: {party.members.length}</p>
       <p>Tags: {party.tagNames.join(",")}</p>
       <button
-        onClick={() => joinParty("6871e4ec3988a545804da6b4", party._id)}
+        onClick={() => joinParty(loginUser._id, party._id)}
         className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-4 py-2 font-[700] cursor-pointer hover:bg-[#f0b291] "
       >
         Join

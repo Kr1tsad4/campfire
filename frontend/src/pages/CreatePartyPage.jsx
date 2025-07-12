@@ -4,10 +4,11 @@ import Header from "../components/Header";
 import CreatePartyForm from "../components/CreatePartyForm";
 import { useParty } from "../hooks/useParty";
 import { useTags } from "../hooks/useTags";
+import { useUser } from "../hooks/useUser";
+import { useEffect, useState } from "react";
 function CreatePartyPage() {
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
-  const userId = "68712b710092fda6f6505efb";
-
+  const { loginUser, getLoginUser } = useUser();
   const {
     partyName,
     setPartyName,
@@ -21,9 +22,12 @@ function CreatePartyPage() {
     setEndTime,
     createNewParty,
   } = useParty();
-
   const { baseTags, selectedTags, fetchBaseTags, handleSelectedTag } =
     useTags();
+
+  useEffect(() => {
+    getLoginUser();
+  }, []);
   return (
     <div className="flex bg-[#fff7f8] min-h-screen">
       <SideNavContainer
@@ -58,7 +62,7 @@ function CreatePartyPage() {
                 endTime,
                 selectedTags,
               },
-              userId
+              loginUser._id
             )
           }
           fetchBaseTags={fetchBaseTags}

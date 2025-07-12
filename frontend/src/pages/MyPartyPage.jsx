@@ -5,9 +5,12 @@ import SideNavContainer from "../components/SideNavContainer";
 import ListParty from "../components/ListParty";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
 function MyPartyPage() {
   const navigator = useNavigate();
+  const { loginUser, getLoginUser } = useUser();
+
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
   const {
     viewPartyDetails,
@@ -17,11 +20,17 @@ function MyPartyPage() {
     getUserJoinedParties,
   } = useParty();
 
-  const userId ="68712b710092fda6f6505efb";
   useEffect(() => {
-    getUserParties(userId);
-    getUserJoinedParties(userId);
+    getLoginUser();
   }, []);
+
+  useEffect(() => {
+    if (loginUser && loginUser._id) {
+      getUserParties(loginUser._id);
+      getUserJoinedParties(loginUser._id);
+    }
+  }, [loginUser]);
+
   return (
     <>
       <div className="flex bg-[#fff7f8] min-h-screen w-auto ">

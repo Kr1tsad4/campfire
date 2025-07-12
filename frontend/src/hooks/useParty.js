@@ -72,7 +72,7 @@ export const useParty = () => {
   ) => {
     console.log(userId);
     const partyData = {
-      name:partyName,
+      name: partyName,
       ownerId: userId,
       description,
       data: selectedDate,
@@ -95,6 +95,7 @@ export const useParty = () => {
       if (!isUserInParty) {
         party.members.push(userId);
         await updateParty(API_URL, partyId, { members: party.members });
+        navigator("/my-party");
       }
     }
   };
