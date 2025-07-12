@@ -21,10 +21,11 @@ export const useParty = () => {
   const [endTime, setEndTime] = useState("");
   const [userParties, setUserParties] = useState(null);
   const [joinedParties, setJoinedParties] = useState(null);
+  const [isMember, setIsMember] = useState(false);
 
   const navigator = useNavigate();
   const fetchParties = useCallback(
-    async (searchValue) => {
+    async (searchValue, user) => {
       try {
         const res =
           searchValue && searchValue.length > 0
@@ -36,18 +37,21 @@ export const useParty = () => {
               const tagNames = await Promise.all(
                 party.tags.map((tagId) => getTagById(API_URL, tagId))
               );
-
               return {
                 ...party,
                 tagNames: tagNames.map((tag) => tag.name),
               };
             })
           );
-          setParties(partiesWithTags);
+          const filteredParties = partiesWithTags.filter((p) => {
+            return !p.members.includes(user?._id);
+          });
+
+          setParties(filteredParties);
         }
       } catch (error) {
         console.log(`Failed to fetch party.`);
-        console.error(e);
+        console.error(error);
       }
     },
     [setParties]
@@ -62,10 +66,20 @@ export const useParty = () => {
       await fetchParties(result);
     }
   };
+
   const viewPartyDetails = async (id) => {
     navigator(`/party/${id}`);
   };
 
+  const checkUserIsMemberOfParty = async (partyId, user) => {
+    const party = await getPartyById(API_URL, partyId);
+    const inParty = party.members.includes(user?._id);
+    if (inParty) {
+      setIsMember(true);
+    } else {
+      setIsMember(false);
+    }
+  };
   const createNewParty = async (
     { partyName, description, selectedDate, startTime, endTime, selectedTags },
     userId
@@ -95,7 +109,6 @@ export const useParty = () => {
       if (!isUserInParty) {
         party.members.push(userId);
         await updateParty(API_URL, partyId, { members: party.members });
-        navigator("/my-party");
       }
     }
   };
@@ -168,5 +181,7 @@ export const useParty = () => {
     joinedParties,
     getUserJoinedParties,
     joinParty,
+    checkUserIsMemberOfParty,
+    isMember,
   };
 };
