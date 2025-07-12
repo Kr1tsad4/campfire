@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import InputComponent from "./InputComponent";
 import MyCalender from "./MyCalender";
 import TimePicker from "./TimePicker";
@@ -14,10 +15,15 @@ function CreatePartyForm({
   setStartTime,
   endTime,
   setEndTime,
-  tags,
-  setTags,
+  baseTags,
   createNewParty,
+  fetchBaseTags,
+  handleSelectedTag
 }) {
+
+  useEffect(() =>{
+    fetchBaseTags()
+  },[])
   return (
     <div
       className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
@@ -34,6 +40,7 @@ function CreatePartyForm({
         </label>
         <InputComponent
           id="party-name"
+          type="text"
           placeholder="Enter party name"
           width="500"
           value={partyName}
@@ -43,6 +50,7 @@ function CreatePartyForm({
 
         <InputComponent
           id="description"
+          type="text"
           placeholder="Enter party description"
           width="500"
           value={description}
@@ -67,13 +75,21 @@ function CreatePartyForm({
         </div>
         <label className="-ml-[390px] mb-2">Select party tags</label>
 
-        <InputComponent
-          id="tags"
-          placeholder="Tags"
-          width="500"
-          value={tags}
-          handleInput={(e) => setTags(e)}
-        />
+        <div className="flex">
+          {baseTags.map((tag, index) => {
+            return (
+              <div
+                key={index}
+                className={`mr-2 border-1 border-black rounded-[10px] px-2 py-[2px] text-[16px] cursor-default ${
+                  baseTags[index].selected ? "bg-[#f4cdb8ff]" : ""
+                }`}
+                onClick={() => handleSelectedTag(index)}
+              >
+                {tag.name}
+              </div>
+            );
+          })}
+        </div>
         <div className="ml-[420px] mt-5">
           <button
             onClick={() => createNewParty()}
