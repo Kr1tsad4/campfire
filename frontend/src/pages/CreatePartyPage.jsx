@@ -3,7 +3,7 @@ import SideNavContainer from "../components/SideNavContainer";
 import Header from "../components/Header";
 import CreatePartyForm from "../components/CreatePartyForm";
 import { useParty } from "../hooks/useParty";
-
+import { useTags } from "../hooks/useTags";
 function CreatePartyPage() {
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
   const {
@@ -17,11 +17,15 @@ function CreatePartyPage() {
     setStartTime,
     endTime,
     setEndTime,
-    tags,
-    setTags,
     createNewParty,
   } = useParty();
 
+  const {
+    baseTags,
+    selectedTags,
+    fetchBaseTags,
+    handleSelectedTag,
+  } = useTags();
   return (
     <div className="flex bg-[#fff7f8] min-h-screen">
       <SideNavContainer
@@ -45,9 +49,19 @@ function CreatePartyPage() {
           setStartTime={setStartTime}
           endTime={endTime}
           setEndTime={setEndTime}
-          tags={tags}
-          setTags={setTags}
-          createNewParty={createNewParty}
+          baseTags={baseTags}
+          createNewParty={() =>
+            createNewParty({
+              partyName,
+              description,
+              selectedDate,
+              startTime,
+              endTime,
+              selectedTags,
+            })
+          }
+          fetchBaseTags={fetchBaseTags}
+          handleSelectedTag={handleSelectedTag}
         />
       </div>
     </div>

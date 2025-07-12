@@ -1,8 +1,8 @@
 import { API_URL } from "../libs/api";
-import { getParties, getPartyById } from "../libs/fetchPartyUtils";
+import { getParties } from "../libs/fetchPartyUtils";
 import { getUserById } from "../libs/fetchUsersUtils";
 import { getTagById } from "../libs/fetchTagsUtils";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useParty = () => {
@@ -14,30 +14,38 @@ export const useParty = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [tags, setTags] = useState("");
   const [userParties, setUserParties] = useState(null);
   const [joinedParties, setJoinedParties] = useState(null);
 
   const navigator = useNavigate();
-  const fetchParties = async (searchValue) => {
-    const res = searchValue ? searchValue : await getParties(API_URL);
-    if (res) {
-      const partiesWithTags = await Promise.all(
-        res.map(async (party) => {
-          const tagNames = await Promise.all(
-            party.tags.map((tagId) => getTagById(API_URL, tagId))
+  const fetchParties = useCallback(
+    async (searchValue) => {
+      try {
+        const res = searchValue ? searchValue : await getParties(API_URL);
+
+        if (res) {
+          const partiesWithTags = await Promise.all(
+            res.map(async (party) => {
+              const tagNames = await Promise.all(
+                party.tags.map((tagId) => getTagById(API_URL, tagId))
+              );
+
+              return {
+                ...party,
+                tagNames: tagNames.map((tag) => tag.name),
+              };
+            })
           );
 
-          return {
-            ...party,
-            tagNames: tagNames.map((tag) => tag.name),
-          };
-        })
-      );
-
-      setParties(partiesWithTags);
-    }
-  };
+          setParties(partiesWithTags);
+        }
+      } catch (error) {
+        console.log(`Failed to fetch party.`);
+        console.error(e);
+      }
+    },
+    [setParties]
+  );
 
   const handleSearchParty = async (value) => {
     const res = await getParties(API_URL);
@@ -52,13 +60,20 @@ export const useParty = () => {
     navigator(`/party/${id}`);
   };
 
-  const createNewParty = async () => {
+  const createNewParty = ({
+    partyName,
+    description,
+    selectedDate,
+    startTime,
+    endTime,
+    selectedTags,
+  }) => {
     console.log(partyName);
     console.log(description);
     console.log(selectedDate);
     console.log(startTime);
     console.log(endTime);
-    console.log(tags);
+    console.log(selectedTags);
   };
 
   const getUserParties = async (userId) => {
@@ -101,7 +116,6 @@ export const useParty = () => {
         };
       })
     );
-    console.log(partiesWithTags);
     setJoinedParties(partiesWithTags);
   };
 
@@ -125,8 +139,6 @@ export const useParty = () => {
     setStartTime,
     endTime,
     setEndTime,
-    tags,
-    setTags,
     userParties,
     getUserParties,
     joinedParties,

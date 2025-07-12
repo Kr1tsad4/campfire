@@ -23,7 +23,7 @@ function MyCalender({ selectedDate, setSelectedDate }) {
   return (
     <div>
       <button
-        popovertarget="cally-popover1"
+        popoverTarget="cally-popover1"
         id="cally1"
         className="input input-bordered border-gray-400 text-base text-gray-500 bg-transparent w-[500px] mb-5 px-2 py-2"
         style={{ anchorName: "--cally1" }}
