@@ -6,6 +6,7 @@ import SchedulePage from "./pages/SchedulePage";
 import CreatePartyPage from "./pages/CreatePartyPage";
 import InvitationsPage from "./pages/InvitationsPage";
 import SettingsPage from "./pages/SettingsPage";
+import ProfilePage from "./pages/ProfilePage";
 function App() {
   return (
     <Router>
@@ -20,7 +21,8 @@ function App() {
         <Route path="/create-party" element={<CreatePartyPage />} />
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/invitations" element={<InvitationsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings" element={<SettingsPage/>} />
+        <Route path="/profile" element={<ProfilePage/>} />
       </Routes>
     </Router>
   );

@@ -31,7 +31,7 @@ function Homepage({ openPartyDetails }) {
 
   return (
     <>
-      <div className={`flex bg-[#fff7f8] min-h-screen w-auto relative`}>
+      <div className={`flex bg-[#fcfff7ff] min-h-screen w-auto relative`}>
         <SideNavContainer
           hideNavBar={hideNavBar}
           toggleSideNavBar={toggleSideNavBar}

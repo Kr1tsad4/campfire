@@ -34,7 +34,7 @@ function MyPartyPage() {
 
   return (
     <>
-      <div className="flex bg-[#fff7f8] min-h-screen w-auto ">
+      <div className="flex bg-[#fcfff7ff] min-h-screen w-auto ">
         <SideNavContainer
           hideNavBar={hideNavBar}
           toggleSideNavBar={toggleSideNavBar}
