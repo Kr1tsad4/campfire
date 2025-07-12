@@ -34,7 +34,6 @@ function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedM
   const handleYearChange = (eventObject) => {
     const year = parseInt(eventObject.target.value);
     setSelectedYear(year);
-    console.log(selectedYear);
     updateDays(year, selectedMonth);
   };
 
