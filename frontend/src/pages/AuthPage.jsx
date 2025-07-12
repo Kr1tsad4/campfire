@@ -34,6 +34,17 @@ function AuthPage() {
     `bg-gray-300 text-gray-900 rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default`
   );
 
+  const clearInput = () => {
+    setUsername("");
+    setPassword("");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setSelectedYear("");
+    setSelectedMonth("");
+    setSelectedDay("");
+    console.log("clear");
+  }
   const signUpButtonChecker = () => {
     // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
     if (
@@ -246,7 +257,10 @@ function AuthPage() {
         <div
           id="switch-button"
           className="underline underline-offset-1 my-2 cursor-default hover:text-[#AEC8A4]"
-          onClick={() => setIsLogin(!isLogin)}
+          onClick={() => {
+            clearInput();
+            setIsLogin(!isLogin)
+          }}
         >
           {isLogin ? "Does not have an account?" : "Already have an account?"}
         </div>

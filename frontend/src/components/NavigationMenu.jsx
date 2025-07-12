@@ -5,6 +5,9 @@ import { FaCalendarDays } from "react-icons/fa6";
 import { TiPlus } from "react-icons/ti";
 import { FcInvite } from "react-icons/fc";
 import { IoIosSettings } from "react-icons/io";
+import { BiLogOut } from "react-icons/bi";
+import { useUser } from '../hooks/useUser';
+
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
@@ -15,10 +18,12 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const isParty = location.pathname === "/my-party";
   const isInvitations = location.pathname === "/invitations";
   const isSettings = location.pathname === "/settings";
+
+  const {removeLoginUser} = useUser();
   return (
     <>
       <div
-        className="w-[250px] min-h-screen bg-[#c86e5a] fixed z-20 
+        className="w-[250px] min-h-screen bg-[#8A784E] fixed z-20 
           max-[1025px]:min-h-full max-[1025px]:w-[300px] max-[321px]:w-[320px] max-[426px]:w-[250px]"
       >
         <div className="flex gap-4 px-5">
@@ -40,8 +45,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-10">
             <button
               onClick={() => navigator("/home")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#e0907e] transition-all w-full px-5 py-3 ${
-                isHome ? "bg-[#e0907e]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isHome ? "bg-[#3B3B1A]" : ""
               }`}
             >
               <FaHome size={25} />
@@ -51,8 +56,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/my-party")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#e0907e] transition-all w-full px-5 py-3 ${
-                isParty ? "bg-[#e0907e]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isParty ? "bg-[#3B3B1A]" : ""
               }`}
             >
               <RiTeamFill size={25} />
@@ -62,8 +67,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/schedule")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#e0907e] transition-all w-full px-5 py-3 ${
-                isSchedule ? "bg-[#e0907e]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isSchedule ? "bg-[#3B3B1A]" : ""
               }`}
             >
               <FaCalendarDays size={25} />
@@ -73,8 +78,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/create-party")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#e0907e] transition-all w-full px-5 py-3 ${
-                isCreateParty ? "bg-[#e0907e]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isCreateParty ? "bg-[#3B3B1A]" : ""
               }`}
             >
               <TiPlus size={25} />
@@ -84,8 +89,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/invitations")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#e0907e] transition-all w-full px-5 py-3 ${
-                isInvitations ? "bg-[#e0907e]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isInvitations ? "bg-[#3B3B1A]" : ""
               }`}
             >
               <FcInvite size={25} />
@@ -95,12 +100,26 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/settings")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#e0907e] transition-all w-full px-5 py-3 ${
-                isSettings ? "bg-[#e0907e]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isSettings ? "bg-[#3B3B1A]" : ""
               }`}
             >
               <IoIosSettings size={25} />
               <h1 className="font-bold text-[22px] -mt-1">Settings</h1>
+            </button>
+          </div>
+          <div className="mt-5">
+            <button
+              onClick={() => {
+                removeLoginUser();
+                navigator("/")
+              }}
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isSettings ? "bg-[#3B3B1A]" : ""
+              }`}
+            >
+              <BiLogOut size={25} />
+              <h1 className="font-bold text-[22px] -mt-1">Logout</h1>
             </button>
           </div>
         </div>
