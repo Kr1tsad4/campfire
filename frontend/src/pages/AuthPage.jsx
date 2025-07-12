@@ -5,9 +5,14 @@ import { API_URL } from "../libs/api";
 import { useEffect } from "react";
 import { createUser } from "../libs/fetchUsersUtils";
 import { useTags } from "../hooks/useTags";
+import colorTheme from "../libs/colorTheme.js";
+import { userLogin } from "../libs/authUtils.js";
+
 function AuthPage() {
   const { baseTags, handleSelectedTag, setSelectedTag, fetchBaseTags } =
     useTags();
+
+  const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -19,10 +24,14 @@ function AuthPage() {
   const [selectedDay, setSelectedDay] = useState("");
 
   const [isValidSignUp, setIsValidSignUp] = useState(false);
+  const [isValidSignIn, setIsValidSignIn] = useState(false);
   const [signUpButton, setSignUpButton] = useState(
     `bg-gray-300 text-gray-900 rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default`
   );
-
+  const [signInButton, setSignInButton] = useState(
+    `bg-gray-300 text-gray-900 rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default`
+  );
+  
   const signUpButtonChecker = () => {
     // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
     if (
@@ -42,6 +51,19 @@ function AuthPage() {
     }
     setIsValidSignUp(true);
     return setSignUpButton(
+      `bg-[#f8d6db] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#f3bfa3]`
+    );
+  };
+  const signInButtonChecker = () => {
+    // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
+    if (!username || !password ) {
+      setIsValidSignIn(false);
+      return setSignInButton(
+        `bg-gray-300 text-gray-900 rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default`
+      );
+    }
+    setIsValidSignIn(true);
+    return setSignInButton(
       `bg-[#f8d6db] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#f3bfa3]`
     );
   };
@@ -68,10 +90,31 @@ function AuthPage() {
     console.log(`ok`);
     createUser(API_URL, user);
     return;
-    // sessionStorage.setItem('user', user);
+    
   };
+
+  const signIn = async () => {
+    if (!isValidSignIn) {
+      console.log(`data incompleted`);
+      return;
+    }
+    const data = {
+      username,
+      password
+    }
+    const user = await userLogin(API_URL, data);
+    if(user){
+      sessionStorage.setItem('user', JSON.stringify(user));
+    }
+    // const storage = sessionStorage.getItem('user');
+    // const storageObj = JSON.parse(storage);
+    return;
+  }
+
   useEffect(() => {
-    signUpButtonChecker();
+    if(isLogin) signInButtonChecker();
+    else signUpButtonChecker();
+    
   }, [
     username,
     password,
@@ -87,13 +130,21 @@ function AuthPage() {
   }, []); // [] ทำให้รันแค่ครั้งเดียวเมื่อ component mount
 
   return (
-    <div className="bg-[#F8D6DB] min-h-screen text-[#482820] flex items-center justify-center">
+    <div
+      className={` min-h-screen text-[] flex items-center justify-center`}
+      style={{
+        backgroundColor: colorTheme.background,
+        color: colorTheme.text,
+      }}
+    >
       <div
         id="auth-container"
         className="bg-white p-6 rounded-lg shadow-md w-120"
       >
         {/* {console.log(baseTags)} */}
-        <div className="text-[32px] font-[700] pl-0 mb-5">Register</div>
+        <div className="text-[32px] font-[700] pl-0 mb-5">
+          {isLogin ? "Login" : "Register"}
+        </div>
         <InputComponent
           type="text"
           id="username"
@@ -109,58 +160,74 @@ function AuthPage() {
           handleInput={(e) => setPassword(e)}
         />
         <div className="flex flex-row">
-          <InputComponent
-            type="text"
-            id="first-name"
-            placeholder="First name"
-            value={firstName}
-            handleInput={(e) => setFirstName(e)}
-            width={40}
-          />
-          <InputComponent
+          {!isLogin && (
+            <InputComponent
+              type="text"
+              id="first-name"
+              placeholder="First name"
+              value={firstName}
+              handleInput={(e) => setFirstName(e)}
+              width={40}
+            />
+          )}
+          {!isLogin && <InputComponent
             type="text"
             id="last-name"
             placeholder="Last name"
             value={lastName}
             handleInput={(e) => setLastName(e)}
             width={40}
-          />
+          />}
         </div>
-        <InputComponent
+        {!isLogin && <InputComponent
           type="email"
           id="email"
           placeholder="Email"
           value={email}
           handleInput={(e) => setEmail(e)}
-        />
-        <DateOfBirth
+        />}
+        {!isLogin && <DateOfBirth
           selectedYear={selectedYear}
           setSelectedYear={setSelectedYear}
           selectedMonth={selectedMonth}
           setSelectedMonth={setSelectedMonth}
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
-        />
-        <div className="text-[16px] text-gray-700 font-[500] my-2">
+        />}
+        {!isLogin && <div className="text-[16px] text-gray-700 font-[500] my-2">
           Interested (optional)
-        </div>
-        <div className="flex">
+        </div>}
+        {!isLogin && <div className="flex">
           {baseTags.map((tag, index) => {
             return (
               <div
                 key={index}
-                className={`mr-2 border-1 border-[#f4cdb8ff] rounded-[10px] px-2 py-[2px] text-[16px] cursor-default ${
-                  baseTags[index].selected ? "bg-[#f4cdb8ff]" : ""
-                }`}
+                className={`mr-2 border-[1.5px] border-[] rounded-[10px] px-2 py-[2px] text-[16px] cursor-default}`}
+                style={{
+                  borderColor: colorTheme.style1,
+                  backgroundColor: baseTags[index].selected
+                    ? colorTheme.style1
+                    : "",
+                }}
                 onClick={() => handleSelectedTag(index)}
               >
                 {tag.name}
               </div>
             );
           })}
-        </div>
-        <div id="register-button" className={signUpButton} onClick={signUp}>
-          Sign Up
+        </div>}
+        {!isLogin && <div id="register-button" className={signUpButton} onClick={signUp}>
+          Sign up
+        </div>}
+        {isLogin && <div id="Login-button" className={signInButton} onClick={signIn}>
+          Sign in
+        </div>}
+        <div
+          id="switch-button"
+          className="underline underline-offset-1 my-2 cursor-default hover:text-[#AEC8A4]"
+          onClick={() => setIsLogin(!isLogin)}
+        >
+          {isLogin ? "Does not have an account?" : "Already have an account?"}
         </div>
       </div>
     </div>
