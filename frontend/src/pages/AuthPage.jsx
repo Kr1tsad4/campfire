@@ -91,7 +91,8 @@ function AuthPage() {
     console.log(user);
     console.log(`ok`);
     const createdUser = await createUser(API_URL, user);
-    if (createdUser) {
+    if (createdUser ) {
+      console.log(createdUser);
       saveLoginUserSession(createdUser);
       navigator("/home");
     }
@@ -108,8 +109,8 @@ function AuthPage() {
       password,
     };
     const user = await userLogin(API_URL, data);
-
-    if (user) {
+    console.log(user);
+    if (user && user._id) {
       saveLoginUserSession(user);
       navigator("/home");
     }

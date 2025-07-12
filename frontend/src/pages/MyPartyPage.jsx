@@ -26,6 +26,7 @@ function MyPartyPage() {
 
   useEffect(() => {
     if (loginUser && loginUser._id) {
+      console.log(loginUser);
       getUserParties(loginUser._id);
       getUserJoinedParties(loginUser._id);
     }
