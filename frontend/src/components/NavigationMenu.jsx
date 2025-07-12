@@ -19,7 +19,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
     <>
       <div
         className="w-[250px] min-h-screen bg-[#c86e5a] fixed z-20 
-          max-[1025px]:min-h-full max-[1025px]:w-[200px] max-[769px]:hidden max-[426px]:hidden"
+          max-[1025px]:min-h-full max-[1025px]:w-[300px] max-[321px]:w-[320px] max-[426px]:w-[250px]"
       >
         <div className="flex gap-4 px-5">
           <div className="pt-7 ">
@@ -30,7 +30,11 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
               <FaBars size={25} />
             </button>
           </div>
-          <p className="font-bold text-[22px] pt-6">MAAM PARTY</p>
+          <p
+            className={`font-bold text-[22px] pt-6 max-[321px]:text-[18px] max-[426px]:mt-1`}
+          >
+            MAAM PARTY
+          </p>
         </div>
         <div>
           <div className="mt-10">

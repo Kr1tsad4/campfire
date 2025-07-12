@@ -1,5 +1,10 @@
 import { API_URL } from "../libs/api";
-import { getParties } from "../libs/fetchPartyUtils";
+import {
+  createParty,
+  getParties,
+  getPartyById,
+  updateParty,
+} from "../libs/fetchPartyUtils";
 import { getUserById } from "../libs/fetchUsersUtils";
 import { getTagById } from "../libs/fetchTagsUtils";
 import { useCallback, useState } from "react";
@@ -21,8 +26,10 @@ export const useParty = () => {
   const fetchParties = useCallback(
     async (searchValue) => {
       try {
-        const res = searchValue ? searchValue : await getParties(API_URL);
-
+        const res =
+          searchValue && searchValue.length > 0
+            ? searchValue
+            : await getParties(API_URL);
         if (res) {
           const partiesWithTags = await Promise.all(
             res.map(async (party) => {
@@ -36,7 +43,6 @@ export const useParty = () => {
               };
             })
           );
-
           setParties(partiesWithTags);
         }
       } catch (error) {
@@ -60,20 +66,37 @@ export const useParty = () => {
     navigator(`/party/${id}`);
   };
 
-  const createNewParty = ({
-    partyName,
-    description,
-    selectedDate,
-    startTime,
-    endTime,
-    selectedTags,
-  }) => {
-    console.log(partyName);
-    console.log(description);
-    console.log(selectedDate);
-    console.log(startTime);
-    console.log(endTime);
-    console.log(selectedTags);
+  const createNewParty = async (
+    { partyName, description, selectedDate, startTime, endTime, selectedTags },
+    userId
+  ) => {
+    console.log(userId);
+    const partyData = {
+      name:partyName,
+      ownerId: userId,
+      description,
+      data: selectedDate,
+      startTime,
+      endTime,
+      tags: selectedTags,
+    };
+    const newParty = await createParty(API_URL, partyData);
+    if (newParty) {
+      await fetchParties();
+      navigator("/my-party");
+    }
+  };
+
+  const joinParty = async (userId, partyId) => {
+    const party = await getPartyById(API_URL, partyId);
+
+    if (party) {
+      const isUserInParty = party.members.includes(userId);
+      if (!isUserInParty) {
+        party.members.push(userId);
+        await updateParty(API_URL, partyId, { members: party.members });
+      }
+    }
   };
 
   const getUserParties = async (userId) => {
@@ -143,5 +166,6 @@ export const useParty = () => {
     getUserParties,
     joinedParties,
     getUserJoinedParties,
+    joinParty,
   };
 };

@@ -15,7 +15,15 @@ function Header({
   };
   return (
     <>
-      <div className="h-[88px] w-full fixed pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 ml-[120px]">
+      <div
+        className={`h-[88px] w-full fixed ml-[120px]   pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 
+            ${
+              hideNavBar
+                ? "max-[426px]:ml-25  max-[376px]:ml-28 "
+                : "ml-2  max-[376px]:ml-17 max-[769px]:ml-5"
+            }
+        }`}
+      >
         <div
           className={`${
             hideNavBar ? "-ml-[50px]" : ""
@@ -25,8 +33,12 @@ function Header({
         >
           <div className={`flex mr-20 ${hideSearchBar ? "hidden" : ""}`}>
             <div
-              className="flex items-center w-[600px]  max-[426px]:w-[280px] max-[376px]:w-[180px] 
-            bg-[#EDE7F6] rounded-full px-4 py-2 "
+              className={`flex items-center w-[600px]  max-[426px]:w-[280px] max-[376px]:w-[180px] 
+            bg-[#EDE7F6] rounded-full px-4 py-2 max-[426px]:ml-15 max-[426px]:-mr-15 ${
+              hideNavBar
+                ? "max-[769px]:w-[500px] max-[769px]:ml-22 max-[1025px]:-ml-5"
+                : "max-[1025px]:-ml-5"
+            }`}
             >
               <input
                 type="text"

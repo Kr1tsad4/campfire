@@ -7,7 +7,7 @@ import { API_URL } from "../libs/api";
 
 function PartyDetailsPage() {
   const { id } = useParams();
-  const { party, setParty } = useParty();
+  const { party, setParty, joinParty } = useParty();
   useEffect(() => {
     const fetch = async () => {
       const res = await getPartyById(API_URL, id);
@@ -35,7 +35,14 @@ function PartyDetailsPage() {
       <p>
         Time : {party.startTime} - {party.endTime}{" "}
       </p>
-      <p>Tags: {party.tagNames.join(',')}</p>
+      <p>Members: {party.members.length}</p>
+      <p>Tags: {party.tagNames.join(",")}</p>
+      <button
+        onClick={() => joinParty("6871e4ec3988a545804da6b4", party._id)}
+        className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-4 py-2 font-[700] cursor-pointer hover:bg-[#f0b291] "
+      >
+        Join
+      </button>
     </div>
   );
 }

@@ -13,15 +13,23 @@ function SideNavContainer({ hideNavBar, toggleSideNavBar, children }) {
         </div>
       )}
       {hideNavBar && (
-        <div className={`${hideNavBar ? "block" : ""} pt-6  pl-6  z-50 fixed`}>
+        <div
+          className={`${
+            hideNavBar ? "block" : ""
+          } pt-6  pl-6  z-50 fixed max-[1025px]:ml-5`}
+        >
           <div className="flex gap-4 w-[200px]">
             <button
-              className="cursor-pointer"
+              className="cursor-pointer "
               onClick={() => toggleSideNavBar(hideNavBar)}
             >
               <FaBars size={25} color="black" />
             </button>
-            <p className="font-bold text-[22px] text-black">MAAM PARTY</p>
+            <p
+              className={`font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden `}
+            >
+              MAAM PARTY
+            </p>
           </div>
         </div>
       )}

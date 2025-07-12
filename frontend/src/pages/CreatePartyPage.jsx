@@ -6,6 +6,8 @@ import { useParty } from "../hooks/useParty";
 import { useTags } from "../hooks/useTags";
 function CreatePartyPage() {
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
+  const userId = "68712b710092fda6f6505efb";
+
   const {
     partyName,
     setPartyName,
@@ -20,12 +22,8 @@ function CreatePartyPage() {
     createNewParty,
   } = useParty();
 
-  const {
-    baseTags,
-    selectedTags,
-    fetchBaseTags,
-    handleSelectedTag,
-  } = useTags();
+  const { baseTags, selectedTags, fetchBaseTags, handleSelectedTag } =
+    useTags();
   return (
     <div className="flex bg-[#fff7f8] min-h-screen">
       <SideNavContainer
@@ -51,14 +49,17 @@ function CreatePartyPage() {
           setEndTime={setEndTime}
           baseTags={baseTags}
           createNewParty={() =>
-            createNewParty({
-              partyName,
-              description,
-              selectedDate,
-              startTime,
-              endTime,
-              selectedTags,
-            })
+            createNewParty(
+              {
+                partyName,
+                description,
+                selectedDate,
+                startTime,
+                endTime,
+                selectedTags,
+              },
+              userId
+            )
           }
           fetchBaseTags={fetchBaseTags}
           handleSelectedTag={handleSelectedTag}

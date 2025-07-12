@@ -18,12 +18,11 @@ function CreatePartyForm({
   baseTags,
   createNewParty,
   fetchBaseTags,
-  handleSelectedTag
+  handleSelectedTag,
 }) {
-
-  useEffect(() =>{
-    fetchBaseTags()
-  },[])
+  useEffect(() => {
+    fetchBaseTags();
+  }, []);
   return (
     <div
       className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
@@ -75,7 +74,7 @@ function CreatePartyForm({
         </div>
         <label className="-ml-[390px] mb-2">Select party tags</label>
 
-        <div className="flex">
+        <div className="flex -ml-[250px]">
           {baseTags.map((tag, index) => {
             return (
               <div

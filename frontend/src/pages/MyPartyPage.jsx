@@ -17,7 +17,7 @@ function MyPartyPage() {
     getUserJoinedParties,
   } = useParty();
 
-  const userId = "";
+  const userId ="68712b710092fda6f6505efb";
   useEffect(() => {
     getUserParties(userId);
     getUserJoinedParties(userId);
