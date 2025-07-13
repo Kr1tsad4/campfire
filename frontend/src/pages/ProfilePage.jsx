@@ -1,15 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SideNavContainer from "../components/SideNavContainer";
 import { useNavigationBar } from "../hooks/useNavigationBar";
 import { useTags } from "../hooks/useTags";
 import colorTheme from "../libs/colorTheme";
+import EditableText from "../components/editableText";
+import { useParams } from "react-router-dom";
+import { getUserById } from "../libs/fetchUsersUtils";
+import { API_URL } from "../libs/api";
 
 function ProfilePage() {
+  const { id } = useParams();
   const { userTags, fetchUserTags } = useTags();
 
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const sessionUser = JSON.parse(sessionStorage.getItem("user"));
+  const [user, setUser] = useState(null);
+  const isMyAccount = sessionUser._id === id;
   let dob = null;
-  if (user.dob) dob = new Date(user.dob);
+  if (user?.dob) dob = new Date(user?.dob);
   const now = new Date();
 
   const setAge = () => {
@@ -27,8 +34,17 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    // console.log(user);
-    fetchUserTags(user._id);
+    if (id) {
+      fetchUserTags(id);
+    }
+  }, [id, fetchUserTags]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const fetchedUser = await getUserById(API_URL, id);
+      setUser(fetchedUser);
+    };
+    fetchUser();
     console.log(userTags);
   }, []);
 
@@ -49,16 +65,31 @@ function ProfilePage() {
           >
             ProfilePicture
           </div>
-          <div className="text-[40px] ml-4 m-0">{user.penName}</div>
+          <EditableText
+            data={user?.penName}
+            textSize={40}
+            hoverMode={true}
+            isMyAccount={isMyAccount}
+            id={id}
+            fieldName="penName"
+            editWidth={"400px"}
+          />
           <div className="text-[16px] text-[#808077ff] ml-4">
-            @{user.username} {dob && `, ${setAge()} years`}
+            @{user?.username} {dob && `, ${setAge()} years`}
           </div>
           <div className="text-[24px] ml-4 mt-4">About me</div>
-          <div className="text-[16px] text-[#808077ff] mx-4">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque
-            deserunt nostrum qui eos, ea quidem provident commodi eius sunt
-            nobis omnis esse, minus consequuntur blanditiis laudantium
-            voluptatum nihil soluta ad.
+          <div>
+            <EditableText
+              data={user?.aboutMe}
+              type={"textarea"}
+              textSize={16}
+              hoverMode={false}
+              isMyAccount={isMyAccount}
+              id={id}
+              fieldName="aboutMe"
+              editWidth={"60vw"}
+              editHeight={"400px"}
+            />
           </div>
           <div className="text-[24px] ml-4 mt-4">Interested</div>
           <div className="flex ml-4 cursor-default">

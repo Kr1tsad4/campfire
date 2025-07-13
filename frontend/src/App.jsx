@@ -28,8 +28,9 @@ function App() {
         />
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/invitations" element={<InvitationsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+
+        <Route path="/settings" element={<SettingsPage/>} />
+        <Route path="/profile/:id" element={<ProfilePage/>} />
       </Routes>
     </Router>
   );
