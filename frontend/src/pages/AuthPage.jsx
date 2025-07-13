@@ -120,7 +120,6 @@ function AuthPage() {
       password,
     };
     const user = await userLogin(API_URL, data);
-    console.log(user);
     if (user && user._id) {
       saveLoginUserSession(user);
       navigator("/home");

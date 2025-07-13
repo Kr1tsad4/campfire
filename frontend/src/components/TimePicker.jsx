@@ -1,32 +1,84 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function TimePicker({ label, value, onChange }) {
-  const [time, setTime] = useState(value || "");
+function TimePicker({ label, selectedTime, setSelectedTime }) {
+  const hours = Array.from({ length: 12 }, (_, i) =>
+    (i + 1).toString().padStart(2, "0")
+  );
+  const minutes = ["00", "05","10", "15", "25", "30", "35", "40", "45", "50", "55"];
+  const periods = ["AM", "PM"];
 
-  const handleChange = (e) => {
-    const raw = e.target.value;
-    setTime(raw);
-    onChange?.(formatTime(raw));
+  const [hour, setHour] = useState("-");
+  const [minute, setMinute] = useState("-");
+  const [period, setPeriod] = useState("AM");
+
+  const handleChange = (h, m, p) => {
+    setHour(h);
+    setMinute(m);
+    setPeriod(p);
+
+    if (h !== "-" && m !== "-" && p) {
+      const formatted = `${h}:${m} ${p}`;
+      setSelectedTime(formatted);
+    }
   };
 
-  const formatTime = (timeStr) => {
-    if (!timeStr) return "";
-    const [hourStr, minute] = timeStr.split(":");
-    let hour = parseInt(hourStr, 10);
-    const ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12 || 12;
-    return `${hour.toString().padStart(2, "0")}:${minute} ${ampm}`;
-  };
+
+  useEffect(() => {
+    if (selectedTime) {
+      const timeParts = selectedTime.trim().split(/[: ]/);
+      if (timeParts.length === 3) {
+        setHour(timeParts[0].padStart(2, "0"));
+        setMinute(timeParts[1]);
+        setPeriod(timeParts[2]);
+      }
+    }
+  }, [selectedTime]);
 
   return (
-    <div className="w-[500px] mb-5">
-      <label className="block font-medium mb-1">{label}</label>
-      <input
-        type="time"
-        value={time}
-        onChange={handleChange}
-        className="w-full px-3 py-2 border border-gray-400 rounded"
-      />
+    <div className="mb-4 w-[500px]">
+      <label className="block font-medium mb-1">
+        {label}
+        {label === "Start Time" && <span className="text-red-500"> *</span>}
+      </label>
+      <div className="flex gap-2">
+        <select
+          value={hour}
+          onChange={(e) => handleChange(e.target.value, minute, period)}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="-">Hour</option>
+          {hours.map((h) => (
+            <option key={h} value={h}>
+              {h}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={minute}
+          onChange={(e) => handleChange(hour, e.target.value, period)}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="-">Minute</option>
+          {minutes.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={period}
+          onChange={(e) => handleChange(hour, minute, e.target.value)}
+          className="border px-2 py-1 rounded"
+        >
+          {periods.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }

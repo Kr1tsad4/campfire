@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 function ListParty({
   parties,
   hideNavBar,
   viewPartyDetails,
   openPartyDetails,
+  isMyParty = false,
+  deleteMyParty,
+  userId
 }) {
+  const navigator = useNavigate();
+
   if (!parties) return <div>Loading...</div>;
   const openDetailsPopup = (partyId) => {
     openPartyDetails = true;
@@ -43,8 +50,28 @@ function ListParty({
                 </div>
               </div>
             </div>
-
-            <div className="flex items-center ml-[400px]"></div>
+            {isMyParty && (
+              <div className="flex items-center ml-[350px] gap-2 w-[50px]">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator(`/my-party/update-party/${party._id}`);
+                  }}
+                  className="bg-[#f3bfa3] rounded-[5px]  mt-2 px-3 py-2 font-[700] cursor-pointer hover:bg-[#f0b291] z-50"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteMyParty(party._id, userId);
+                  }}
+                  className="bg-red-300 rounded-[5px] mt-2 px-3 py-2 font-[700] cursor-pointer hover:bg-[#f0b291]"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>

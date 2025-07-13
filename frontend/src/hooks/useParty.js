@@ -4,6 +4,7 @@ import {
   getParties,
   getPartyById,
   updateParty,
+  deleteParty,
 } from "../libs/fetchPartyUtils";
 import { getUserById } from "../libs/fetchUsersUtils";
 import { getTagById } from "../libs/fetchTagsUtils";
@@ -22,6 +23,15 @@ export const useParty = () => {
   const [userParties, setUserParties] = useState(null);
   const [joinedParties, setJoinedParties] = useState(null);
   const [isMember, setIsMember] = useState(false);
+
+  const convertTo12Hour = (timeStr) => {
+    if (!timeStr) return "";
+    const [hourStr, minute] = timeStr.split(":");
+    let hour = parseInt(hourStr, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+    return `${hour.toString().padStart(2, "0")}:${minute} ${ampm}`;
+  };
 
   const navigator = useNavigate();
   const fetchParties = useCallback(
@@ -84,12 +94,11 @@ export const useParty = () => {
     { partyName, description, selectedDate, startTime, endTime, selectedTags },
     userId
   ) => {
-    console.log(userId);
     const partyData = {
       name: partyName,
       ownerId: userId,
       description,
-      data: selectedDate,
+      date: selectedDate,
       startTime,
       endTime,
       tags: selectedTags,
@@ -155,7 +164,59 @@ export const useParty = () => {
     );
     setJoinedParties(partiesWithTags);
   };
+  const getPartyTagsAndMembersName = async (partyId) => {
+    const res = await getPartyById(API_URL, partyId);
+    if (res) {
+      const tagIds = Array.isArray(res.tags) ? res.tags : []; 
 
+      const tagNames = await Promise.all(
+        tagIds.map((tagId) => getTagById(API_URL, tagId))
+      );
+
+      const ownerId = res.ownerId;
+      const filteredMemberIds =
+        res.members?.filter((id) => id !== ownerId) || [];
+
+      const membersName = await Promise.all(
+        filteredMemberIds.map((memberId) => getUserById(API_URL, memberId))
+      );
+
+      const ownerUser = await getUserById(API_URL, ownerId);
+
+      const partyWithTagsAndMembers = {
+        ...res,
+        tagNames: tagNames.map((tag) => tag.name),
+        membersName: membersName.map((member) => member.penName),
+        ownerName: ownerUser?.penName,
+      };
+
+      setParty(partyWithTagsAndMembers);
+    }
+  };
+
+  const updateMyParty = async (partyFormData, userId, id) => {
+    const partyData = {
+      name: partyFormData.name,
+      ownerId: userId,
+      description: partyFormData.description,
+      date: partyFormData.date,
+      startTime: partyFormData.startTime,
+      endTime: partyFormData.endTime,
+      tags: partyFormData.tags,
+    };
+    const updatedParty = await updateParty(API_URL, id, partyData);
+
+    if (updatedParty) {
+      await fetchParties();
+      navigator("/my-party");
+    }
+  };
+
+  const deleteMyParty = async (partyId, userId) => {
+    await deleteParty(API_URL, partyId);
+    await getUserParties(userId);
+    navigator("/my-party");
+  };
   return {
     parties,
     fetchParties,
@@ -183,5 +244,8 @@ export const useParty = () => {
     joinParty,
     checkUserIsMemberOfParty,
     isMember,
+    getPartyTagsAndMembersName,
+    deleteMyParty,
+    updateMyParty,
   };
 };

@@ -7,7 +7,6 @@ export const useNavigationBar = () => {
     setHideNavBar(!hideNavBar);
   };
   return {
-
     hideNavBar,
     toggleSideNavBar
   };

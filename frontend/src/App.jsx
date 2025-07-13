@@ -3,10 +3,10 @@ import Homepage from "./pages/Homepage";
 import AuthPage from "./pages/AuthPage";
 import MyPartyPage from "./pages/MyPartyPage";
 import SchedulePage from "./pages/SchedulePage";
-import CreatePartyPage from "./pages/CreatePartyPage";
 import InvitationsPage from "./pages/InvitationsPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
+import CreateUpdatePartyPage from "./pages/CreateUpdatePartyPage";
 function App() {
   return (
     <Router>
@@ -18,11 +18,18 @@ function App() {
           element={<Homepage openPartyDetails={true} />}
         />
         <Route path="/my-party" element={<MyPartyPage />} />
-        <Route path="/create-party" element={<CreatePartyPage />} />
+        <Route
+          path="/my-party/update-party/:id"
+          element={<CreateUpdatePartyPage type="update" />}
+        />
+        <Route
+          path="/create-party"
+          element={<CreateUpdatePartyPage type="create" />}
+        />
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/invitations" element={<InvitationsPage />} />
-        <Route path="/settings" element={<SettingsPage/>} />
-        <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

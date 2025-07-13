@@ -6,8 +6,7 @@ import { TiPlus } from "react-icons/ti";
 import { FcInvite } from "react-icons/fc";
 import { IoIosSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
-import { useUser } from '../hooks/useUser';
-
+import { useUser } from "../hooks/useUser";
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
@@ -19,7 +18,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const isInvitations = location.pathname === "/invitations";
   const isSettings = location.pathname === "/settings";
 
-  const {removeLoginUser} = useUser();
+  const { removeLoginUser } = useUser();
   return (
     <>
       <div
@@ -112,11 +111,9 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
             <button
               onClick={() => {
                 removeLoginUser();
-                navigator("/")
+                navigator("/");
               }}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isSettings ? "bg-[#3B3B1A]" : ""
-              }`}
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 `}
             >
               <BiLogOut size={25} />
               <h1 className="font-bold text-[22px] -mt-1">Logout</h1>

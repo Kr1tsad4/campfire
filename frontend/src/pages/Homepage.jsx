@@ -5,7 +5,7 @@ import { useParty } from "../hooks/useParty";
 import { useNavigationBar } from "../hooks/useNavigationBar";
 import { useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
-import PartyDetailsPage from "./PartyDetailsPage";
+import PartyDetailsPopup from "../components/PartyDetailsPopup";
 
 function Homepage({ openPartyDetails }) {
 
@@ -64,7 +64,7 @@ function Homepage({ openPartyDetails }) {
               style={{ pointerEvents: "auto" }}
             ></div>
             <div className="fixed top-0 left-[360px] z-20">
-              <PartyDetailsPage />
+              <PartyDetailsPopup   />
             </div>
           </>
         )}
