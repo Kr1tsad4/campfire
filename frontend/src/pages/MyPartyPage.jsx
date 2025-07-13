@@ -3,7 +3,7 @@ import { useNavigationBar } from "../hooks/useNavigationBar";
 import { useParty } from "../hooks/useParty";
 import SideNavContainer from "../components/SideNavContainer";
 import ListParty from "../components/ListParty";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 
@@ -18,6 +18,7 @@ function MyPartyPage() {
     getUserParties,
     joinedParties,
     getUserJoinedParties,
+    deleteMyParty,
   } = useParty();
 
   useEffect(() => {
@@ -26,7 +27,6 @@ function MyPartyPage() {
 
   useEffect(() => {
     if (loginUser && loginUser._id) {
-      console.log(loginUser);
       getUserParties(loginUser._id);
       getUserJoinedParties(loginUser._id);
     }
@@ -57,6 +57,9 @@ function MyPartyPage() {
                   parties={userParties}
                   hideNavBar={hideNavBar}
                   viewPartyDetails={viewPartyDetails}
+                  isMyParty={true}
+                  deleteMyParty={deleteMyParty}
+                  userId={loginUser?._id}
                 />
               )}
               {!userParties ||
@@ -79,7 +82,7 @@ function MyPartyPage() {
             </div>
           </div>
 
-          <div className="ml-12 min-w-full">
+          <div className="ml-12 min-w-full mb-28">
             <p
               className={`text-[32px] text-black  mt-20 ${
                 hideNavBar ? "ml-[220px]" : "ml-[260px]"
