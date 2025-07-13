@@ -40,6 +40,10 @@ const UserModelSchema = new Schema(
       type: Date,
       require: true,
     },
+    aboutMe: {
+      type: String,
+      trim: true,
+    },
     interestedTag: [
       {
         type: mongoose.Schema.Types.ObjectId,

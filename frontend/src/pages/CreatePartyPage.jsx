@@ -29,7 +29,7 @@ function CreatePartyPage() {
     getLoginUser();
   }, []);
   return (
-    <div className="flex bg-[#fff7f8] min-h-screen">
+    <div className="flex bg-[#fcfff7ff] min-h-screen">
       <SideNavContainer
         hideNavBar={hideNavBar}
         toggleSideNavBar={toggleSideNavBar}

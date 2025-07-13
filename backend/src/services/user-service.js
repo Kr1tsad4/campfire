@@ -46,12 +46,13 @@ const update = async (id, userData) => {
     newPassword,
     dob,
     interestedTag,
+    aboutMe,
   } = userData;
 
   let isUpdated = false;
   const user = await User.findById(id);
   if (!user) throw createError(404, `User not found with id ${id}.`);
-
+  console.log(user.aboutMe);
   const updateData = {};
   if (username && user.username !== username) {
     const existingUsername = await User.findOne({ username: username });
@@ -96,6 +97,11 @@ const update = async (id, userData) => {
     updateData.interestedTag = interestedTag;
     isUpdated = true;
   }
+  if (user.aboutMe !== aboutMe) {
+    updateData.aboutMe = aboutMe;
+    isUpdated = true;
+  }
+  console.log(updateData);
   if (!isUpdated) throw createError(400, "Does not have any different data.");
   const updatedUser = await User.findByIdAndUpdate(id, updateData);
   return updatedUser;
