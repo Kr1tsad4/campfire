@@ -33,7 +33,7 @@ const create = async (party) => {
 };
 
 const update = async (id, party) => {
-  const { name, ownerId, members, description, start, end, tags, status } =
+  const { name, ownerId, members, description, startTime, endTime,date, tags, status } =
     party;
 
   const existingParty = await Party.findById(id).select("-__v");
@@ -44,9 +44,10 @@ const update = async (id, party) => {
   if (ownerId !== undefined) existingParty.ownerId = ownerId;
   if (members !== undefined) existingParty.members = members;
   if (description !== undefined) existingParty.description = description;
-  if (start !== undefined) existingParty.start = start;
-  if (end !== undefined) existingParty.end = end;
+  if (startTime !== undefined) existingParty.startTime =startTime;
+  if (endTime !== undefined) existingParty.endTime = endTime;
   if (tags !== undefined) existingParty.tags = tags;
+  if (date !== undefined) existingParty.date = date;
   if (status !== undefined) existingParty.status = status;
 
   const updatedParty = await existingParty.save();
