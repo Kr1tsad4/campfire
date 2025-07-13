@@ -65,5 +65,6 @@ export const useTags = () => {
     selectedTags,
     userTags,
     fetchUserTags,
+    setSelectedTags
   };
 };

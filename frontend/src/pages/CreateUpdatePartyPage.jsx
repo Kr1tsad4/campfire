@@ -35,6 +35,7 @@ function CreateUpdatePartyPage({ type }) {
     fetchBaseTags,
     handleSelectedTag,
     setBaseTags,
+    setSelectedTags
   } = useTags();
   const [enableCreateButton, setEnableCreateButton] = useState(false);
   useEffect(() => {
@@ -132,6 +133,7 @@ function CreateUpdatePartyPage({ type }) {
             handleSelectedTag={handleSelectedTag}
             loginUser={loginUser}
             setBaseTags={setBaseTags}
+            setSelectedTags={setSelectedTags}
           />
         )}
       </div>

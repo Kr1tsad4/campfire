@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import InputComponent from "./InputComponent";
 import MyCalender from "./MyCalender";
 import TimePicker from "./TimePicker";
@@ -25,16 +25,24 @@ function PartyForm({
   myParty,
   updateMyParty,
   loginUser,
-  setBaseTags
+  setBaseTags,
+  setSelectedTags
 }) {
   const navigator = useNavigate();
 
   useEffect(() => {
     fetchBaseTags();
   }, []);
+  const isInitialized = useRef(false);
 
-  useEffect(() => {
-    if (type === "update" && myParty) {
+ useEffect(() => {
+    if (
+      type === "update" &&
+      myParty &&
+      baseTags.length > 0 &&
+      !isInitialized.current
+    ) {
+      isInitialized.current = true; 
       setPartyName(myParty.name || "");
       setDescription(myParty.description || "");
       setSelectedDate(myParty.date || "");
@@ -46,8 +54,9 @@ function PartyForm({
         selected: myParty.tags.includes(tag._id),
       }));
       setBaseTags(updatedTags);
+      setSelectedTags(myParty.tags); 
     }
-  }, [myParty, type]);
+  }, [myParty, type, baseTags]);
 
   return (
     <div
