@@ -26,9 +26,16 @@ function App() {
           path="/create-party"
           element={<CreateUpdatePartyPage type="create" />}
         />
+        <Route
+          path="/my-party/update-party/:id"
+          element={<CreateUpdatePartyPage type="update" />}
+        />
+        <Route
+          path="/create-party"
+          element={<CreateUpdatePartyPage type="create" />}
+        />
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/invitations" element={<InvitationsPage />} />
-
         <Route path="/settings" element={<SettingsPage/>} />
         <Route path="/profile/:id" element={<ProfilePage/>} />
       </Routes>
