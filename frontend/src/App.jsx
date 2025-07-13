@@ -6,7 +6,7 @@ import SchedulePage from "./pages/SchedulePage";
 import InvitationsPage from "./pages/InvitationsPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
-import CreateUpdatePartyPage from "./pages/CreatePartyPage";
+import CreateUpdatePartyPage from "./pages/CreateUpdatePartyPage";
 function App() {
   return (
     <Router>
