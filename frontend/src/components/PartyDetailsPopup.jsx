@@ -11,6 +11,7 @@ function PartyDetailsPopup() {
     getPartyTagsAndMembersName,
     checkUserIsMemberOfParty,
     isMember,
+    joinParty
   } = useParty();
   const { loginUser, getLoginUser } = useUser();
   const navigator = useNavigate();

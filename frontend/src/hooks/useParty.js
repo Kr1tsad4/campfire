@@ -24,15 +24,6 @@ export const useParty = () => {
   const [joinedParties, setJoinedParties] = useState(null);
   const [isMember, setIsMember] = useState(false);
 
-  const convertTo12Hour = (timeStr) => {
-    if (!timeStr) return "";
-    const [hourStr, minute] = timeStr.split(":");
-    let hour = parseInt(hourStr, 10);
-    const ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12 || 12;
-    return `${hour.toString().padStart(2, "0")}:${minute} ${ampm}`;
-  };
-
   const navigator = useNavigate();
   const fetchParties = useCallback(
     async (searchValue, user) => {
@@ -118,6 +109,7 @@ export const useParty = () => {
       if (!isUserInParty) {
         party.members.push(userId);
         await updateParty(API_URL, partyId, { members: party.members });
+        navigator('/my-party')
       }
     }
   };
