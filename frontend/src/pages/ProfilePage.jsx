@@ -5,15 +5,18 @@ import { useTags } from "../hooks/useTags";
 import colorTheme from "../libs/colorTheme";
 import EditableText from "../components/editableText";
 import { useParams } from "react-router-dom";
+import { getUserById } from "../libs/fetchUsersUtils";
+import { API_URL } from "../libs/api";
 
 function ProfilePage() {
   const { id } = useParams();
   const { userTags, fetchUserTags } = useTags();
 
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  const isMyAccount = user._id === id;
+  const sessionUser = JSON.parse(sessionStorage.getItem("user"));
+  const [user, setUser] = useState(null);
+  const isMyAccount = sessionUser._id === id;
   let dob = null;
-  if (user.dob) dob = new Date(user.dob);
+  if (user?.dob) dob = new Date(user?.dob);
   const now = new Date();
 
   const setAge = () => {
@@ -31,6 +34,18 @@ function ProfilePage() {
   };
 
   useEffect(() => {
+    if (id) {
+      fetchUserTags(id);
+    }
+  }, [id, fetchUserTags]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const fetchedUser = await getUserById(API_URL, id);
+      setUser(fetchedUser);
+    };
+    fetchUser();
+    console.log(userTags);
   }, []);
 
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
@@ -51,7 +66,7 @@ function ProfilePage() {
             ProfilePicture
           </div>
           <EditableText
-            data={user.penName}
+            data={user?.penName}
             textSize={40}
             hoverMode={true}
             isMyAccount={isMyAccount}
@@ -60,12 +75,12 @@ function ProfilePage() {
             editWidth={"400px"}
           />
           <div className="text-[16px] text-[#808077ff] ml-4">
-            @{user.username} {dob && `, ${setAge()} years`}
+            @{user?.username} {dob && `, ${setAge()} years`}
           </div>
           <div className="text-[24px] ml-4 mt-4">About me</div>
           <div>
             <EditableText
-              data={user.aboutMe}
+              data={user?.aboutMe}
               type={"textarea"}
               textSize={16}
               hoverMode={false}

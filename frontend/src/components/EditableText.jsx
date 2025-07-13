@@ -21,7 +21,8 @@ function EditableText({
   let prevData;
 
   useEffect(() => {
-  }, [])
+    setDataValue(data);
+  }, [data])
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const handleUpdate = async () => {
