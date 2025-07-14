@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import "cally";
 
-function MyCalender({ selectedDate, setSelectedDate }) {
+function Calender({ selectedDate, setSelectedDate }) {
   const calendarRef = useRef();
 
   useEffect(() => {
@@ -68,4 +68,4 @@ function MyCalender({ selectedDate, setSelectedDate }) {
   );
 }
 
-export default MyCalender;
+export default Calender;

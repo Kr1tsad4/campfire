@@ -7,7 +7,7 @@ function ListParty({
   openPartyDetails,
   isMyParty = false,
   deleteMyParty,
-  userId
+  userId,
 }) {
   const navigator = useNavigate();
 
@@ -26,13 +26,13 @@ function ListParty({
         {parties.map((party, index) => (
           <div
             key={index}
-            className={` flex w-[1120px] max-[1441px]:w-[1100px] max-[1025px]:w-[750px] max-[769px]:w-[700px] max-[376px]:w-[300px]  
-              max-[426px]:w-[400px] max-[426px]:h-[180px] border-1 border-gray-200 h-[200px] rounded-2xl 
+            className={`flex w-[1120px] max-[1441px]:w-[1000px] max-[1025px]:w-[750px] max-[769px]:w-[700px] max-[376px]:w-[300px]  
+              max-[426px]:w-[400px] max-[426px]:h-[180px] border-1 border-gray-200 h-[200px] rounded-2xl relative
               p-3 cursor-pointer text-black hover:bg-gray-100 transition-all`}
             onClick={() => openDetailsPopup(party._id)}
           >
             <div className="h-full w-[300px] max-[426px]:w-[150px] max-[426px]:h-[150px] max-[376px]:pt-[20px] max-[376px]:w-[150px] bg-[#FEF3C7] rounded-2xl"></div>
-            <div className="p-2 pl-15 pt-1 max-[321px]:-mt-2 max-[769px]:pt-2 max-[426px]:text-[10px] max-[376px]:text-[10px] max-[426px]:pt-6 max-[376px]:pt-2 max-[376px]:pl-10">
+            <div className="p-2 pl-15 pt-1 max-[321px]:-mt-2 max-[769px]:pt-2 max-[426px]:text-[10px] max-[376px]:text-[10px] max-[426px]:pt-2 max-[376px]:pt-2 max-[376px]:pl-10">
               <p className="font-bold text-[17px]">{party.name}</p>
               <p className="pb-2 text-gray-500">{party.description}</p>
               <p>Date : {party.date}</p>
@@ -51,13 +51,14 @@ function ListParty({
               </div>
             </div>
             {isMyParty && (
-              <div className="flex items-center ml-[350px] gap-2 w-[50px]">
+              <div className="flex items-center ml-[350px] gap-2 w-[50px] absolute right-30 top-16 max-[1025px]:flex-col 
+              max-[1025px]:right-10 max-[1025px]:top-10 max-[426px]:hidden">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     navigator(`/my-party/update-party/${party._id}`);
                   }}
-                  className="bg-[#f3bfa3] rounded-[5px]  mt-2 px-3 py-2 font-[700] cursor-pointer hover:bg-[#f0b291] z-50"
+                  className="bg-[#f3bfa3] rounded-[5px]  mt-2 px-3 py-2 font-[700] cursor-pointer hover:bg-[#f0b291]"
                 >
                   Update
                 </button>

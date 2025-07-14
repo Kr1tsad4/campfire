@@ -4,7 +4,19 @@ function TimePicker({ label, selectedTime, setSelectedTime }) {
   const hours = Array.from({ length: 12 }, (_, i) =>
     (i + 1).toString().padStart(2, "0")
   );
-  const minutes = ["00", "05","10", "15", "25", "30", "35", "40", "45", "50", "55"];
+  const minutes = [
+    "00",
+    "05",
+    "10",
+    "15",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "55",
+  ];
   const periods = ["AM", "PM"];
 
   const [hour, setHour] = useState("-");
@@ -21,7 +33,6 @@ function TimePicker({ label, selectedTime, setSelectedTime }) {
       setSelectedTime(formatted);
     }
   };
-
 
   useEffect(() => {
     if (selectedTime) {

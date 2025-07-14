@@ -49,8 +49,6 @@ export const useTags = () => {
       );
       const tagsObj = tagNames.map((tag) => tag.name);
       setUserTags(tagsObj);
-
-      
     } catch (e) {
       console.log(`Failed to fetch user tags.`);
       console.error(e);
@@ -65,6 +63,6 @@ export const useTags = () => {
     selectedTags,
     userTags,
     fetchUserTags,
-    setSelectedTags
+    setSelectedTags,
   };
 };

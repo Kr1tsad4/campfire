@@ -8,7 +8,6 @@ import { useUser } from "../hooks/useUser";
 import PartyDetailsPopup from "../components/PartyDetailsPopup";
 
 function Homepage({ openPartyDetails }) {
-
   const {
     parties,
     fetchParties,
@@ -63,8 +62,14 @@ function Homepage({ openPartyDetails }) {
               className="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-10"
               style={{ pointerEvents: "auto" }}
             ></div>
-            <div className="fixed top-0 left-[360px] z-20">
-              <PartyDetailsPopup   />
+            <div
+              className={`fixed top-0 left-[360px] z-20 ${
+                hideNavBar
+                  ? "max-[1441px]:top-15 max-[1441px]:left-80 max-[1025px]:left-40 max-[1025px]:top-5 max-[769px]:left-20 max-[426px]:left-0 max-[321px]:-left-3"
+                  : "max-[1441px]:top-15 max-[1025px]:left-60 max-[1025px]:top-5 max-[769px]:left-25 max-[426px]:left-0 "
+              } `}
+            >
+              <PartyDetailsPopup />
             </div>
           </>
         )}

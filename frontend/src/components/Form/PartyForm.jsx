@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
 import InputComponent from "./InputComponent";
-import MyCalender from "./MyCalender";
+import Calender from "./Calender";
 import TimePicker from "./TimePicker";
 import { useNavigate } from "react-router-dom";
 
 function PartyForm({
+  type,
   hideNavBar,
+  loginUser,
+  myParty,
   partyName,
   setPartyName,
   description,
@@ -17,32 +20,29 @@ function PartyForm({
   endTime,
   setEndTime,
   baseTags,
-  createNewParty,
-  fetchBaseTags,
-  handleSelectedTag,
-  enableCreateButton,
-  type,
-  myParty,
-  updateMyParty,
-  loginUser,
   setBaseTags,
-  setSelectedTags
+  setSelectedTags,
+  handleSelectedTag,
+  createNewParty,
+  enableCreateButton,
+  fetchBaseTags,
+  updateMyParty,
 }) {
   const navigator = useNavigate();
+  const isInitialized = useRef(false);
 
   useEffect(() => {
     fetchBaseTags();
   }, []);
-  const isInitialized = useRef(false);
 
- useEffect(() => {
+  useEffect(() => {
     if (
       type === "update" &&
       myParty &&
       baseTags.length > 0 &&
       !isInitialized.current
     ) {
-      isInitialized.current = true; 
+      isInitialized.current = true;
       setPartyName(myParty.name || "");
       setDescription(myParty.description || "");
       setSelectedDate(myParty.date || "");
@@ -54,7 +54,7 @@ function PartyForm({
         selected: myParty.tags.includes(tag._id),
       }));
       setBaseTags(updatedTags);
-      setSelectedTags(myParty.tags); 
+      setSelectedTags(myParty.tags);
     }
   }, [myParty, type, baseTags]);
 
@@ -101,7 +101,7 @@ function PartyForm({
           <span className="text-red-500">*</span>
         </label>
 
-        <MyCalender
+        <Calender
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
