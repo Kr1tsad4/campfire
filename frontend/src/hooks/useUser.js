@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export const useUser = () => {
   const [loginUser, setLoginUser] = useState(null);
-
   const saveLoginUserSession = (user) => {
     sessionStorage.setItem("user", JSON.stringify(user));
   };
@@ -14,10 +13,12 @@ export const useUser = () => {
   const removeLoginUser = () => {
     sessionStorage.removeItem("user");
   };
+
   return {
     loginUser,
     getLoginUser,
     saveLoginUserSession,
     removeLoginUser,
+
   };
 };
