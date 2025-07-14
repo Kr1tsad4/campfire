@@ -109,7 +109,7 @@ export const useParty = () => {
       if (!isUserInParty) {
         party.members.push(userId);
         await updateParty(API_URL, partyId, { members: party.members });
-        navigator("/my-party");
+        navigator(`/party/${partyId}/lobby`);
       }
     }
   };

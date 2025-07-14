@@ -7,6 +7,7 @@ import InvitationsPage from "./pages/InvitationsPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import CreateUpdatePartyPage from "./pages/CreateUpdatePartyPage";
+import PartyLobbyPage from "./pages/PartyLobbyPage";
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
           path="/party/:partyId"
           element={<Homepage openPartyDetails={true} />}
         />
+        <Route path="/party/:partyId/lobby" element={<PartyLobbyPage />} />
         <Route path="/my-party" element={<MyPartyPage />} />
         <Route
           path="/my-party/update-party/:id"

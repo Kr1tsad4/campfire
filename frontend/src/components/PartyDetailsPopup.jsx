@@ -54,7 +54,10 @@ function PartyDetailsPopup() {
               </button>
             )}
             {isMember && (
-              <button className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#f0b291] ">
+              <button
+                onClick={() => navigator(`/party/${partyId}/lobby`)}
+                className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#f0b291] "
+              >
                 view
               </button>
             )}
