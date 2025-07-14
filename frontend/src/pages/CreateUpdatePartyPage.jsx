@@ -1,7 +1,7 @@
 import { useNavigationBar } from "../hooks/useNavigationBar";
 import SideNavContainer from "../components/SideNavContainer";
 import Header from "../components/Header";
-import PartyForm from "../components/PartyForm";
+import PartyForm from "../components/Form/PartyForm";
 import { useParty } from "../hooks/useParty";
 import { useTags } from "../hooks/useTags";
 import { useUser } from "../hooks/useUser";
@@ -29,15 +29,18 @@ function CreateUpdatePartyPage({ type }) {
     createNewParty,
     updateMyParty,
   } = useParty();
+
   const {
     baseTags,
     selectedTags,
     fetchBaseTags,
     handleSelectedTag,
     setBaseTags,
-    setSelectedTags
+    setSelectedTags,
   } = useTags();
+
   const [enableCreateButton, setEnableCreateButton] = useState(false);
+
   useEffect(() => {
     if (partyName.trim() && selectedDate && startTime) {
       setEnableCreateButton(true);
@@ -49,11 +52,13 @@ function CreateUpdatePartyPage({ type }) {
   useEffect(() => {
     getLoginUser();
   }, []);
+
   useEffect(() => {
     if (id) {
       getPartyTagsAndMembersName(id);
     }
   }, []);
+
   return (
     <div className="flex bg-[#fff7f8] min-h-screen">
       <SideNavContainer
@@ -101,9 +106,10 @@ function CreateUpdatePartyPage({ type }) {
 
         {type === "update" && (
           <PartyForm
-            myParty={party}
             type={type}
             hideNavBar={hideNavBar}
+            loginUser={loginUser}
+            myParty={party}
             partyName={partyName}
             setPartyName={setPartyName}
             description={description}
@@ -115,6 +121,10 @@ function CreateUpdatePartyPage({ type }) {
             endTime={endTime}
             setEndTime={setEndTime}
             baseTags={baseTags}
+            setBaseTags={setBaseTags}
+            setSelectedTags={setSelectedTags}
+            fetchBaseTags={fetchBaseTags}
+            handleSelectedTag={handleSelectedTag}
             updateMyParty={() =>
               updateMyParty(
                 {
@@ -129,11 +139,6 @@ function CreateUpdatePartyPage({ type }) {
                 id
               )
             }
-            fetchBaseTags={fetchBaseTags}
-            handleSelectedTag={handleSelectedTag}
-            loginUser={loginUser}
-            setBaseTags={setBaseTags}
-            setSelectedTags={setSelectedTags}
           />
         )}
       </div>

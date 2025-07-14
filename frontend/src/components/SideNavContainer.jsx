@@ -16,7 +16,7 @@ function SideNavContainer({ hideNavBar, toggleSideNavBar, children }) {
         <div
           className={`${
             hideNavBar ? "block" : ""
-          } pt-6  pl-6  z-50 fixed max-[1025px]:ml-5`}
+          } pt-6  pl-6  z-50 fixed max-[1025px]:ml-5 max-[426px]:-ml-3 max-[1441px]:mt-1`}
         >
           <div className="flex gap-4 w-[200px]">
             <button

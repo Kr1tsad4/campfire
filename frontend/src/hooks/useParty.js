@@ -109,7 +109,7 @@ export const useParty = () => {
       if (!isUserInParty) {
         party.members.push(userId);
         await updateParty(API_URL, partyId, { members: party.members });
-        navigator('/my-party')
+        navigator("/my-party");
       }
     }
   };
@@ -159,7 +159,7 @@ export const useParty = () => {
   const getPartyTagsAndMembersName = async (partyId) => {
     const res = await getPartyById(API_URL, partyId);
     if (res) {
-      const tagIds = Array.isArray(res.tags) ? res.tags : []; 
+      const tagIds = Array.isArray(res.tags) ? res.tags : [];
 
       const tagNames = await Promise.all(
         tagIds.map((tagId) => getTagById(API_URL, tagId))

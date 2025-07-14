@@ -16,11 +16,15 @@ function Header({
   return (
     <>
       <div
-        className={`h-[88px] w-full fixed ml-[120px]   pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 
+        className={`h-[88px] w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 
             ${
               hideNavBar
-                ? "max-[426px]:ml-25  max-[376px]:ml-28 "
-                : "ml-2  max-[376px]:ml-17 max-[769px]:ml-5"
+                ? `max-[426px]:ml-25  max-[376px]:ml-28 max-[769px]:ml-5 ${
+                    hideSearchBar ? "max-[769px]:ml-[140px] max-[426px]:ml-[150px] max-[321px]:ml-[150px]" : ""
+                  }`
+                : `ml-2  max-[376px]:ml-17 max-[769px]:ml-5 ${
+                    hideSearchBar ? "max-[769px]:ml-[110px] max-[426px]:ml-[85px] " : ""
+                  }`
             }
         }`}
       >

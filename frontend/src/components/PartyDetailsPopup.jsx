@@ -11,7 +11,7 @@ function PartyDetailsPopup() {
     getPartyTagsAndMembersName,
     checkUserIsMemberOfParty,
     isMember,
-    joinParty
+    joinParty,
   } = useParty();
   const { loginUser, getLoginUser } = useUser();
   const navigator = useNavigate();
@@ -31,9 +31,9 @@ function PartyDetailsPopup() {
   if (!party) return <div>Loading...</div>;
 
   return (
-    <div className="flex bg-[#c86e5a] h-[650px] w-[800px] rounded-2xl m-5">
+    <div className="flex bg-[#c86e5a] h-[650px] w-[800px] max-[1025px]:w-[700px] max-[1025px]:h-[600px] max-[769px]:w-[600px] max-[426px]:w-[380px] max-[321px]:w-[300px] rounded-2xl m-5">
       <div className="text-black">
-        <div className="h-[250px] w-[800px] bg-[#FEF3C7] rounded-t-2xl"></div>
+        <div className="h-[250px] w-[800px] bg-[#FEF3C7] rounded-t-2xl max-[1025px]:w-[700px] max-[769px]:w-[600px] max-[426px]:w-[380px] max-[321px]:w-[300px]"></div>
         <div className="ml-10 mt-5 text-[18px]">
           <h1 className="">Party name : {party.name}</h1>
           <h1>Owner : {party.ownerName}</h1>
@@ -44,7 +44,7 @@ function PartyDetailsPopup() {
           </p>
           <p>Members: {party.membersName.join(",") || "-"}</p>
           <p>Tags: {party.tagNames.join(",")}</p>
-          <div className="flex justify-end mr-5 mt-[100px] gap-5">
+          <div className="flex justify-end mr-5 mt-[100px] gap-5 max-[1025px]:mt-10">
             {!isMember && (
               <button
                 onClick={() => joinParty(loginUser._id, party._id)}

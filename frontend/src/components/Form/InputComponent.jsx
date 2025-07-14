@@ -1,4 +1,11 @@
-function InputComponent({ id, placeholder,type, value, handleInput, width = 64 }) {
+function InputComponent({
+  id,
+  placeholder,
+  type,
+  value,
+  handleInput,
+  width = 64,
+}) {
   return (
     <div className="flex items-center mb-4 pr-2">
       <input
@@ -15,4 +22,3 @@ function InputComponent({ id, placeholder,type, value, handleInput, width = 64 }
 }
 
 export default InputComponent;
-

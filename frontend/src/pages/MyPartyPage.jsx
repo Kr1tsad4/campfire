@@ -43,15 +43,25 @@ function MyPartyPage() {
           <div className="-ml-[75px] ">
             <Header hideSearchBar={true} hideNavBar={hideNavBar} />
           </div>
-          <div className="ml-12 min-w-full">
+          <div
+            className={`ml-12 min-w-full ${
+              hideNavBar
+                ? "max-[1441px]:-ml-18  max-[769px]:-ml-40 max-[426px]:-ml-45"
+                : "max-[1025px]:-ml-5 "
+            } `}
+          >
             <p
-              className={`text-[32px] text-black  mt-20 ${
-                hideNavBar ? "ml-[220px]" : "ml-[260px]"
+              className={`text-[32px] text-black  mt-20 ml-[250px] ${
+                hideNavBar ? "ml-[220px]" : "max-[1025px]:ml-[200px]"
               }`}
             >
               My parties
             </p>
-            <div className={`-mt-[100px] ${hideNavBar ? "ml-[190px]" : ""}`}>
+            <div
+              className={`-mt-[100px] ${
+                hideNavBar ? "ml-[190px] max-[321px]:ml-47" : ""
+              }`}
+            >
               {userParties && (
                 <ListParty
                   parties={userParties}
@@ -82,10 +92,16 @@ function MyPartyPage() {
             </div>
           </div>
 
-          <div className="ml-12 min-w-full mb-28">
+          <div
+            className={`ml-12 min-w-full mb-28  ${
+              hideNavBar
+                ? "max-[769px]:-ml-40 max-[1441px]:-ml-17 max-[426px]:-ml-45"
+                : "max-[1025px]:-ml-5 "
+            } `}
+          >
             <p
-              className={`text-[32px] text-black  mt-20 ${
-                hideNavBar ? "ml-[220px]" : "ml-[260px]"
+              className={`text-[32px] text-black  mt-20  ml-[250px]${
+                hideNavBar ? "ml-[220px]" : ""
               }`}
             >
               Joined Parties

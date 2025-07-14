@@ -1,18 +1,24 @@
 import { useState } from "react";
 
-function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedMonth, selectedDay, setSelectedDay}) {
-
+function DateOfBirth({
+  selectedYear,
+  setSelectedYear,
+  selectedMonth,
+  setSelectedMonth,
+  selectedDay,
+  setSelectedDay,
+}) {
   const [daysInMonth, setDaysInMonth] = useState([]);
 
   const currentYear = new Date().getFullYear();
   const lengthYear = currentYear - 125;
-  const years = []
-  for(let i = currentYear; i >= lengthYear; --i){
+  const years = [];
+  for (let i = currentYear; i >= lengthYear; --i) {
     years.push(i);
   }
 
   const isLeapYear = (year) => {
-    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   };
 
   const updateDays = (year, month) => {
@@ -27,7 +33,7 @@ function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedM
     }
 
     const daysArray = [];
-  for(let i = days; i >= 1; --i) daysArray.push(i);
+    for (let i = days; i >= 1; --i) daysArray.push(i);
     setDaysInMonth(daysArray);
   };
 
@@ -54,13 +60,15 @@ function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedM
     { value: 9, label: "September" },
     { value: 10, label: "October" },
     { value: 11, label: "November" },
-    { value: 12, label: "December" }
+    { value: 12, label: "December" },
   ];
 
   return (
     <div>
       {/* year */}
-      <div className="text-[16px] text-gray-700 font-[500] mb-2">Date of birth</div>
+      <div className="text-[16px] text-gray-700 font-[500] mb-2">
+        Date of birth
+      </div>
       <select
         id="year"
         name="year"
@@ -68,7 +76,13 @@ function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedM
         onClick={handleYearChange}
       >
         <option value="">-- Year --</option>
-        {years.map((year) => {return <option key={year} value={year}>{year}</option>})}
+        {years.map((year) => {
+          return (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          );
+        })}
       </select>
 
       {/* month */}
@@ -76,12 +90,22 @@ function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedM
         id="month"
         name="month"
         className={`border border-gray-400 px-2 py-2 rounded-md w-36 mr-2
-        ${!selectedYear ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white'}`}
+        ${
+          !selectedYear
+            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+            : "bg-white"
+        }`}
         disabled={!selectedYear}
         onClick={handleMonthChange}
       >
         <option value="">-- Month --</option>
-        {months.map((month) => {return <option key={month.value} value={month.value}>{month.label}</option>})}
+        {months.map((month) => {
+          return (
+            <option key={month.value} value={month.value}>
+              {month.label}
+            </option>
+          );
+        })}
       </select>
 
       {/* day */}
@@ -89,15 +113,23 @@ function DateOfBirth({selectedYear, setSelectedYear, selectedMonth, setSelectedM
         id="day"
         name="day"
         className={`border border-gray-400 px-2 py-2 rounded-md w-26 mr-2
-        ${!selectedYear || !selectedMonth ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white cursor-auto'}`}
+        ${
+          !selectedYear || !selectedMonth
+            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+            : "bg-white cursor-auto"
+        }`}
         disabled={!selectedYear || !selectedMonth}
         onChange={(e) => setSelectedDay(e.target.value)}
-
       >
         <option value="">-- day --</option>
-        {daysInMonth.map((day) => {return <option key={day} value={day}>{day}</option>})}
+        {daysInMonth.map((day) => {
+          return (
+            <option key={day} value={day}>
+              {day}
+            </option>
+          );
+        })}
       </select>
-
     </div>
   );
 }
