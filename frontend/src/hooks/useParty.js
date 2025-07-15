@@ -114,6 +114,21 @@ export const useParty = () => {
     }
   };
 
+  const leaveParty = async (userId, partyId) => {
+    const party = await getPartyById(API_URL, partyId);
+
+    if (party) {
+      const isUserInParty = party.members.includes(userId);
+      if (isUserInParty) {
+        const updatedMembers = party.members.filter(
+          (member) => member !== userId
+        );
+        await updateParty(API_URL, partyId, { members: updatedMembers });
+        navigator("/my-party");
+      }
+    }
+  };
+
   const getUserParties = async (userId) => {
     const user = await getUserById(API_URL, userId);
     const parties = await getParties(API_URL);
@@ -239,5 +254,6 @@ export const useParty = () => {
     getPartyTagsAndMembersName,
     deleteMyParty,
     updateMyParty,
+    leaveParty,
   };
 };

@@ -42,7 +42,7 @@ function PartyDetailsPopup() {
           <p>
             Time : {party.startTime} - {party.endTime}{" "}
           </p>
-          <p>Members: {party.membersName.join(",") || "-"}</p>
+          <p>Members: {party.membersName.join(" ") || "-"}</p>
           <p>Tags: {party.tagNames.join(",")}</p>
           <div className="flex justify-end mr-5 mt-[100px] gap-5 max-[1025px]:mt-10">
             {!isMember && (
