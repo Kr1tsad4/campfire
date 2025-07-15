@@ -2,7 +2,11 @@ const asyncHandler = require("express-async-handler");
 const invitationService = require("../services/invitation-service");
 
 const getAllInvitation = asyncHandler(async (req, res) => {
-  const invitations = await invitationService.findAll(req.params.id);
+  const invitations = await invitationService.findAll();
+  res.status(200).json(invitations);
+});
+const getUserInvitaion = asyncHandler(async (req, res) => {
+  const invitations = await invitationService.findAllByRecipientId(req.params.id);
   res.status(200).json(invitations);
 });
 const getInvitationById = asyncHandler(async (req, res) => {
@@ -23,6 +27,7 @@ const deleteInvitation = asyncHandler(async (req, res) => {
 });
 module.exports = {
   getAllInvitation,
+  getUserInvitaion,
   getInvitationById,
   createInvitation,
   updateInvitation,

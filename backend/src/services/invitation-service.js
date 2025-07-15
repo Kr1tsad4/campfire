@@ -1,8 +1,12 @@
 const Invitation = require("../models/invitation");
 const createError = require("http-errors");
 
-const findAll = async (id) => {
-  return await Invitation.find({ recipient: id, status: 0 });
+const findAll = async () => {
+  return await Invitation.find();
+};
+
+const findAllByRecipientId = async (id) => {
+  return await Invitation.find({ recipientId: id });
 };
 
 const findById = async (id) => {
@@ -37,4 +41,4 @@ const deleteInvitation = async (id) => {
   await Invitation.deleteOne(existingInvitation._id);
 };
 
-module.exports = { findAll, findById, create, update, deleteInvitation };
+module.exports = { findAll, findAllByRecipientId, findById, create, update, deleteInvitation };
