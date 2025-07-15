@@ -1,12 +1,14 @@
 import { FaSearch } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 function Header({
   handleSearchParty,
   searchValue,
   setSearchValue,
   hideNavBar,
   hideSearchBar,
+  loginUser
 }) {
+  const navigator = useNavigate()
   const handleKeyUp = (e) => {
     if (e.key === "Enter") {
       handleSearchParty(searchValue);
@@ -20,10 +22,14 @@ function Header({
             ${
               hideNavBar
                 ? `max-[426px]:ml-25  max-[376px]:ml-28 max-[769px]:ml-5 ${
-                    hideSearchBar ? "max-[769px]:ml-[140px] max-[426px]:ml-[150px] max-[321px]:ml-[150px]" : ""
+                    hideSearchBar
+                      ? "max-[769px]:ml-[140px] max-[426px]:ml-[150px] max-[321px]:ml-[150px]"
+                      : ""
                   }`
                 : `ml-2  max-[376px]:ml-17 max-[769px]:ml-5 ${
-                    hideSearchBar ? "max-[769px]:ml-[110px] max-[426px]:ml-[85px] " : ""
+                    hideSearchBar
+                      ? "max-[769px]:ml-[110px] max-[426px]:ml-[85px] "
+                      : ""
                   }`
             }
         }`}
@@ -61,7 +67,7 @@ function Header({
               hideNavBar ? "mr-[30px]" : "mr-[80px]"
             } `}
           >
-            <div className="avatar">
+            <div className="avatar" onClick={() => navigator(`/profile/${loginUser?._id}`)}>
               <div className="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring-2 ring-offset-2">
                 <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
               </div>

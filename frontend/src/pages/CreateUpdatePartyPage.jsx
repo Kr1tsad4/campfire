@@ -67,7 +67,11 @@ function CreateUpdatePartyPage({ type }) {
       />
       <div className="min-w-full">
         <div className="-ml-[75px]">
-          <Header hideSearchBar={true} hideNavBar={hideNavBar} />
+          <Header
+            hideSearchBar={true}
+            hideNavBar={hideNavBar}
+            loginUser={loginUser}
+          />
         </div>
         {type === "create" && (
           <PartyForm

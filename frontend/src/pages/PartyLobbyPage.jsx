@@ -4,15 +4,15 @@ import Header from "../components/Header";
 import { useParams } from "react-router-dom";
 import { useParty } from "../hooks/useParty";
 import { useEffect } from "react";
-import Lobby from "../components/Lobby";
 import { useUser } from "../hooks/useUser";
+import Chat from "../components/Chat";
 function PartyLobby() {
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
   const { partyId } = useParams();
   const { getPartyTagsAndMembersName, party } = useParty();
   const { loginUser, getLoginUser } = useUser();
   useEffect(() => {
-    getLoginUser()
+    getLoginUser();
     getPartyTagsAndMembersName(partyId);
   }, []);
   return (
@@ -24,10 +24,20 @@ function PartyLobby() {
         />
         <div>
           <div className="-ml-[75px]">
-            <Header hideSearchBar={true} hideNavBar={hideNavBar} />
+            <Header hideSearchBar={true} hideNavBar={hideNavBar} loginUser={loginUser}/>
           </div>
           <div className="ml-[330px] mt-[100px]">
-            <Lobby party={party} loginUser={loginUser}/>
+            <div className="text-black">
+              <div className="flex justify-between">
+                <h1 className="font-bold text-4xl">
+                  Welcome to {party?.name} !
+                </h1>
+              </div>
+
+              <div className="mt-10">
+                <Chat partyId={party?._id} user={loginUser} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
