@@ -27,7 +27,6 @@ function PartyDetailsPopup() {
   useEffect(() => {
     checkUserIsMemberOfParty(partyId, loginUser);
   }, [loginUser]);
-
   if (!party) return <div>Loading...</div>;
 
   return (

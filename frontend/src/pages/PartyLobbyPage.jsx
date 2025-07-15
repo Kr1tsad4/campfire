@@ -11,8 +11,15 @@ function PartyLobby() {
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
   const { partyId } = useParams();
   const { getPartyTagsAndMembersName, party, leaveParty } = useParty();
-  const { loginUser, getLoginUser } = useUser();
+  const {
+    loginUser,
+    getLoginUser,
+    searchResult,
+    searchUserByName,
+    getAllUser,
+  } = useUser();
   const [openInvitePopup, setOpenInvitePopup] = useState(false);
+
   useEffect(() => {
     getLoginUser();
     getPartyTagsAndMembersName(partyId);
@@ -24,7 +31,11 @@ function PartyLobby() {
           hideNavBar={hideNavBar}
           toggleSideNavBar={toggleSideNavBar}
         />
-        <div>
+        <div
+          className={`${
+            openInvitePopup ? "pointer-events-none opacity-50" : ""
+          }`}
+        >
           <div className="-ml-[75px]">
             <Header
               hideSearchBar={true}
@@ -32,24 +43,21 @@ function PartyLobby() {
               loginUser={loginUser}
             />
           </div>
-          <div className="ml-[330px] mt-[100px]">
+          <div className="ml-[330px] mt-[100px] text-black flex gap-20">
             <div className="text-black">
-              <div className="flex justify-between">
+              <div className="flex justify-between relative">
                 <h1 className="font-bold text-4xl">
                   Welcome to {party?.name} !
                 </h1>
                 <div>
                   <button
                     onClick={() => setOpenInvitePopup(!openInvitePopup)}
-                    className="bg-blue-500 rounded-[5px] w-fit px-4 py-2  font-[700] cursor-pointer hover:bg-blue-400 mr-5 relative"
+                    className={`
+                     bg-blue-500 rounded-[5px] w-fit px-4 py-2  font-[700] cursor-pointer hover:bg-blue-400 mr-5 `}
                   >
                     Invite
                   </button>
-                  {openInvitePopup && (
-                    <div className="absolute right-100">
-                      <InvitePopup />
-                    </div>
-                  )}
+
                   {loginUser?._id !== party?.ownerId && (
                     <button
                       className="bg-[#f44f39] cursor-pointer
@@ -62,12 +70,35 @@ function PartyLobby() {
                 </div>
               </div>
 
-              <div className="mt-10">
+              <div className="mt-10 ">
                 <Chat partyId={party?._id} user={loginUser} />
               </div>
             </div>
+
+            <div className="border-2 h-[300px] mt-21 w-[200px] p-4">
+              <h1 className="font-bold text-2xl mb-2">Members</h1>
+              <p className="text-xl">{party?.ownerName} <span className="pl-8">(Owner)</span></p>
+              {party?.membersName?.map((member, index) => (
+                <div key={index}>
+                  <div className="flex justify-between">
+                    <p className="text-xl">{member}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+
+        {openInvitePopup && (
+          <div className={`absolute right-110 top-30`}>
+            <InvitePopup
+              searchResult={searchResult}
+              searchUserByName={searchUserByName}
+              setOpenInvitePopup={setOpenInvitePopup}
+              getAllUser={getAllUser}
+            />
+          </div>
+        )}
       </div>
     </>
   );

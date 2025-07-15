@@ -39,8 +39,8 @@ function ListParty({
               <p>
                 Time : {party.startTime} - {party.endTime}{" "}
               </p>
-              <p>Members : {party.members.length}</p>
-              <div className="flex gap-2 pt-2  ">
+
+              <div className="flex gap-2 pt-2  mt-5">
                 <div key={index} className="flex gap-2 max-[376px]:flex-wrap">
                   {party.tagNames?.map((tagName, index) => (
                     <div key={index}>
