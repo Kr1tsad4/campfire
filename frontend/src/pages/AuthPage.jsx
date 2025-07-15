@@ -44,7 +44,7 @@ function AuthPage() {
     setSelectedMonth("");
     setSelectedDay("");
     console.log("clear");
-  }
+  };
   const signUpButtonChecker = () => {
     // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
     if (
@@ -99,11 +99,16 @@ function AuthPage() {
     baseTags.map((tag, index) => {
       if (tag.selected) user.interestedTag.push(tag._id);
     });
-    console.log(user);
-    console.log(`ok`);
     const createdUser = await createUser(API_URL, user);
-    if (createdUser ) {
+    if (createdUser && createdUser._id) {
       console.log(createdUser);
+      console.log(username);
+      console.log(password);
+      const data = {
+        username,
+        password,
+      };
+      await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
       navigator("/home");
     }
@@ -258,7 +263,7 @@ function AuthPage() {
           className="underline underline-offset-1 my-2 cursor-default hover:text-[#AEC8A4]"
           onClick={() => {
             clearInput();
-            setIsLogin(!isLogin)
+            setIsLogin(!isLogin);
           }}
         >
           {isLogin ? "Does not have an account?" : "Already have an account?"}

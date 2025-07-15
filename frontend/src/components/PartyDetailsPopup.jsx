@@ -16,7 +16,7 @@ function PartyDetailsPopup() {
   const { loginUser, getLoginUser } = useUser();
   const navigator = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => {  
     getPartyTagsAndMembersName(partyId);
   }, [partyId]);
 

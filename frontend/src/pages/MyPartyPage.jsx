@@ -72,23 +72,24 @@ function MyPartyPage() {
                   userId={loginUser?._id}
                 />
               )}
-              {!userParties ||
-                (userParties.length === 0 && (
-                  <p
-                    className={`text-black  mt-12 text-[18px]  ${
-                      hideNavBar ? "ml-[350px]" : "ml-[600px]"
-                    }`}
+              {(!userParties || userParties.length === 0) && (
+                <p
+                  className={`text-black  mt-12 text-[18px]  ${
+                    hideNavBar
+                      ? "ml-[350px]"
+                      : "ml-[600px]"
+                  }`}
+                >
+                  {" "}
+                  You haven’t created any parties yet.{" "}
+                  <span
+                    onClick={() => navigator("/create-party")}
+                    className="text-blue-500 cursor-pointer hover:underline transition-all"
                   >
-                    {" "}
-                    You haven’t created any parties yet.{" "}
-                    <span
-                      onClick={() => navigator("/create-party")}
-                      className="text-blue-500 cursor-pointer hover:underline transition-all"
-                    >
-                      Create now ?
-                    </span>
-                  </p>
-                ))}
+                    Create now ?
+                  </span>
+                </p>
+              )}
             </div>
           </div>
 
@@ -100,8 +101,8 @@ function MyPartyPage() {
             } `}
           >
             <p
-              className={`text-[32px] text-black  mt-20  ml-[250px]${
-                hideNavBar ? "ml-[220px]" : ""
+              className={`text-[32px] text-black  mt-20 ml-[250px] ${
+                hideNavBar ? "ml-[220px]" : "max-[1025px]:ml-[200px]"
               }`}
             >
               Joined Parties
@@ -114,22 +115,23 @@ function MyPartyPage() {
                   viewPartyDetails={viewPartyDetails}
                 />
               )}
-              {!joinedParties ||
-                (joinedParties.length === 0 && (
-                  <p
-                    className={`text-black  mt-12 text-[18px]  ${
-                      hideNavBar ? "ml-[350px]" : "ml-[600px]"
-                    }`}
+              {(!joinedParties || joinedParties.length === 0) && (
+                <p
+                  className={`text-black  mt-12 text-[18px]  ${
+                    hideNavBar
+                      ? "ml-[350px]"
+                      : "ml-[600px]"
+                  }`}
+                >
+                  You haven’t joined any parties yet.{" "}
+                  <span
+                    onClick={() => navigator("/home")}
+                    className="text-blue-500 cursor-pointer hover:underline transition-all"
                   >
-                    You haven’t joined any parties yet.{" "}
-                    <span
-                      onClick={() => navigator("/home")}
-                      className="text-blue-500 cursor-pointer hover:underline transition-all"
-                    >
-                      Explore now
-                    </span>
-                  </p>
-                ))}
+                    Explore now
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         </div>

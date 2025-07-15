@@ -43,6 +43,7 @@ function Homepage({ openPartyDetails }) {
             setSearchValue={setSearchValue}
             hideNavBar={hideNavBar}
             hideSearchBar={false}
+            loginUser={loginUser}
           />
           <div>
             <ListParty

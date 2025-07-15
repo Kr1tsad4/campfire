@@ -121,7 +121,7 @@ export const useParty = () => {
       return party.ownerId === user._id;
     });
     const partiesWithTags = await Promise.all(
-      userParty.map(async (party) => {
+      userParty?.map(async (party) => {
         const tagNames = await Promise.all(
           party.tags.map((tagId) => getTagById(API_URL, tagId))
         );
@@ -162,7 +162,7 @@ export const useParty = () => {
       const tagIds = Array.isArray(res.tags) ? res.tags : [];
 
       const tagNames = await Promise.all(
-        tagIds.map((tagId) => getTagById(API_URL, tagId))
+        tagIds?.map((tagId) => getTagById(API_URL, tagId))
       );
 
       const ownerId = res.ownerId;
@@ -170,7 +170,7 @@ export const useParty = () => {
         res.members?.filter((id) => id !== ownerId) || [];
 
       const membersName = await Promise.all(
-        filteredMemberIds.map((memberId) => getUserById(API_URL, memberId))
+        filteredMemberIds?.map((memberId) => getUserById(API_URL, memberId))
       );
 
       const ownerUser = await getUserById(API_URL, ownerId);
@@ -178,7 +178,7 @@ export const useParty = () => {
       const partyWithTagsAndMembers = {
         ...res,
         tagNames: tagNames.map((tag) => tag.name),
-        membersName: membersName.map((member) => member.penName),
+        membersName: membersName?.map((member) => member.penName),
         ownerName: ownerUser?.penName,
       };
 
