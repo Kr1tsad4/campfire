@@ -19,6 +19,9 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   chatSocketHandler(io, socket);
+  socket.on('invitation', () => {
+    console.log(`invite`);
+  })
 });
 
 server.listen(port, () => {

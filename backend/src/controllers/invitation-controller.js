@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const invitationService = require("../services/invitation-services");
+const invitationService = require("../services/invitation-service");
 
 const getAllInvitation = asyncHandler(async (req, res) => {
   const invitations = await invitationService.findAll(req.params.id);

@@ -2,7 +2,7 @@ const Invitation = require("../models/invitation");
 const createError = require("http-errors");
 
 const findAll = async (id) => {
-  return await Invitation.find({ recipient: id });
+  return await Invitation.find({ recipient: id, status: 0 });
 };
 
 const findById = async (id) => {
@@ -21,7 +21,7 @@ const create = async (data) => {
     partyId,
     status: 0,
   });
-  res.status(201).json(newInvitation);
+  return newInvitation;
 };
 
 // data = {status, responseTimeStamp}
