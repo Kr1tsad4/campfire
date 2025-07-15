@@ -8,38 +8,98 @@ import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import CreateUpdatePartyPage from "./pages/CreateUpdatePartyPage";
 import PartyLobbyPage from "./pages/PartyLobbyPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useUser } from "./hooks/useUser";
+import { useEffect } from "react";
 function App() {
+  const { loginUser, getLoginUser, isLoadingUser } = useUser();
+  useEffect(() => {
+    getLoginUser();
+  }, []);
   return (
     <Router>
       <Routes>
         <Route path="/" element={<AuthPage />} />
-        <Route path="/home" element={<Homepage />} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <Homepage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/party/:partyId"
-          element={<Homepage openPartyDetails={true} />}
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <Homepage openPartyDetails={true} />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/party/:partyId/lobby" element={<PartyLobbyPage />} />
-        <Route path="/my-party" element={<MyPartyPage />} />
+        <Route
+          path="/party/:partyId/lobby"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <PartyLobbyPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-party"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <MyPartyPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/my-party/update-party/:id"
-          element={<CreateUpdatePartyPage type="update" />}
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <CreateUpdatePartyPage type="update" />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/create-party"
-          element={<CreateUpdatePartyPage type="create" />}
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <CreateUpdatePartyPage type="create" />
+            </ProtectedRoute>
+          }
         />
         <Route
-          path="/my-party/update-party/:id"
-          element={<CreateUpdatePartyPage type="update" />}
+          path="/schedule"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <SchedulePage />
+            </ProtectedRoute>
+          }
         />
         <Route
-          path="/create-party"
-          element={<CreateUpdatePartyPage type="create" />}
+          path="/invitations"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <InvitationsPage />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/schedule" element={<SchedulePage />} />
-        <Route path="/invitations" element={<InvitationsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <SettingsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );

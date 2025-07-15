@@ -110,7 +110,7 @@ function AuthPage() {
       };
       await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
-      navigator("/home");
+      window.location.href = "/home";
     }
     return;
   };
@@ -127,7 +127,7 @@ function AuthPage() {
     const user = await userLogin(API_URL, data);
     if (user && user._id) {
       saveLoginUserSession(user);
-      navigator("/home");
+      window.location.href = "/home";
     }
     // const storage = sessionStorage.getItem('user');
     // const storageObj = JSON.parse(storage);
