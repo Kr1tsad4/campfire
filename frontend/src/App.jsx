@@ -24,7 +24,7 @@ function App() {
           path="/home"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <Homepage />
+              <Homepage loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -32,7 +32,7 @@ function App() {
           path="/party/:partyId"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <Homepage openPartyDetails={true} />
+              <Homepage openPartyDetails={true} loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -40,7 +40,7 @@ function App() {
           path="/party/:partyId/lobby"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <PartyLobbyPage />
+              <PartyLobbyPage loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -48,7 +48,7 @@ function App() {
           path="/my-party"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <MyPartyPage />
+              <MyPartyPage loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -56,7 +56,7 @@ function App() {
           path="/my-party/update-party/:id"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <CreateUpdatePartyPage type="update" />
+              <CreateUpdatePartyPage type="update" loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -64,7 +64,7 @@ function App() {
           path="/create-party"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <CreateUpdatePartyPage type="create" />
+              <CreateUpdatePartyPage type="create" loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -72,7 +72,7 @@ function App() {
           path="/schedule"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <SchedulePage />
+              <SchedulePage loginUser={loginUser} />
             </ProtectedRoute>
           }
         />
@@ -80,7 +80,7 @@ function App() {
           path="/invitations"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <InvitationsPage />
+              <InvitationsPage loginUser={loginUser} />
             </ProtectedRoute>
           }
         />

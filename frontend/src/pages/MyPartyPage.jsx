@@ -1,17 +1,14 @@
-import Header from "../components/Header";
 import { useNavigationBar } from "../hooks/useNavigationBar";
 import { useParty } from "../hooks/useParty";
-import SideNavContainer from "../components/SideNavContainer";
 import ListParty from "../components/ListParty";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
+import Layout from "../components/Layout";
 
-function MyPartyPage() {
+function MyPartyPage({ loginUser }) {
   const navigator = useNavigate();
-  const { loginUser, getLoginUser } = useUser();
 
-  const { hideNavBar, toggleSideNavBar } = useNavigationBar();
+  const { hideNavBar } = useNavigationBar();
   const {
     viewPartyDetails,
     userParties,
@@ -22,10 +19,6 @@ function MyPartyPage() {
   } = useParty();
 
   useEffect(() => {
-    getLoginUser();
-  }, []);
-
-  useEffect(() => {
     if (loginUser && loginUser._id) {
       getUserParties(loginUser._id);
       getUserJoinedParties(loginUser._id);
@@ -34,31 +27,24 @@ function MyPartyPage() {
 
   return (
     <>
-      <div className="flex bg-[#fcfff7ff] min-h-screen w-auto ">
-        <SideNavContainer
-          hideNavBar={hideNavBar}
-          toggleSideNavBar={toggleSideNavBar}
-        />
-        <div>
-          <div className="-ml-[75px] ">
-            <Header hideSearchBar={true} hideNavBar={hideNavBar} />
-          </div>
+      <div>
+        <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
-            className={`ml-12 min-w-full ${
+            className={`min-w-full ${
               hideNavBar
                 ? "max-[1441px]:-ml-18  max-[769px]:-ml-40 max-[426px]:-ml-45"
                 : "max-[1025px]:-ml-5 "
             } `}
           >
             <p
-              className={`text-[32px] text-black  mt-20 ml-[250px] ${
+              className={`text-[32px] text-black  mt-20 ml-[380px] ${
                 hideNavBar ? "ml-[220px]" : "max-[1025px]:ml-[200px]"
               }`}
             >
               My parties
             </p>
             <div
-              className={`-mt-[100px] ${
+              className={`-mt-[80px] ${
                 hideNavBar ? "ml-[190px] max-[321px]:ml-47" : ""
               }`}
             >
@@ -75,9 +61,7 @@ function MyPartyPage() {
               {(!userParties || userParties.length === 0) && (
                 <p
                   className={`text-black  mt-12 text-[18px]  ${
-                    hideNavBar
-                      ? "ml-[350px]"
-                      : "ml-[600px]"
+                    hideNavBar ? "ml-[350px]" : "ml-[720px]"
                   }`}
                 >
                   {" "}
@@ -92,22 +76,21 @@ function MyPartyPage() {
               )}
             </div>
           </div>
-
           <div
-            className={`ml-12 min-w-full mb-28  ${
+            className={`min-w-full mb-28  ${
               hideNavBar
                 ? "max-[769px]:-ml-40 max-[1441px]:-ml-17 max-[426px]:-ml-45"
                 : "max-[1025px]:-ml-5 "
             } `}
           >
             <p
-              className={`text-[32px] text-black  mt-20 ml-[250px] ${
+              className={`text-[32px] text-black  mt-10 ml-[380px] ${
                 hideNavBar ? "ml-[220px]" : "max-[1025px]:ml-[200px]"
               }`}
             >
               Joined Parties
             </p>
-            <div className={`-mt-[100px] ${hideNavBar ? "ml-[190px]" : ""}`}>
+            <div className={`-mt-[80px] ${hideNavBar ? "ml-[190px]" : ""}`}>
               {joinedParties && (
                 <ListParty
                   parties={joinedParties}
@@ -117,10 +100,8 @@ function MyPartyPage() {
               )}
               {(!joinedParties || joinedParties.length === 0) && (
                 <p
-                  className={`text-black  mt-12 text-[18px]  ${
-                    hideNavBar
-                      ? "ml-[350px]"
-                      : "ml-[600px]"
+                  className={`text-black  mt-18 text-[18px]  ${
+                    hideNavBar ? "ml-[350px]" : "ml-[680px]"
                   }`}
                 >
                   You haven’t joined any parties yet.{" "}
@@ -134,7 +115,7 @@ function MyPartyPage() {
               )}
             </div>
           </div>
-        </div>
+        </Layout>
       </div>
     </>
   );
