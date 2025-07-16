@@ -1,5 +1,8 @@
 const Party = require("../models/party");
+const Invitation = require("../models/invitation");
 const createError = require("http-errors");
+
+
 
 const findAll = async () => {
   return await Party.find().select("-__v");
@@ -59,6 +62,7 @@ const deleteById = async (id) => {
   if (!existingParty) {
     throw createError(404, `Party not found.`);
   }
+  const Invitations = await Invitation.deleteMany({ partyId: id });
   await Party.deleteOne(existingParty._id);
 };
 
