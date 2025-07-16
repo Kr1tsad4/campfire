@@ -4,8 +4,8 @@ const { Server } = require("socket.io");
 const connectDB = require("./src/config/db.js");
 const app = require("./src/app.js");
 const { chatSocketHandler } = require("./src/sockets/chat-socket.js");
+const { invitationSocketHandler } = require("./src/sockets/invitation-socket.js");
 connectDB();
-
 const port = process.env.PORT;
 
 const server = http.createServer(app);
@@ -19,6 +19,8 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   chatSocketHandler(io, socket);
+  invitationSocketHandler(io, socket);
+
 });
 
 server.listen(port, () => {

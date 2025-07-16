@@ -19,15 +19,8 @@ const invitationSchema = new Schema(
       ref: "Party",
       default: null,
     },
-    status: {
-      type: Number, // 0 stand for pending, 1 accepted, 2 declined
-      required: true,
-      default: 0,
-    },
-    responseTimeStamp: {
-      type: Date,
-      default: null,
-    },
   },
   { timestamps: true }
 );
+
+module.exports = mongoose.model("Invitation", invitationSchema);

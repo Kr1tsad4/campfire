@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import socket from "../socket";
+import { useUser } from "../hooks/useUser";
+
 function InvitePopup({
   searchResult,
   searchUserByName,
   setOpenInvitePopup,
   getAllUser,
 }) {
+  const { loginUser, getLoginUser } = useUser();
   const [inputValue, setInputValue] = useState("");
   const { partyId } = useParams();
   const handleInputChange = (e) => {
@@ -16,8 +20,11 @@ function InvitePopup({
   };
   useEffect(() => {
     getAllUser();
+    getLoginUser();
   }, []);
-
+  const inviteUser = async (senderId, recipientId, partyId) => {
+    socket.emit("inviteUser", senderId, recipientId, partyId);
+  };
   return (
     <div className="flex flex-col text-black bg-white border-2 border-black h-[500px] w-[450px] rounded-2xl m-5 items-center">
       <div className="ml-[400px] mt-1">
@@ -43,7 +50,10 @@ function InvitePopup({
               <div className="flex justify-between hover:bg-gray-200 items-center cursor-pointer transition-all duration-100 rounded-md">
                 <h1>{user.penName}</h1>
                 <div className="mb-2 pt-2">
-                  <button className="bg-blue-500 rounded-[5px] w-fit px-2 py-[2px]  font-[700] cursor-pointer hover:bg-blue-400 mr-5">
+                  <button
+                    className="bg-blue-500 rounded-[5px] w-fit px-2 py-[2px]  font-[700] cursor-pointer hover:bg-blue-400 mr-5"
+                    onClick={() => inviteUser(loginUser._id, user._id, partyId)}
+                  >
                     invite
                   </button>
                 </div>
