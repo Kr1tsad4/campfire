@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", getAllInvitation);
 router.get("/user/:id", getUserInvitaion);
-router.get("/obj/:id", getInvitationById);
+router.get("/:id", getInvitationById);
 router.post("/", createInvitation);
 router.put("/", updateInvitation);
 router.delete("/:id", deleteInvitation);
