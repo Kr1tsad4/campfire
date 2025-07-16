@@ -1,16 +1,13 @@
 import { useNavigationBar } from "../hooks/useNavigationBar";
-import SideNavContainer from "../components/SideNavContainer";
-import Header from "../components/Header";
 import PartyForm from "../components/Form/PartyForm";
 import { useParty } from "../hooks/useParty";
 import { useTags } from "../hooks/useTags";
-import { useUser } from "../hooks/useUser";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Layout from "../components/Layout";
 
-function CreateUpdatePartyPage({ type }) {
-  const { hideNavBar, toggleSideNavBar } = useNavigationBar();
-  const { loginUser, getLoginUser } = useUser();
+function CreateUpdatePartyPage({ type, loginUser }) {
+  const { hideNavBar } = useNavigationBar();
   const { id } = useParams();
 
   const {
@@ -50,29 +47,14 @@ function CreateUpdatePartyPage({ type }) {
   }, [partyName, selectedDate, startTime]);
 
   useEffect(() => {
-    getLoginUser();
-  }, []);
-
-  useEffect(() => {
     if (id) {
       getPartyTagsAndMembersName(id);
     }
   }, []);
 
   return (
-    <div className="flex bg-[#fff7f8] min-h-screen">
-      <SideNavContainer
-        hideNavBar={hideNavBar}
-        toggleSideNavBar={toggleSideNavBar}
-      />
-      <div className="min-w-full">
-        <div className="-ml-[75px]">
-          <Header
-            hideSearchBar={true}
-            hideNavBar={hideNavBar}
-            loginUser={loginUser}
-          />
-        </div>
+    <div>
+      <Layout loginUser={loginUser} hideSearchBar={true}>
         {type === "create" && (
           <PartyForm
             type={type}
@@ -145,7 +127,7 @@ function CreateUpdatePartyPage({ type }) {
             }
           />
         )}
-      </div>
+      </Layout>
     </div>
   );
 }

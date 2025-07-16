@@ -6,9 +6,9 @@ function Header({
   setSearchValue,
   hideNavBar,
   hideSearchBar,
-  loginUser
+  loginUser,
 }) {
-  const navigator = useNavigate()
+  const navigator = useNavigate();
   const handleKeyUp = (e) => {
     if (e.key === "Enter") {
       handleSearchParty(searchValue);
@@ -18,7 +18,7 @@ function Header({
   return (
     <>
       <div
-        className={`h-[88px] w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 
+        className={`h-[88px]  top-0 w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 
             ${
               hideNavBar
                 ? `max-[426px]:ml-25  max-[376px]:ml-28 max-[769px]:ml-5 ${
@@ -67,7 +67,10 @@ function Header({
               hideNavBar ? "mr-[30px]" : "mr-[80px]"
             } `}
           >
-            <div className="avatar" onClick={() => navigator(`/profile/${loginUser?._id}`)}>
+            <div
+              className="avatar"
+              onClick={() => navigator(`/profile/${loginUser?._id}`)}
+            >
               <div className="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring-2 ring-offset-2">
                 <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
               </div>

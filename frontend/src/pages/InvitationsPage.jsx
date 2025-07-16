@@ -1,15 +1,12 @@
 import { useNavigationBar } from "../hooks/useNavigationBar";
-import SideNavContainer from "../components/SideNavContainer";
-import Header from "../components/Header";
 import socket from "../socket";
 import { useEffect, useState } from "react";
-import { useUser } from "../hooks/useUser";
 import { useInvitation } from "../hooks/useInvitation";
 import { API_URL } from "../libs/api";
 import { getPartyById } from "../libs/fetchPartyUtils";
-function InvitationsPage() {
-  const { hideNavBar, toggleSideNavBar } = useNavigationBar();
-  const { loginUser, getLoginUser } = useUser();
+import Layout from "../components/Layout";
+function InvitationsPage({ loginUser }) {
+  const { hideNavBar } = useNavigationBar();
   const { userInvitation, setUserInvitation, fetchUserInvitation } =
     useInvitation();
 
@@ -21,7 +18,6 @@ function InvitationsPage() {
   };
   const [parties, setParties] = useState([]);
   useEffect(() => {
-    getLoginUser();
     fetchUserInvitation();
     socket.on("new-invite", async (invite) => {
       alert(invite);
@@ -40,17 +36,7 @@ function InvitationsPage() {
   return (
     <>
       <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
-        <SideNavContainer
-          hideNavBar={hideNavBar}
-          toggleSideNavBar={toggleSideNavBar}
-        />
-        <div>
-          <div className="-ml-[75px]">
-            <Header hideSearchBar={true} hideNavBar={hideNavBar} />
-          </div>
-
-          {/* comp */}
-
+        <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
             className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
               hideNavBar ? "pl-5" : "pl-[250px]"
@@ -65,7 +51,7 @@ function InvitationsPage() {
               ></div>
             ))}
           </div>
-        </div>
+        </Layout>
       </div>
     </>
   );

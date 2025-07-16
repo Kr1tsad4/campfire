@@ -20,7 +20,7 @@ function ListParty({
     <>
       <div
         className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
-          hideNavBar ? "pl-5" : "pl-[250px]"
+          hideNavBar ? "pl-5" : "pl-[380px]"
         } max-[769px]:pl-0`}
       >
         {parties.map((party, index) => (
