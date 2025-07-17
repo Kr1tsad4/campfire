@@ -11,6 +11,7 @@ const invitationSocketHandler = (io, socket) => {
   socket.on('join-invitation', async (userId) => {
     socket.join(userId);
   })
+  
 }
 
 module.exports = {invitationSocketHandler};
