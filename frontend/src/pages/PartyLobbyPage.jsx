@@ -26,7 +26,7 @@ function PartyLobby({ loginUser }) {
               openInvitePopup ? "pointer-events-none opacity-50" : ""
             }`}
           >
-            <div className="ml-[390px] mt-[100px] text-black flex gap-20">
+            <div className="ml-[380px] mt-[100px] text-black flex gap-20">
               <div className="text-black">
                 <div className="flex justify-between relative">
                   <h1 className="font-bold text-4xl">

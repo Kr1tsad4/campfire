@@ -18,27 +18,16 @@ function Header({
   return (
     <>
       <div
-        className={`h-[88px]  top-0 w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 max-[769px]:pl-0 max-[426px]:pl-0 
-            ${
-              hideNavBar
-                ? `max-[426px]:ml-25  max-[376px]:ml-28 max-[769px]:ml-5 ${
-                    hideSearchBar
-                      ? "max-[769px]:ml-[140px] max-[426px]:ml-[150px] max-[321px]:ml-[150px]"
-                      : ""
-                  }`
-                : `ml-2  max-[376px]:ml-17 max-[769px]:ml-5 ${
-                    hideSearchBar
-                      ? "max-[769px]:ml-[110px] max-[426px]:ml-[85px] "
-                      : ""
-                  }`
-            }
-        }`}
+        className={`h-[88px]  top-0 w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 
+         max-[1025px]:right-0  max-[769px]:pl-0 max-[321px]:pl-12  max-[376px]:pl-10 max-[426px]:ml-35 max-[769px]:ml-40 
+          
+        `}
       >
         <div
           className={`${
             hideNavBar ? "-ml-[50px]" : ""
           } w-full h-[88px] flex  items-center ${
-            hideSearchBar ? "justify-end" : "justify-between"
+            hideSearchBar  ? "justify-end ml-6" : "justify-between"
           }`}
         >
           <div className={`flex mr-20 ${hideSearchBar ? "hidden" : ""}`}>
@@ -46,7 +35,7 @@ function Header({
               className={`flex items-center w-[600px]  max-[426px]:w-[280px] max-[376px]:w-[180px] 
             bg-[#EDE7F6] rounded-full px-4 py-2 max-[426px]:ml-15 max-[426px]:-mr-15 ${
               hideNavBar
-                ? "max-[769px]:w-[500px] max-[769px]:ml-22 max-[1025px]:-ml-5"
+                ? "max-[769px]:w-[500px] max-[769px]:ml-42 max-[1025px]:-ml-5 max-[426px]:ml-28 max-[376px]:ml-20 max-[376px]:-mr-3  max-[321px]:ml-15 max-[321px]:-mr-15  "
                 : "max-[1025px]:-ml-5"
             }`}
             >
@@ -64,8 +53,8 @@ function Header({
 
           <div
             className={` pr-5 cursor-pointer ${
-              hideNavBar ? "mr-[30px]" : "mr-[80px]"
-            } `}
+              hideNavBar && !hideSearchBar ? "mr-[30px]" : "mr-[80px]"
+            }  ${hideSearchBar && hideNavBar ? "max-[769px]:mr-5 mr-25":"mr-25"}`}
           >
             <div
               className="avatar"

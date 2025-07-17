@@ -60,43 +60,45 @@ function PartyForm({
 
   return (
     <div
-      className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ml-[380px] ${
-        hideNavBar ? "pl-5" : "pl-[250px]"
-      } max-[769px]:pl-0`}
+      className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ml-[600px] max-[426px]:ml-0`}
     >
       <div className="flex justify-center -ml-[300px] mb-5 ">
         {type === "create" && (
-          <h1 className="text-[30px] font-bold">Create your party</h1>
+          <h1 className="text-[30px] font-bold max-[426px]:ml-8">Create your party</h1>
         )}
         {type === "update" && (
           <h1 className="text-[30px] font-bold">Update party</h1>
         )}
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center ">
         <label className="-ml-[410px] mb-2">
           Party Name {""}
           <span className="text-red-500">*</span>
         </label>
-        <InputComponent
-          id="party-name"
-          type="text"
-          placeholder="Enter party name"
-          width="500"
-          value={partyName}
-          handleInput={(e) => setPartyName(e)}
-        />
+        <div className="max-[426px]:-ml-45">
+          <InputComponent
+            id="party-name"
+            type="text"
+            placeholder="Enter party name"
+            width="500"
+            value={partyName}
+            handleInput={(e) => setPartyName(e)}
+          />
+        </div>
 
         <label className="-ml-[420px] mb-2">Description</label>
+        <div className="max-[426px]:-ml-45">
+          <InputComponent
+            id="description"
+            type="text"
+            placeholder="Enter party description"
+            width="500"
+            value={description}
+            handleInput={(e) => setDescription(e)}
+          />
+        </div>
 
-        <InputComponent
-          id="description"
-          type="text"
-          placeholder="Enter party description"
-          width="500"
-          value={description}
-          handleInput={(e) => setDescription(e)}
-        />
-        <label className="-ml-[420px] mb-2">
+        <label className="-ml-[420px] mb-2 ">
           Pick a date {""}
           <span className="text-red-500">*</span>
         </label>
@@ -105,7 +107,7 @@ function PartyForm({
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
-        <div className="flex w-[500px] gap-5">
+        <div className="flex w-[500px] gap-5 max-[426px]:flex-col">
           <TimePicker
             label="Start Time"
             selectedTime={startTime}
@@ -119,7 +121,7 @@ function PartyForm({
         </div>
         <label className="-ml-[390px] mb-2">Select party tags</label>
 
-        <div className="flex -ml-[250px]">
+        <div className="flex -ml-[250px] max-[426px]:pl-6">
           {baseTags.map((tag, index) => {
             return (
               <div
@@ -134,11 +136,11 @@ function PartyForm({
             );
           })}
         </div>
-        <div className="ml-[420px] mt-5">
+        <div className="ml-[420px] mt-5 max-[426px]:ml-[10px]">
           {type === "create" && (
             <button
               onClick={() => createNewParty()}
-              className={`${
+              className={` ${
                 enableCreateButton
                   ? "bg-[#f3bfa3] cursor-pointer hover:bg-[#f0b291]"
                   : "bg-[#ccc7c4]"

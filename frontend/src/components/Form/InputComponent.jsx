@@ -15,7 +15,7 @@ function InputComponent({
         onChange={(e) => handleInput(e.target.value)}
         value={value}
         autoComplete="off"
-        className={`border border-gray-400 px-2 py-2 rounded-md w-[${width}px]`}
+        className={`border border-gray-400 px-2 py-2 rounded-md w-[${width}px] max-[426px]:w-[300px]`}
       />
     </div>
   );
