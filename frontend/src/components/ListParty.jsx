@@ -16,18 +16,19 @@ function ListParty({
     openPartyDetails = true;
     viewPartyDetails(partyId);
   };
+
   return (
     <>
       <div
         className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
-          hideNavBar ? "pl-5" : "pl-[380px]"
+          hideNavBar ? "pl-5 " : "pl-[380px]"
         } max-[769px]:pl-0`}
       >
         {parties.map((party, index) => (
           <div
             key={index}
-            className={`flex w-[1120px] max-[1441px]:w-[1000px] max-[1025px]:w-[750px] max-[769px]:w-[700px] max-[376px]:w-[300px]  
-              max-[426px]:w-[400px] max-[426px]:h-[180px] border-1 border-gray-200 h-[200px] rounded-2xl relative
+            className={`flex w-[1120px] max-[1441px]:w-[1100px] max-[1025px]:w-[800px] max-[769px]:w-[700px] max-[376px]:w-[350px]  
+              max-[321px]:w-[300px] max-[426px]:w-[400px] max-[426px]:h-[180px] border-1 border-gray-200 h-[200px] rounded-2xl relative
               p-3 cursor-pointer text-black hover:bg-gray-100 transition-all`}
             onClick={() => openDetailsPopup(party._id)}
           >

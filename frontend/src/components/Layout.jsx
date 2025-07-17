@@ -24,7 +24,15 @@ function Layout({ children, loginUser, hideSearchBar }) {
               loginUser={loginUser}
             />
 
-            <div>{children}</div>
+            <div
+              className={`${
+                hideNavBar
+                  ? "max-[376px]:ml-20 max-[426px]:ml-22 max-[769px]:ml-28 max-[1025px]:-ml-50  max-[1441px]:-ml-30  max-[2561px]:-ml-25"
+                  : "max-[426px]:ml-22 max-[769px]:ml-28 max-[1025px]:-ml-50 max-[1441px]:-ml-0"
+              }`}
+            >
+              {children}
+            </div>
           </div>
         </div>
       </div>

@@ -51,7 +51,7 @@ function TimePicker({ label, selectedTime, setSelectedTime }) {
         {label}
         {label === "Start Time" && <span className="text-red-500"> *</span>}
       </label>
-      <div className="flex gap-2">
+      <div className="flex gap-2 max-[426px]:pl-4">
         <select
           value={hour}
           onChange={(e) => handleChange(e.target.value, minute, period)}

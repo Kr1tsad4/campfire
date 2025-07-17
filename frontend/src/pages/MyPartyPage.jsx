@@ -29,23 +29,11 @@ function MyPartyPage({ loginUser }) {
     <>
       <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
-          <div
-            className={`min-w-full ${
-              hideNavBar
-                ? "max-[1441px]:-ml-18  max-[769px]:-ml-40 max-[426px]:-ml-45"
-                : "max-[1025px]:-ml-5 "
-            } `}
-          >
-            <p
-              className={`text-[32px] text-black  mt-20 ml-[380px] ${
-                hideNavBar ? "ml-[220px]" : "max-[1025px]:ml-[200px]"
-              }`}
-            >
-              My parties
-            </p>
+          <div className={`min-w-full ml-1 max-[769px]:ml-0`}>
+            <p className={`text-[32px] text-black  mt-20  min-[1024px]:ml-[380px]`}>My parties</p>
             <div
               className={`-mt-[80px] ${
-                hideNavBar ? "ml-[190px] max-[321px]:ml-47" : ""
+                hideNavBar ? "ml-[190px] max-[321px]:ml-47 " : ""
               }`}
             >
               {userParties && (
@@ -59,11 +47,7 @@ function MyPartyPage({ loginUser }) {
                 />
               )}
               {(!userParties || userParties.length === 0) && (
-                <p
-                  className={`text-black  mt-12 text-[18px]  ${
-                    hideNavBar ? "ml-[350px]" : "ml-[720px]"
-                  }`}
-                >
+                <p className={`text-black text-[18px]  ml-[300px] max-[769px]:ml-0 max-[769px]:p-2 min-[1024px]:ml-[600px]`}>
                   {" "}
                   You haven’t created any parties yet.{" "}
                   <span
@@ -76,21 +60,9 @@ function MyPartyPage({ loginUser }) {
               )}
             </div>
           </div>
-          <div
-            className={`min-w-full mb-28  ${
-              hideNavBar
-                ? "max-[769px]:-ml-40 max-[1441px]:-ml-17 max-[426px]:-ml-45"
-                : "max-[1025px]:-ml-5 "
-            } `}
-          >
-            <p
-              className={`text-[32px] text-black  mt-10 ml-[380px] ${
-                hideNavBar ? "ml-[220px]" : "max-[1025px]:ml-[200px]"
-              }`}
-            >
-              Joined Parties
-            </p>
-            <div className={`-mt-[80px] ${hideNavBar ? "ml-[190px]" : ""}`}>
+          <div className={`min-w-full mb-28 mt-25 ml-1  max-[769px]:ml-0 `}>
+            <p className={`text-[32px] text-black  mt-10  min-[1024px]:ml-[380px]`}>Joined Parties</p>
+            <div className={`-mt-[80px]`}>
               {joinedParties && (
                 <ListParty
                   parties={joinedParties}
@@ -99,11 +71,7 @@ function MyPartyPage({ loginUser }) {
                 />
               )}
               {(!joinedParties || joinedParties.length === 0) && (
-                <p
-                  className={`text-black  mt-18 text-[18px]  ${
-                    hideNavBar ? "ml-[350px]" : "ml-[680px]"
-                  }`}
-                >
+                <p className={`text-black text-[18px] ml-[300px]  min-[1024px]:ml-[600px]`}>
                   You haven’t joined any parties yet.{" "}
                   <span
                     onClick={() => navigator("/home")}
