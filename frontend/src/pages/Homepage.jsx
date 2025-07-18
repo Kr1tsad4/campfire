@@ -1,6 +1,6 @@
 import ListParty from "../components/ListParty";
 import { useParty } from "../hooks/useParty";
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import { useEffect, useState } from "react";
 import PartyDetailsPopup from "../components/PartyDetailsPopup";
 import Layout from "../components/Layout";
@@ -20,10 +20,6 @@ function Homepage({ openPartyDetails, loginUser }) {
 
 
   useEffect(() => {
-    setTmpHideNavBar(hideNavBar);
-    console.log(hideNavBar, tmpHideNavBar);
-  }, [tmpHideNavBar]);
-  useEffect(() => {
     fetchParties(loginUser, searchValue);
   }, [loginUser]);
   
@@ -38,7 +34,7 @@ function Homepage({ openPartyDetails, loginUser }) {
         >
           <ListParty
             parties={parties}
-            hideNavBar={tmpHideNavBar}
+            hideNavBar={hideNavBar}
             joinParty={joinParty}
             loginUser={loginUser}
             viewPartyDetails={viewPartyDetails}

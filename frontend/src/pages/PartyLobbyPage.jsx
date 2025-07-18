@@ -1,4 +1,4 @@
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import { useParams } from "react-router-dom";
 import { useParty } from "../hooks/useParty";
 import { useEffect, useState } from "react";
