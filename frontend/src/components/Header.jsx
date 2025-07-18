@@ -11,8 +11,7 @@ function Header({
   const navigator = useNavigate();
   const handleKeyUp = (e) => {
     if (e.key === "Enter") {
-      handleSearchParty(searchValue);
-      setSearchValue("");
+      handleSearchParty(searchValue, loginUser);
     }
   };
   return (
@@ -27,7 +26,7 @@ function Header({
           className={`${
             hideNavBar ? "-ml-[50px]" : ""
           } w-full h-[88px] flex  items-center ${
-            hideSearchBar  ? "justify-end ml-6" : "justify-between"
+            hideSearchBar ? "justify-end ml-6" : "justify-between"
           }`}
         >
           <div className={`flex mr-20 ${hideSearchBar ? "hidden" : ""}`}>
@@ -47,14 +46,19 @@ function Header({
                 onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
               />
-              <FaSearch className="text-gray-600 ml-3 cursor-pointer" />
+              <FaSearch
+                className="text-gray-600 ml-3 cursor-pointer"
+                onClick={() => handleSearchParty(searchValue, loginUser)}
+              />
             </div>
           </div>
 
           <div
             className={` pr-5 cursor-pointer ${
               hideNavBar && !hideSearchBar ? "mr-[30px]" : "mr-[80px]"
-            }  ${hideSearchBar && hideNavBar ? "max-[769px]:mr-5 mr-25":"mr-25"}`}
+            }  ${
+              hideSearchBar && hideNavBar ? "max-[769px]:mr-5 mr-25" : "mr-25"
+            }`}
           >
             <div
               className="avatar"
