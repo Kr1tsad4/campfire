@@ -1,4 +1,4 @@
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import socket from "../socket";
 import { useEffect, useState } from "react";
 import { useInvitation } from "../hooks/useInvitation";
@@ -7,7 +7,7 @@ import { getPartyById } from "../libs/fetchPartyUtils";
 import { deleteInvitation } from "../libs/fetchInvitationUtils";
 import Layout from "../components/Layout";
 import { useParty } from "../hooks/useParty";
-import PartyDeletedPopup from "../components/partyDeletePopup";
+import PartyDeletedPopup from "../components/PartyDeletePopup";
 
 function InvitationsPage({ loginUser }) {
   const { hideNavBar } = useNavigationBar();

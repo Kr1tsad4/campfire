@@ -1,4 +1,4 @@
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import { useParty } from "../hooks/useParty";
 import ListParty from "../components/ListParty";
 import { useEffect, useState } from "react";

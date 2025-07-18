@@ -21,16 +21,14 @@ function ListParty({
     <>
       <div
         className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
-          "xl:pl-[380px] lg:pl-[620px]"
+        hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : ""
         }`}
       >
         {parties.map((party, index) => (
           <div
             key={index}
             className={`flex flex-col md:flex-row  xl:w-[960px] ${
-              hideNavBar
-              ? "lg:w-[700px]"
-              : "lg:w-[600px]"
+              hideNavBar ? "lg:w-[700px]" : "lg:w-[600px]"
             }
               h-[180px] sm:h-[180px] md:h-[200px] 
               border border-gray-200 rounded-2xl relative

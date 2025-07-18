@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import NavigationMenu from "../components/NavigationMenu";
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import colorTheme from "../libs/colorTheme";
 import EditableText from "../components/editableText";
 import { useParams } from "react-router-dom";

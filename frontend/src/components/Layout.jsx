@@ -1,6 +1,6 @@
 import NavigationMenu from "./NavigationMenu";
 import Header from "../components/Header";
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import { FaBars } from "react-icons/fa";
 
 function Layout({
@@ -30,7 +30,7 @@ function Layout({
           <div className="flex gap-4 w-[200px] ">
             <button
               className="cursor-pointer"
-              onClick={() => toggleSideNavBar(hideNavBar)}
+              onClick={() => toggleSideNavBar()}
             >
               <FaBars size={25} color="black" />
             </button>

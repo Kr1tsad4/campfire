@@ -1,4 +1,4 @@
-import { useNavigationBar } from "../hooks/useNavigationBar";
+import { useNavigationBar } from "../contexts/NavigationContext";
 import PartyForm from "../components/Form/PartyForm";
 import { useParty } from "../hooks/useParty";
 import { useTags } from "../hooks/useTags";
