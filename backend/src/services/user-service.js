@@ -3,11 +3,17 @@ const bcrypt = require("bcryptjs");
 const createError = require("http-errors");
 
 const findAll = async () => {
-  return await User.find();
+  return await User.find().select("-__v").populate({
+    path: "interestedTag",
+    select: "_id name", 
+  });;
 };
 
 const findById = async (id) => {
-  const user = await User.findById(id);
+  const user = await User.findById(id).select("-__v").populate({
+    path: "interestedTag",
+    select: "_id name", 
+  });;
   if (!user) {
     throw createError(404, `User not found with id ${id}.`);
   }
@@ -101,7 +107,6 @@ const update = async (id, userData) => {
     updateData.aboutMe = aboutMe;
     isUpdated = true;
   }
-  console.log(updateData);
   if (!isUpdated) throw createError(400, "Does not have any different data.");
   const updatedUser = await User.findByIdAndUpdate(id, updateData);
   return updatedUser;
