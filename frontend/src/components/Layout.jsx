@@ -54,8 +54,8 @@ function Layout({
           <div
             className={`${
               hideNavBar
-                ? "ml-5 sm:ml-6 md:ml-7 lg:-ml-96 xl:-ml-32 2xl:-ml-6"
-                : "sm:ml-6 md:ml-7 lg:-ml-50 xl:ml-0"
+                ? "ml-20 sm:ml-30 md:ml-30 lg:-ml-80 xl:ml-5"
+                : "ml-20 sm:ml-30 md:ml-30 lg:-ml-50 xl:ml-5"
             }`}
           >
             {children}

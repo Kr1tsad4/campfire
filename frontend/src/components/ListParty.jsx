@@ -27,7 +27,11 @@ function ListParty({
         {parties.map((party, index) => (
           <div
             key={index}
-            className={`flex w-[300px] sm:w-[350px] md:w-[700px] lg:w-[660px] xl:w-[1100px] 2xl:w-[1120px] 
+            className={`flex flex-col md:flex-row  xl:w-[960px] ${
+              hideNavBar
+              ? "lg:w-[700px]"
+              : "lg:w-[600px]"
+            }
               h-[180px] sm:h-[180px] md:h-[200px] 
               border border-gray-200 rounded-2xl relative
               p-3 cursor-pointer text-black hover:bg-gray-100 transition-all`}
