@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import AuthPage from "./pages/AuthPage";
 import MyPartyPage from "./pages/MyPartyPage";
-import SchedulePage from "./pages/SchedulePage";
+import PartyBoardPage from "./pages/PartyBoardPage";
 import InvitationsPage from "./pages/InvitationsPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -45,6 +45,14 @@ function App() {
           }
         />
         <Route
+          path="/party-board"
+          element={
+            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+              <PartyBoardPage loginUser={loginUser} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/my-party"
           element={
             <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
@@ -68,14 +76,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/schedule"
-          element={
-            <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-              <SchedulePage loginUser={loginUser} />
-            </ProtectedRoute>
-          }
-        />
+
         <Route
           path="/invitations"
           element={

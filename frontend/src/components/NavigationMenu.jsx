@@ -1,7 +1,7 @@
 import { FaBars, FaHome } from "react-icons/fa";
 import { RiTeamFill } from "react-icons/ri";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaCalendarDays } from "react-icons/fa6";
+import { MdForum } from "react-icons/md";
 import { TiPlus } from "react-icons/ti";
 import { FcInvite } from "react-icons/fc";
 import { IoIosSettings } from "react-icons/io";
@@ -12,7 +12,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/home";
-  const isSchedule = location.pathname === "/schedule";
+  const isPartyBoard = location.pathname === "/party-board";
   const isCreateParty = location.pathname === "/create-party";
   const isParty = location.pathname === "/my-party";
   const isInvitations = location.pathname === "/invitations";
@@ -54,6 +54,17 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
+              onClick={() => navigator("/party-board")}
+              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
+                isPartyBoard ? "bg-[#3B3B1A]" : ""
+              }`}
+            >
+              <MdForum size={25} />
+              <h1 className="font-bold text-[22px] -mt-1">Party Board</h1>
+            </button>
+          </div>
+          <div className="mt-5">
+            <button
               onClick={() => navigator("/my-party")}
               className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
                 isParty ? "bg-[#3B3B1A]" : ""
@@ -63,17 +74,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
               <h1 className="font-bold text-[22px] -mt-1">My Party</h1>
             </button>
           </div>
-          <div className="mt-5">
-            <button
-              onClick={() => navigator("/schedule")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isSchedule ? "bg-[#3B3B1A]" : ""
-              }`}
-            >
-              <FaCalendarDays size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">My Schedule</h1>
-            </button>
-          </div>
+
           <div className="mt-5">
             <button
               onClick={() => navigator("/create-party")}

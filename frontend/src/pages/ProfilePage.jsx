@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
-import SideNavContainer from "../components/SideNavContainer";
+import { useEffect } from "react";
+import NavigationMenu from "../components/NavigationMenu";
 import { useNavigationBar } from "../hooks/useNavigationBar";
-import { useTags } from "../hooks/useTags";
 import colorTheme from "../libs/colorTheme";
 import EditableText from "../components/editableText";
 import { useParams } from "react-router-dom";
-import { getUserById } from "../libs/fetchUsersUtils";
-import { API_URL } from "../libs/api";
+import { useUser } from "../hooks/useUser";
 
 function ProfilePage() {
   const { id } = useParams();
-  const { userTags, fetchUserTags } = useTags();
+  const { fetchUser, user, getLoginUser, loginUser } = useUser();
 
-  const sessionUser = JSON.parse(sessionStorage.getItem("user"));
-  const [user, setUser] = useState(null);
-  const isMyAccount = sessionUser._id === id;
+  const isMyAccount = loginUser?._id === id;
   let dob = null;
   if (user?.dob) dob = new Date(user?.dob);
   const now = new Date();
@@ -34,28 +30,43 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    if (id) {
-      fetchUserTags(id);
-    }
-  }, [id, fetchUserTags]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const fetchedUser = await getUserById(API_URL, id);
-      setUser(fetchedUser);
-    };
-    fetchUser();
-    console.log(userTags);
+    getLoginUser();
+    fetchUser(id);
   }, []);
 
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
   return (
     <>
       <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
-        <SideNavContainer
-          hideNavBar={hideNavBar}
-          toggleSideNavBar={toggleSideNavBar}
-        />
+        {!hideNavBar && (
+          <div>
+            <NavigationMenu
+              toggleSideNavBar={toggleSideNavBar}
+              hideNavBar={hideNavBar}
+            />
+          </div>
+        )}
+        {hideNavBar && (
+          <div
+            className={`${
+              hideNavBar ? "block" : ""
+            } pt-6  pl-6  z-50 fixed max-[1025px]:ml-5 max-[426px]:-ml-3 max-[1441px]:mt-1`}
+          >
+            <div className="flex gap-4 w-[200px]">
+              <button
+                className="cursor-pointer "
+                onClick={() => toggleSideNavBar(hideNavBar)}
+              >
+                <FaBars size={25} color="black" />
+              </button>
+              <p
+                className={`font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden `}
+              >
+                MAAM PARTY
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className={`${hideNavBar ? "" : "ml-[250px]"} text-[#3B3B1A]`}>
           <div
@@ -93,7 +104,7 @@ function ProfilePage() {
           </div>
           <div className="text-[24px] ml-4 mt-4">Interested</div>
           <div className="flex ml-4 cursor-default">
-            {userTags.map((tag, index) => (
+            {user?.interestedTag.map((tag, index) => (
               <div
                 key={index}
                 className={`mr-2 border-[1.5px] border-[] rounded-[10px] px-2 py-[2px] text-[16px] }`}
@@ -101,7 +112,7 @@ function ProfilePage() {
                   borderColor: colorTheme.style1,
                 }}
               >
-                {tag}
+                {tag.name}
               </div>
             ))}
           </div>

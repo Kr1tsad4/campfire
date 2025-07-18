@@ -28,7 +28,7 @@ function InvitationsPage({ loginUser }) {
   };
   const handleDeleteInvite = async (id) => {
     deleteInvitation(API_URL, id);
-    
+
     setParties((prevParties) =>
       prevParties.filter((party) => party.inviteId !== id)
     );

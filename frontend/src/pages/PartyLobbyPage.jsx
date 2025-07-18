@@ -10,12 +10,12 @@ import { useUser } from "../hooks/useUser";
 function PartyLobby({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
   const { partyId } = useParams();
-  const { getPartyTagsAndMembersName, party, leaveParty } = useParty();
+  const { fetchPartyById, party, leaveParty } = useParty();
   const { searchResult, searchUserByName, getAllUser } = useUser();
   const [openInvitePopup, setOpenInvitePopup] = useState(false);
 
   useEffect(() => {
-    getPartyTagsAndMembersName(partyId);
+    fetchPartyById(partyId);
   }, []);
   return (
     <>
@@ -63,10 +63,12 @@ function PartyLobby({ loginUser }) {
                 <p className="text-xl">
                   {party?.ownerName} <span className="pl-8">(Owner)</span>
                 </p>
-                {party?.membersName?.map((member, index) => (
+                {party?.members?.map((member, index) => (
                   <div key={index}>
                     <div className="flex justify-between">
-                      <p className="text-xl">{member}</p>
+                      <p className="text-xl">
+                        {member._id === party.ownerId ? " " : member.penName}
+                      </p>
                     </div>
                   </div>
                 ))}

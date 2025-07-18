@@ -7,7 +7,6 @@ import {
   deleteParty,
 } from "../libs/fetchPartyUtils";
 import { getUserById } from "../libs/fetchUsersUtils";
-import { getTagById } from "../libs/fetchTagsUtils";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -32,22 +31,10 @@ export const useParty = () => {
           searchValue && searchValue.length > 0
             ? searchValue
             : await getParties(API_URL);
-        if (res) {
-          const partiesWithTags = await Promise.all(
-            res.map(async (party) => {
-              const tagNames = await Promise.all(
-                party.tags.map((tagId) => getTagById(API_URL, tagId))
-              );
-              return {
-                ...party,
-                tagNames: tagNames.map((tag) => tag.name),
-              };
-            })
-          );
-          const filteredParties = partiesWithTags.filter((p) => {
-            return !p.members.includes(user?._id);
+        if (res && res.length !== 0) {
+          const filteredParties = res.filter((p) => {
+            return !p.members?.some((m) => m._id === user?._id);
           });
-
           setParties(filteredParties);
         }
       } catch (error) {
@@ -56,6 +43,23 @@ export const useParty = () => {
       }
     },
     [setParties]
+  );
+
+  const fetchPartyById = useCallback(
+    async (partyId) => {
+      try {
+        const res = await getPartyById(API_URL, partyId);
+        if (res) {
+          const owner = await getUserById(API_URL, res.ownerId);
+          const partyWithOwnerName = { ...res, ownerName: owner?.penName };
+          setParty(partyWithOwnerName);
+        }
+      } catch (error) {
+        console.log(`Failed to fetch party.`);
+        console.error(error);
+      }
+    },
+    [setParty]
   );
 
   const handleSearchParty = async (value) => {
@@ -74,7 +78,7 @@ export const useParty = () => {
 
   const checkUserIsMemberOfParty = async (partyId, user) => {
     const party = await getPartyById(API_URL, partyId);
-    const inParty = party.members.includes(user?._id);
+    const inParty = party.members?.some((m) => m._id === user?._id);
     if (inParty) {
       setIsMember(true);
     } else {
@@ -132,22 +136,11 @@ export const useParty = () => {
   const getUserParties = async (userId) => {
     const user = await getUserById(API_URL, userId);
     const parties = await getParties(API_URL);
-    const userParty = await parties.filter((party) => {
+    const userOwnParty = await parties.filter((party) => {
       return party.ownerId === user._id;
     });
-    const partiesWithTags = await Promise.all(
-      userParty?.map(async (party) => {
-        const tagNames = await Promise.all(
-          party.tags.map((tagId) => getTagById(API_URL, tagId))
-        );
 
-        return {
-          ...party,
-          tagNames: tagNames.map((tag) => tag.name),
-        };
-      })
-    );
-    setUserParties(partiesWithTags);
+    setUserParties(userOwnParty);
   };
 
   const getUserJoinedParties = async (userId) => {
@@ -155,50 +148,12 @@ export const useParty = () => {
     const parties = await getParties(API_URL);
 
     const userJoinedParty = parties.filter((party) => {
-      return party.members.includes(user._id) && party.ownerId !== user._id;
+      return (
+        party.members?.some((m) => m._id === user?._id) &&
+        party.ownerId !== user._id
+      );
     });
-    const partiesWithTags = await Promise.all(
-      userJoinedParty.map(async (party) => {
-        const tagNames = await Promise.all(
-          party.tags.map((tagId) => getTagById(API_URL, tagId))
-        );
-
-        return {
-          ...party,
-          tagNames: tagNames.map((tag) => tag.name),
-        };
-      })
-    );
-    setJoinedParties(partiesWithTags);
-  };
-  const getPartyTagsAndMembersName = async (partyId) => {
-    const res = await getPartyById(API_URL, partyId);
-    if (res) {
-      const tagIds = Array.isArray(res.tags) ? res.tags : [];
-
-      const tagNames = await Promise.all(
-        tagIds?.map((tagId) => getTagById(API_URL, tagId))
-      );
-
-      const ownerId = res.ownerId;
-      const filteredMemberIds =
-        res.members?.filter((id) => id !== ownerId) || [];
-
-      const membersName = await Promise.all(
-        filteredMemberIds?.map((memberId) => getUserById(API_URL, memberId))
-      );
-
-      const ownerUser = await getUserById(API_URL, ownerId);
-
-      const partyWithTagsAndMembers = {
-        ...res,
-        tagNames: tagNames.map((tag) => tag.name),
-        membersName: membersName?.map((member) => member.penName),
-        ownerName: ownerUser?.penName,
-      };
-
-      setParty(partyWithTagsAndMembers);
-    }
+    setJoinedParties(userJoinedParty);
   };
 
   const updateMyParty = async (partyFormData, userId, id) => {
@@ -251,7 +206,7 @@ export const useParty = () => {
     joinParty,
     checkUserIsMemberOfParty,
     isMember,
-    getPartyTagsAndMembersName,
+    fetchPartyById,
     deleteMyParty,
     updateMyParty,
     leaveParty,

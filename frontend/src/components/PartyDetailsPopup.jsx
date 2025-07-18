@@ -8,7 +8,7 @@ function PartyDetailsPopup() {
 
   const {
     party,
-    getPartyTagsAndMembersName,
+    fetchPartyById,
     checkUserIsMemberOfParty,
     isMember,
     joinParty,
@@ -16,8 +16,8 @@ function PartyDetailsPopup() {
   const { loginUser, getLoginUser } = useUser();
   const navigator = useNavigate();
 
-  useEffect(() => {  
-    getPartyTagsAndMembersName(partyId);
+  useEffect(() => {
+    fetchPartyById(partyId);
   }, [partyId]);
 
   useEffect(() => {
@@ -41,8 +41,24 @@ function PartyDetailsPopup() {
           <p>
             Time : {party.startTime} - {party.endTime}{" "}
           </p>
-          <p>Members: {party.membersName.join(" ") || "-"}</p>
-          <p>Tags: {party.tagNames.join(",")}</p>
+          <div className="flex gap-3">
+            Members:{" "}
+            {Array.isArray(party.members)
+              ? party.members.map((member, index) => (
+                  <div key={index}>{member.penName}</div>
+                ))
+              : "Loading members..."}
+          </div>
+
+          <div className="flex gap-3">
+            Tags:{" "}
+            {Array.isArray(party.tags)
+              ? party.tags.map((tag, index) => (
+                  <div key={index}>{tag.name}</div>
+                ))
+              : "Loading tags..."}
+          </div>
+
           <div className="flex justify-end mr-5 mt-[100px] gap-5 max-[1025px]:mt-10">
             {!isMember && (
               <button

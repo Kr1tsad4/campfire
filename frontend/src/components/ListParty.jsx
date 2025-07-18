@@ -40,20 +40,22 @@ function ListParty({
               <p>
                 Time : {party.startTime} - {party.endTime}{" "}
               </p>
-
-              <div className="flex gap-2 pt-2  mt-5">
+              <p>Members : {party.members.length} </p>
+              <div className="flex gap-2 pt-2  mt-1">
                 <div key={index} className="flex gap-2 max-[376px]:flex-wrap">
-                  {party.tagNames?.map((tagName, index) => (
+                  {party.tags?.map((tag, index) => (
                     <div key={index}>
-                      <p className="bg-blue-200 px-2 rounded-2xl">{tagName}</p>
+                      <p className="bg-blue-200 px-2 rounded-2xl">{tag.name}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
             {isMyParty && (
-              <div className="flex items-center ml-[350px] gap-2 w-[50px] absolute right-30 top-16 max-[1025px]:flex-col 
-              max-[1025px]:right-10 max-[1025px]:top-10 max-[426px]:hidden">
+              <div
+                className="flex items-center ml-[350px] gap-2 w-[50px] absolute right-30 top-16 max-[1025px]:flex-col 
+              max-[1025px]:right-10 max-[1025px]:top-10 max-[426px]:hidden"
+              >
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
