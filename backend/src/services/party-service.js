@@ -8,6 +8,7 @@ const findAll = async () => {
       path: "members",
       select: "-password -__v -createdAt -updatedAt",
     })
+    .populate({ path: "tags", select: "_id name" })
     .select("-__v");
 };
 
@@ -17,8 +18,9 @@ const findById = async (id) => {
       path: "members",
       select: "-password -__v -createdAt -updatedAt",
     })
+    .populate({ path: "tags", select: "_id name" })
     .select("-__v");
-    
+
   if (!existingParty) {
     throw createError(404, `Party not found.`);
   }
