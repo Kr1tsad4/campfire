@@ -20,25 +20,33 @@ function ListParty({
   return (
     <>
       <div
-        className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
-        hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : ""
+        className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 ${
+          hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : ""
         }`}
       >
         {parties.map((party, index) => (
           <div
             key={index}
-            className={`flex flex-col md:flex-row  xl:w-[960px] ${
-              hideNavBar ? "lg:w-[700px]" : "lg:w-[600px]"
+            className={`flex flex-col md:flex-row ${
+              hideNavBar
+                ? "w-[calc(95vw)]"
+                : "w-[calc(95vw)] lg:w-[calc(100vw-350px)]"
             }
-              h-[180px] sm:h-[180px] md:h-[200px] 
               border border-gray-200 rounded-2xl relative
               p-3 cursor-pointer text-black hover:bg-gray-100 transition-all`}
             onClick={() => openDetailsPopup(party._id)}
           >
-            <div className="h-full w-[300px] max-[426px]:w-[150px] max-[426px]:h-[150px] max-[376px]:pt-[20px] max-[376px]:w-[150px] bg-[#FEF3C7] rounded-2xl"></div>
-            <div className="p-2 pl-15 pt-1 max-[321px]:-mt-2 max-[769px]:pt-2 max-[426px]:text-[10px] max-[376px]:text-[10px] max-[426px]:pt-2 max-[376px]:pt-2 max-[376px]:pl-10">
-              <p className="font-bold text-[17px]">{party.name}</p>
-              <p className="pb-2 text-gray-500">{party.description}</p>
+            <div
+              className="self-center shrink-0 w-[96px] h-[96px]
+            md:w-[180px] md:h-[180px] 
+            lg:w-[180px] lg:h-[180px] 
+            xl:w-[180px] xl:h-[180px] bg-[#FEF3C7] rounded-2xl"
+            ></div>
+            <div className="flex flex-col p-2 md:pl-15 pt-1">
+              <p className="mt-2 font-bold xl:text-[28px] lg:text-[24px] text-[22px]">{party.name}</p>
+              <p className="pb-2 mb-2 text-gray-500 line-clamp-4 overflow-hidden w-auto break-words xl:text-[18px] text-[14px]
+              max-h-[5.2rem] xl:max-h-[7rem]
+              ">{party.description}</p>
               <p>Date : {party.date}</p>
               <p>
                 Time : {party.startTime} - {party.endTime}{" "}

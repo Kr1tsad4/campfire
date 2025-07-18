@@ -36,14 +36,14 @@ function Header({
             >
               <input
                 type="text"
-                placeholder="search party name"
-                className="flex-1 bg-transparent outline-none text-gray-800 pl-2 "
+                placeholder="search party"
+                className="flex-1 bg-transparent outline-none text-gray-800"
                 onKeyUp={handleKeyUp}
                 onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
               />
               <FaSearch
-                className="text-gray-600 ml-3 cursor-pointer"
+                className="text-gray-600 cursor-pointer"
                 onClick={() => handleSearchParty(searchValue, loginUser)}
               />
             </div>
