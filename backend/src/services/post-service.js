@@ -5,6 +5,7 @@ const createError = require("http-errors");
 
 const findAll = async () => {
   return await Post.find()
+    .sort({ createdAt: -1 })
     .select("-__v")
     .populate({
       path: "authorId",
