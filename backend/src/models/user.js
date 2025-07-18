@@ -43,6 +43,7 @@ const UserModelSchema = new Schema(
     aboutMe: {
       type: String,
       trim: true,
+      default: "",
     },
     interestedTag: [
       {

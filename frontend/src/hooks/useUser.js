@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getUser } from "../libs/fetchUsersUtils";
+import { getUser, getUserById } from "../libs/fetchUsersUtils";
 import { API_URL } from "../libs/api";
 import { getPartyById } from "../libs/fetchPartyUtils";
 
@@ -8,12 +8,16 @@ export const useUser = () => {
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [allUsers, setAllUsers] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
+  const [user, setUser] = useState(null);
 
   const getAllUser = async () => {
     const users = await getUser(API_URL);
     setAllUsers(users || []);
   };
-
+  const fetchUser = async (userId) => {
+    const user = await getUserById(API_URL, userId);
+    setUser(user);
+  };
   const saveLoginUserSession = (user) => {
     sessionStorage.setItem("user", JSON.stringify(user));
   };
@@ -35,13 +39,18 @@ export const useUser = () => {
     }
 
     const party = await getPartyById(API_URL, partyId);
-    const memberIds = party.members.map((member) => member);
 
-    const result = allUsers.filter(
-      (user) =>
+    const members = party.members.map((member) => member);
+
+    const result = allUsers.filter((user) => {
+      const isAlreadyMember = members.some(
+        (member) => member._id.toString() === user._id.toString()
+      );
+      return (
         user.penName.toLowerCase().includes(searchValue.toLowerCase()) &&
-        !memberIds.includes(user._id)
-    );
+        !isAlreadyMember
+      );
+    });
 
     setSearchResult(result);
   };
@@ -55,5 +64,7 @@ export const useUser = () => {
     searchUserByName,
     searchResult,
     getAllUser,
+    fetchUser,
+    user,
   };
 };

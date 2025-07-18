@@ -1,4 +1,4 @@
-import SideNavContainer from "../components/SideNavContainer";
+import NavigationMenu from "./NavigationMenu"; 
 import Header from "../components/Header";
 import { useNavigationBar } from "../hooks/useNavigationBar";
 import { useParty } from "../hooks/useParty";
@@ -9,10 +9,35 @@ function Layout({ children, loginUser, hideSearchBar }) {
   return (
     <>
       <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
-        <SideNavContainer
-          hideNavBar={hideNavBar}
-          toggleSideNavBar={toggleSideNavBar}
-        />
+        {!hideNavBar && (
+          <div>
+            <NavigationMenu
+              toggleSideNavBar={toggleSideNavBar}
+              hideNavBar={hideNavBar}
+            />
+          </div>
+        )}
+        {hideNavBar && (
+          <div
+            className={`${
+              hideNavBar ? "block" : ""
+            } pt-6  pl-6  z-50 fixed max-[1025px]:ml-5 max-[426px]:-ml-3 max-[1441px]:mt-1`}
+          >
+            <div className="flex gap-4 w-[200px]">
+              <button
+                className="cursor-pointer "
+                onClick={() => toggleSideNavBar(hideNavBar)}
+              >
+                <FaBars size={25} color="black" />
+              </button>
+              <p
+                className={`font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden `}
+              >
+                MAAM PARTY
+              </p>
+            </div>
+          </div>
+        )}
         <div>
           <div className="-ml-[75px]">
             <Header

@@ -1,6 +1,6 @@
 import { useNavigationBar } from "../hooks/useNavigationBar";
 import Layout from "../components/Layout";
-function SchedulePage({loginUser}) {
+function PartyBoardPage({loginUser}) {
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
 
   return (
@@ -12,4 +12,4 @@ function SchedulePage({loginUser}) {
   );
 }
 
-export default SchedulePage;
+export default PartyBoardPage;
