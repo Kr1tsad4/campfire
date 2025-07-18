@@ -12,7 +12,7 @@ function CreateUpdatePartyPage({ type, loginUser }) {
 
   const {
     party,
-    getPartyTagsAndMembersName,
+    fetchPartyById,
     partyName,
     setPartyName,
     description,
@@ -48,7 +48,7 @@ function CreateUpdatePartyPage({ type, loginUser }) {
 
   useEffect(() => {
     if (id) {
-      getPartyTagsAndMembersName(id);
+      fetchPartyById(id);
     }
   }, []);
 
