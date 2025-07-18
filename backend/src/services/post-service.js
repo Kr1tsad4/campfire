@@ -1,4 +1,6 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment");
+
 const createError = require("http-errors");
 
 const findAll = async () => {
@@ -43,7 +45,20 @@ const findById = async (id) => {
 const create = async (post) => {
   const { content, authorId } = post;
 
+  if (!content.trim()) {
+    throw create(400, "Content is required.");
+  }
   const createdPost = await Post.create({ content, authorId });
   return createdPost;
 };
-module.exports = { findAll, findById, create };
+
+const deleteById = async (id) => {
+  const existingPost = await Post.findById(id);
+
+  if (!existingPost) {
+    throw createError(404, "Post not found.");
+  }
+  await Comment.deleteMany({ commentToPost: id });
+  await Post.findByIdAndDelete(id);
+};
+module.exports = { findAll, findById, create, deleteById };

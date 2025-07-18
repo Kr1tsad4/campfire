@@ -19,9 +19,25 @@ const createPost = asyncHandler(async (req, res) => {
   return res.status(201).json(createdPost);
 });
 
+const getAllComment =  asyncHandler(async (req, res) => {
+  const comments = await commentService.findAll();
+  return res.status(200).json(comments);
+});
 const createComment = asyncHandler(async (req, res) => {
   const createdComment = await commentService.create(req.body);
   return res.status(201).json(createdComment);
 });
 
-module.exports = { getAllPost, getPostById, createPost,createComment };
+const deletePost = asyncHandler(async (req, res) => {
+  await postService.deleteById(req.params.id);
+  return res.status(200).json({ message: "Post deleted successfully." });
+});
+
+module.exports = {
+  getAllPost,
+  getPostById,
+  createPost,
+  createComment,
+  deletePost,
+  getAllComment
+};
