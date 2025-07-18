@@ -16,7 +16,10 @@ function Layout({
   return (
     <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
       {!hideNavBar && (
-        <NavigationMenu toggleSideNavBar={toggleSideNavBar} hideNavBar={hideNavBar} />
+        <NavigationMenu
+          toggleSideNavBar={toggleSideNavBar}
+          hideNavBar={hideNavBar}
+        />
       )}
       {hideNavBar && (
         <div
@@ -51,8 +54,8 @@ function Layout({
           <div
             className={`${
               hideNavBar
-                ? "max-[376px]:ml-20 max-[426px]:ml-22 max-[769px]:ml-28 max-[1025px]:-ml-50  max-[1441px]:-ml-30  max-[2561px]:-ml-25"
-                : "max-[426px]:ml-22 max-[769px]:ml-28 max-[1025px]:-ml-50 max-[1441px]:-ml-0"
+                ? "ml-20 sm:ml-30 md:ml-30 lg:-ml-80 xl:ml-5"
+                : "ml-20 sm:ml-30 md:ml-30 lg:-ml-50 xl:ml-5"
             }`}
           >
             {children}
@@ -62,6 +65,5 @@ function Layout({
     </div>
   );
 }
-
 
 export default Layout;

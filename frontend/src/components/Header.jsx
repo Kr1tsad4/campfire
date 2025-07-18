@@ -24,19 +24,15 @@ function Header({
       >
         <div
           className={`${
-            hideNavBar ? "-ml-[50px]" : ""
+            hideNavBar ? "-ml-[50px]" : "ml-[80px]"
           } w-full h-[88px] flex  items-center ${
             hideSearchBar ? "justify-end ml-6" : "justify-between"
           }`}
         >
           <div className={`flex mr-20 ${hideSearchBar ? "hidden" : ""}`}>
             <div
-              className={`flex items-center w-[600px]  max-[426px]:w-[280px] max-[376px]:w-[180px] 
-            bg-[#EDE7F6] rounded-full px-4 py-2 max-[426px]:ml-15 max-[426px]:-mr-15 ${
-              hideNavBar
-                ? "max-[769px]:w-[500px] max-[769px]:ml-42 max-[1025px]:-ml-5 max-[426px]:ml-28 max-[376px]:ml-20 max-[376px]:-mr-3  max-[321px]:ml-15 max-[321px]:-mr-15  "
-                : "max-[1025px]:-ml-5"
-            }`}
+              className={`flex items-center w-[200px] md:w-[250px] lg:w-[500px] xl:w-[800px]
+            bg-[#EDE7F6] rounded-full px-4 py-2 fixed top-[6vw] md:top-[2vw] lg:top-[1.5vw] right-[22vw] md:right-[16vw] z-50`}
             >
               <input
                 type="text"
@@ -54,11 +50,7 @@ function Header({
           </div>
 
           <div
-            className={` pr-5 cursor-pointer ${
-              hideNavBar && !hideSearchBar ? "mr-[30px]" : "mr-[80px]"
-            }  ${
-              hideSearchBar && hideNavBar ? "max-[769px]:mr-5 mr-25" : "mr-25"
-            }`}
+            className={` pr-5 cursor-pointer fixed top-[6vw] right-[0vw] md:top-[1.75vw] md:right-[4vw] z-50`}
           >
             <div
               className="avatar"
