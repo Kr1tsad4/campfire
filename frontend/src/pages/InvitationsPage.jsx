@@ -7,11 +7,11 @@ import { getPartyById } from "../libs/fetchPartyUtils";
 import { deleteInvitation } from "../libs/fetchInvitationUtils";
 import Layout from "../components/Layout";
 import { useParty } from "../hooks/useParty";
-
+import PartyDeletedPopup from "../components/partyDeletePopup";
 
 function InvitationsPage({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
-  const {joinParty} = useParty();
+  const { joinParty } = useParty();
   const { userInvitation, setUserInvitation, fetchUserInvitation } =
     useInvitation();
 
@@ -22,12 +22,13 @@ function InvitationsPage({ loginUser }) {
         return { ...party, inviteId: invite._id };
       })
     );
+
     setParties(partyArr);
     return partyArr;
   };
-
   const handleDeleteInvite = async (id) => {
     deleteInvitation(API_URL, id);
+    
     setParties((prevParties) =>
       prevParties.filter((party) => party.inviteId !== id)
     );
@@ -35,6 +36,7 @@ function InvitationsPage({ loginUser }) {
 
   const buttonClass = `text-[20px] border-2 rounded-2xl p-4`;
   const [parties, setParties] = useState([]);
+  const [isAcceptError, setIsAcceptError] = useState(false);
   useEffect(() => {
     let isMounted = true;
     fetchUserInvitation();
@@ -43,12 +45,12 @@ function InvitationsPage({ loginUser }) {
 
       try {
         const newInvite = await getPartyById(API_URL, invite.partyId);
-        setParties((prevParties) => [...prevParties, newInvite]);
+        const partyWithInviteId = { ...newInvite, inviteId: invite._id };
+        setParties((prevParties) => [...prevParties, partyWithInviteId]);
       } catch (err) {
         console.log(err);
       }
     };
-
     socket.on("new-invite", handleNewInvite);
     return () => {
       socket.off("new-invite", handleNewInvite);
@@ -65,6 +67,9 @@ function InvitationsPage({ loginUser }) {
 
   return (
     <>
+      {isAcceptError && (
+        <PartyDeletedPopup setIsAcceptError={setIsAcceptError} />
+      )}
       <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
         <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
@@ -106,10 +111,13 @@ function InvitationsPage({ loginUser }) {
                 <div className="flex flex-col gap-4">
                   <button
                     className={buttonClass + " bg-green-200 border-green-800"}
-                    onClick={() => {
-                      handleDeleteInvite(party.inviteId);
-                      // console.log(loginUser._id, party._id);
-                      joinParty(loginUser._id, party._id);
+                    onClick={async () => {
+                      handleDeleteInvite(party?.inviteId);
+                      const tmp = await getPartyById(API_URL, party?._id);
+                      if (tmp.message) setIsAcceptError(true);
+                      else {
+                        joinParty(loginUser._id, party._id);
+                      }
                     }}
                   >
                     accept
