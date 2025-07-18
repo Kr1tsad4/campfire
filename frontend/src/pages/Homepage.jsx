@@ -6,18 +6,31 @@ import PartyDetailsPopup from "../components/PartyDetailsPopup";
 import Layout from "../components/Layout";
 
 function Homepage({ openPartyDetails, loginUser }) {
-  const { parties, fetchParties, joinParty, viewPartyDetails } = useParty();
+  const {
+    parties,
+    fetchParties,
+    joinParty,
+    viewPartyDetails,
+    handleSearchParty,
+    searchValue,
+    setSearchValue,
+  } = useParty();
 
   const { hideNavBar } = useNavigationBar();
 
   useEffect(() => {
-    fetchParties(null, loginUser);
+    fetchParties(loginUser, searchValue);
   }, [loginUser]);
 
   return (
     <>
       <div>
-        <Layout loginUser={loginUser}>
+        <Layout
+          loginUser={loginUser}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          handleSearchParty={handleSearchParty}
+        >
           <ListParty
             parties={parties}
             hideNavBar={hideNavBar}

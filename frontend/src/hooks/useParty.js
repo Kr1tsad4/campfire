@@ -25,17 +25,21 @@ export const useParty = () => {
 
   const navigator = useNavigate();
   const fetchParties = useCallback(
-    async (searchValue, user) => {
+    async (user, keyword = "") => {
       try {
-        const res =
-          searchValue && searchValue.length > 0
-            ? searchValue
-            : await getParties(API_URL);
-        if (res && res.length !== 0) {
-          const filteredParties = res.filter((p) => {
+        const res = await getParties(API_URL);
+        if (res) {
+          let filtered = res;
+
+          if (keyword.trim()) {
+            filtered = res.filter((p) =>
+              p.name.toLowerCase().includes(keyword.toLowerCase())
+            );
+          }
+          filtered = filtered.filter((p) => {
             return !p.members?.some((m) => m._id === user?._id);
           });
-          setParties(filteredParties);
+          setParties(filtered);
         }
       } catch (error) {
         console.log(`Failed to fetch party.`);
@@ -62,14 +66,8 @@ export const useParty = () => {
     [setParty]
   );
 
-  const handleSearchParty = async (value) => {
-    const res = await getParties(API_URL);
-    if (res) {
-      const result = res.filter((party) =>
-        party.name.toLowerCase().includes(value.toLowerCase())
-      );
-      await fetchParties(result);
-    }
+  const handleSearchParty = async (value, user) => {
+    await fetchParties(user, value);
   };
 
   const viewPartyDetails = async (id) => {
