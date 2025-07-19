@@ -26,6 +26,7 @@ function PartyBoardPage({ loginUser }) {
   }, []);
 
   const { hideNavBar } = useNavigationBar();
+
   const toggleComments = (postId) => {
     setShowCommentPostId((prevId) => (prevId === postId ? null : postId));
   };
@@ -59,15 +60,12 @@ function PartyBoardPage({ loginUser }) {
   };
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
-      <div
-        className={`${
-          hideNavBar ? "ml-[850px]" : "ml-[300px]"
-        } mt-25 text-black relative border-1 border-gray-300 p-6 rounded-xl bg-white shadow-sm`}
-      >
-        <h1 className="text-4xl mb-2">Party Board</h1>
+      <div className={`${hideNavBar ? " md:ml-[30px] lg:ml-[920px] xl:ml-[640px]" : " md:ml-[30px] lg:ml-[0px]"} overflow-x-hidden mt-25 text-black relative `}>
+        <h1 className="text-4xl mb-2 ml-4 md:ml-0">Board</h1>
 
-        <div className="w-[500px] h-auto mt-5">
-          <div className="mb-4 rounded-xl">
+        <div className="w-[95vw] md:w-[85vw] lg:w-[60vw] h-auto p-5">
+          <div className="border-1 p-5 mb-4 rounded-xl">
+
             <input
               type="text"
               placeholder="What's on your mind ?"

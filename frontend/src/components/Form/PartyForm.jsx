@@ -60,15 +60,16 @@ function PartyForm({
 
   return (
     <div
-      className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 ${
-        hideNavBar ? "ml-[900px]" : "ml-[300px]"
-      } max-[426px]:ml-0`}
+
+    // transition-all duration-300
+      className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6   ${
+        hideNavBar ? "ml-10 sm:ml-25 lg:ml-250 xl:ml-235" : "xl:ml-75 lg:ml-20 sm:ml-25 ml-10 "
+      } `}
+
     >
-      <div className="flex justify-center -ml-[300px] mb-5 ">
+      <div className="flex justify-start mb-5 ">
         {type === "create" && (
-          <h1 className="text-[30px] font-bold max-[426px]:ml-8">
-            Create your party
-          </h1>
+          <h1 className="text-[30px] font-bold">Create your party</h1>
         )}
         {type === "update" && (
           <h1 className="text-[30px] font-bold">Update party</h1>
@@ -79,7 +80,7 @@ function PartyForm({
           Party Name {""}
           <span className="text-red-500">*</span>
         </label>
-        <div className="max-[426px]:-ml-45">
+        <div className="max-[426px]:-ml-45 max-[321px]:-ml-75">
           <InputComponent
             id="party-name"
             type="text"
@@ -91,7 +92,7 @@ function PartyForm({
         </div>
 
         <label className="-ml-[420px] mb-2">Description</label>
-        <div className="max-[426px]:-ml-45">
+        <div className="max-[426px]:-ml-45 max-[321px]:-ml-75">
           <InputComponent
             id="description"
             type="text"
@@ -111,7 +112,7 @@ function PartyForm({
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
-        <div className="flex w-[500px] gap-5 max-[426px]:flex-col">
+        <div className="flex w-[500px] gap-5 max-[426px]:flex-col max-[321px]:-ml-2">
           <TimePicker
             label="Start Time"
             selectedTime={startTime}
@@ -123,9 +124,10 @@ function PartyForm({
             setSelectedTime={setEndTime}
           />
         </div>
-        <label className="-ml-[390px] mb-2">Select party tags</label>
+        <label className="-ml-[390px] mb-2 max-[321px]:mr-12">Select party tags</label>
 
-        <div className="flex flex-wrap gap-2 w-[500px]">
+        <div className="flex self-start max-[321px]:-ml-5">
+
           {baseTags.map((tag, index) => {
             return (
               <div
@@ -140,7 +142,7 @@ function PartyForm({
             );
           })}
         </div>
-        <div className="ml-[420px] mt-5 max-[426px]:ml-[10px]">
+        <div className={`${type === "create" ? "ml-[420px]" : type === "update" ? "ml-[320px]" : ""} mt-5 max-[426px]:-ml-45 max-[321px]:-ml-70`}>
           {type === "create" && (
             <button
               onClick={() => createNewParty()}

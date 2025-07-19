@@ -144,7 +144,7 @@ function InvitationsPage({ loginUser }) {
                   </button>
                 </div>
               </div>
-            ))}
+            )) : <div>there is no invite.</div>}
           </div>
         </Layout>
       </div>
