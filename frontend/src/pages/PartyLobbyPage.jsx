@@ -26,13 +26,17 @@ function PartyLobby({ loginUser }) {
               openInvitePopup ? "pointer-events-none opacity-50" : ""
             }`}
           >
-            <div className="ml-[380px] mt-[100px] text-black flex gap-20">
+            <div
+              className={`${
+                hideNavBar ? "ml-[600px]" : "ml-5"
+              } mt-[100px] text-black flex gap-20`}
+            >
               <div className="text-black">
                 <div className="flex justify-between relative">
                   <h1 className="font-bold text-4xl">
                     Welcome to {party?.name} !
                   </h1>
-                  <div>
+                  <div className="z-50">
                     <button
                       onClick={() => setOpenInvitePopup(!openInvitePopup)}
                       className={`
@@ -43,7 +47,7 @@ function PartyLobby({ loginUser }) {
 
                     {loginUser?._id !== party?.ownerId && (
                       <button
-                        className="bg-[#f44f39] cursor-pointer
+                        className="bg-[#f44f39] cursor-pointer hover:bg-[#f88f82]
                  rounded-[5px] w-fit mt-2 px-4 py-2 font-[700] text-black"
                         onClick={() => leaveParty(loginUser?._id, partyId)}
                       >

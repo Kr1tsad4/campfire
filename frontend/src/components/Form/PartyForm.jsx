@@ -60,11 +60,15 @@ function PartyForm({
 
   return (
     <div
-      className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ml-[600px] max-[426px]:ml-0`}
+      className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6 ${
+        hideNavBar ? "ml-[900px]" : "ml-[300px]"
+      } max-[426px]:ml-0`}
     >
       <div className="flex justify-center -ml-[300px] mb-5 ">
         {type === "create" && (
-          <h1 className="text-[30px] font-bold max-[426px]:ml-8">Create your party</h1>
+          <h1 className="text-[30px] font-bold max-[426px]:ml-8">
+            Create your party
+          </h1>
         )}
         {type === "update" && (
           <h1 className="text-[30px] font-bold">Update party</h1>

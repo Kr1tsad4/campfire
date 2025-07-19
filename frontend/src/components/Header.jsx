@@ -1,5 +1,8 @@
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import { deepOrange, deepPurple } from "@mui/material/colors";
+
 function Header({
   handleSearchParty,
   searchValue,
@@ -17,15 +20,16 @@ function Header({
   return (
     <>
       <div
-        className={`h-[88px]  top-0 w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 
+        className={`h-[88px]  top-0 w-full  fixed pl-[250px] backdrop-blur-md  z-10  
          max-[1025px]:right-0  max-[769px]:pl-0 max-[321px]:pl-12  max-[376px]:pl-10 max-[426px]:ml-35 max-[769px]:ml-40 
           
         `}
       >
+        <p className="text-black -ml-28 pt-5 font-bold text-[23px]">MAAM PARTY</p>
         <div
           className={`${
             hideNavBar ? "-ml-[50px]" : "ml-[80px]"
-          } w-full h-[88px] flex  items-center ${
+          } w-full h-[20px] flex  items-center ${
             hideSearchBar ? "justify-end ml-6" : "justify-between"
           }`}
         >
@@ -50,15 +54,16 @@ function Header({
           </div>
 
           <div
-            className={` pr-5 cursor-pointer fixed top-[6vw] right-[0vw] md:top-[1.75vw] md:right-[4vw] z-50`}
+            className={` pr-5 cursor-pointer fixed top-[6vw] right-[0vw] md:top-[1.75vw] md:right-[4vw] z-50 -mr-30 backdrop-blur-md`}
           >
             <div
-              className="avatar"
+              className="avatar "
               onClick={() => navigator(`/profile/${loginUser?._id}`)}
             >
-              <div className="ring-primary ring-offset-base-100 w-10 h-10 rounded-full ring-2 ring-offset-2">
-                <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
-              </div>
+              <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                {" "}
+                {loginUser?.penName?.charAt(0).toUpperCase()}
+              </Avatar>
             </div>
           </div>
         </div>

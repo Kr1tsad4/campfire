@@ -6,6 +6,7 @@ import { TiPlus } from "react-icons/ti";
 import { FcInvite } from "react-icons/fc";
 import { BiLogOut } from "react-icons/bi";
 import { useUser } from "../hooks/useUser";
+import { MdExplore } from "react-icons/md";
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
@@ -46,8 +47,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
                 isHome ? "bg-[#3B3B1A]" : ""
               }`}
             >
-              <FaHome size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Home</h1>
+              <MdExplore size={25} />
+              <h1 className="font-bold text-[22px] -mt-1">Explore</h1>
             </button>
           </div>
           <div className="mt-5">
