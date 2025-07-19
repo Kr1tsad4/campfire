@@ -2,6 +2,7 @@ import NavigationMenu from "./NavigationMenu";
 import Header from "../components/Header";
 import { useNavigationBar } from "../contexts/NavigationContext";
 import { FaBars } from "react-icons/fa";
+import { useEffect } from "react";
 
 function Layout({
   children,
@@ -54,8 +55,8 @@ function Layout({
           <div
             className={`${
               hideNavBar
-                ? "ml-20 sm:ml-30 md:ml-30 lg:-ml-80 xl:ml-5"
-                : "ml-20 sm:ml-30 md:ml-30 lg:-ml-50 xl:ml-5"
+                ? "ml-21 md:ml-24 lg:-ml-130 xl:-ml-70"
+                : "ml-21 md:ml-24 lg:ml-100 xl:ml-90"
             }`}
           >
             {children}
