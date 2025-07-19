@@ -15,7 +15,7 @@ function Layout({
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
 
   return (
-    <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
+    <div className="flex bg-[#fcfff7ff] min-h-screen w-auto ">
       {!hideNavBar && (
         <NavigationMenu
           toggleSideNavBar={toggleSideNavBar}
@@ -26,7 +26,7 @@ function Layout({
         <div
           className={`${
             hideNavBar ? "block" : ""
-          } pt-6 pl-6 z-50 fixed max-[1025px]:ml-5 max-[426px]:-ml-3 max-[1441px]:mt-1`}
+          } pt-7 pl-5 z-50 fixed `}
         >
           <div className="flex gap-4 w-[200px] ">
             <button
@@ -35,6 +35,7 @@ function Layout({
             >
               <FaBars size={25} color="black" />
             </button>
+            {/* overflow-x-hidden */}
             <p className="font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden">
               MAAM PARTY
             </p>

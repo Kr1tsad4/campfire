@@ -3,6 +3,7 @@ import { usePosts } from "../hooks/usePosts";
 import { useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import { IoTrashBinOutline } from "react-icons/io5";
+import { useNavigationBar } from "../contexts/NavigationContext";
 
 import socket from "../socket";
 function PartyBoardPage({ loginUser }) {
@@ -23,6 +24,8 @@ function PartyBoardPage({ loginUser }) {
     fetchAllPost();
   }, []);
 
+  const { hideNavBar } = useNavigationBar();
+  
   const toggleComments = (postId) => {
     setShowCommentPostId((prevId) => (prevId === postId ? null : postId));
   };
@@ -56,10 +59,10 @@ function PartyBoardPage({ loginUser }) {
   };
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
-      <div className="ml-[600px] mt-25 text-black relative ">
-        <h1 className="text-4xl mb-2">Board</h1>
+      <div className={`${hideNavBar ? " md:ml-[30px] lg:ml-[920px] xl:ml-[640px]" : " md:ml-[30px] lg:ml-[0px]"} overflow-x-hidden mt-25 text-black relative `}>
+        <h1 className="text-4xl mb-2 ml-4 md:ml-0">Board</h1>
 
-        <div className="w-[500px] h-auto p-5">
+        <div className="w-[95vw] md:w-[85vw] lg:w-[60vw] h-auto p-5">
           <div className="border-1 p-5 mb-4 rounded-xl">
             <input
               type="text"

@@ -29,12 +29,10 @@ function MyPartyPage({ loginUser }) {
     <>
       <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
-          <div className={`min-w-full ml-1 max-[769px]:ml-0`}>
-            <p className={`text-[32px] text-black  mt-20  min-[1024px]:ml-[380px]`}>My parties</p>
+          <div className={``}>
+            <p className={` text-[32px] text-black mt-20 ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}>My parties</p>
             <div
-              className={`-mt-[80px] ${
-                hideNavBar ? "ml-[190px] max-[321px]:ml-47 " : ""
-              }`}
+              className={`-mt-[80px]`}
             >
               {userParties && (
                 <ListParty
@@ -47,7 +45,7 @@ function MyPartyPage({ loginUser }) {
                 />
               )}
               {(!userParties || userParties.length === 0) && (
-                <p className={`text-black text-[18px]  ml-[300px] max-[769px]:ml-0 max-[769px]:p-2 min-[1024px]:ml-[600px]`}>
+                <p className={`text-gray-600 text-[18px] `}>
                   {" "}
                   You haven’t created any parties yet.{" "}
                   <span
@@ -60,8 +58,8 @@ function MyPartyPage({ loginUser }) {
               )}
             </div>
           </div>
-          <div className={`min-w-full mb-28 mt-25 ml-1  max-[769px]:ml-0 `}>
-            <p className={`text-[32px] text-black  mt-10  min-[1024px]:ml-[380px]`}>Joined Parties</p>
+          <div className={``}>
+            <p className={`text-[32px] text-black mt-10 ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}>Joined Parties</p>
             <div className={`-mt-[80px]`}>
               {joinedParties && (
                 <ListParty
@@ -71,7 +69,7 @@ function MyPartyPage({ loginUser }) {
                 />
               )}
               {(!joinedParties || joinedParties.length === 0) && (
-                <p className={`text-black text-[18px] ml-[300px]  min-[1024px]:ml-[600px]`}>
+                <p className={`text-gray-600 text-[18px]`}>
                   You haven’t joined any parties yet.{" "}
                   <span
                     onClick={() => navigator("/home")}

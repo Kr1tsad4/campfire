@@ -17,9 +17,7 @@ function Header({
   return (
     <>
       <div
-        className={`h-[88px]  top-0 w-full fixed ml-[120px] pl-[250px] backdrop-blur-2xl z-10 
-         max-[1025px]:right-0  max-[769px]:pl-0 max-[321px]:pl-12  max-[376px]:pl-10 max-[426px]:ml-35 max-[769px]:ml-40 
-          
+        className={`h-[88px]  top-0 left-0 w-[100vw] fixed box-border backdrop-blur-2xl z-10  
         `}
       >
         <div

@@ -77,7 +77,7 @@ function InvitationsPage({ loginUser }) {
               hideNavBar ? "pl-5" : "pl-[380px]"
             } max-[769px]:pl-0`}
           >
-            {parties.map((party, index) => (
+            {parties ? parties.map((party, index) => (
               <div
                 key={index}
                 className={`flex w-[1120px] max-[1441px]:w-[1000px] max-[1025px]:w-[750px] max-[769px]:w-[700px] max-[376px]:w-[300px]  
@@ -130,7 +130,7 @@ function InvitationsPage({ loginUser }) {
                   </button>
                 </div>
               </div>
-            ))}
+            )) : <div>there is no invite.</div>}
           </div>
         </Layout>
       </div>

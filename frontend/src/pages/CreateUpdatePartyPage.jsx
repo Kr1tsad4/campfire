@@ -53,7 +53,7 @@ function CreateUpdatePartyPage({ type, loginUser }) {
   }, []);
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Layout loginUser={loginUser} hideSearchBar={true}>
         {type === "create" && (
           <PartyForm
