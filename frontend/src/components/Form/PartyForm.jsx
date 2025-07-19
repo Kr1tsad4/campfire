@@ -125,13 +125,13 @@ function PartyForm({
         </div>
         <label className="-ml-[390px] mb-2">Select party tags</label>
 
-        <div className="flex -ml-[250px] max-[426px]:pl-6">
+        <div className="flex flex-wrap gap-2 w-[500px]">
           {baseTags.map((tag, index) => {
             return (
               <div
                 key={index}
-                className={`mr-2 border-1 border-black rounded-[10px] px-2 py-[2px] text-[16px] cursor-default ${
-                  baseTags[index].selected ? "bg-[#f4cdb8ff]" : ""
+                className={`border border-black rounded-[10px] px-2 py-[2px] text-[16px] cursor-pointer select-none ${
+                  baseTags[index].selected ? "bg-[#f4cdb8ff]" : "bg-transparent"
                 }`}
                 onClick={() => handleSelectedTag(index)}
               >
