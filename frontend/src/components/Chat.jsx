@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import socket from "../socket";
+import { useNavigationBar } from "../contexts/NavigationContext";
 
 function Chat({ partyId, user }) {
   const [message, setMessage] = useState("");
@@ -34,13 +35,13 @@ function Chat({ partyId, user }) {
       setMessage("");
     }
   };
-
+  const { hideNavBar } = useNavigationBar();
   return (
     <div>
-      <div className="border-2 border-black p-5 overflow-auto max-h-[300px] h-[300px] w-[800px] bg-[#eecab7] text-black">
+      <div className={`rounded-lg p-5 overflow-auto max-h-[300px] h-[300px] xl:w-[700px] ${hideNavBar ? "lg:w-[600px]" : "lg:w-[400px]"} md:w-[460px] w-[90vw] shadow-sm shadow-[#7ad89a] text-black`}>
         {messages.length === 0 && <div>Let's chat now!</div>}
         {messages.map((msg, i) => (
-          <div key={i} className="text-black">
+          <div key={i} className="text-[#041c0cff]">
             <strong>{msg.user}</strong>: {msg.message}
           </div>
         ))}
@@ -49,11 +50,11 @@ function Chat({ partyId, user }) {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type message"
-        className="text-black border-1 rounded-2xl border-black mt-5 p-2 mr-5 w-[500px]"
+        className={`text-black rounded-2xl shadow-sm shadow-[#14552aff] p-2 mr-5 xl:w-[610px] ${hideNavBar ? "lg:w-[510px]" : "lg:w-[310px]"} md:w-[370px] w-[78vw] max-[520px]:w-[60vw]`}
       />
       <button
         onClick={sendMessage}
-        className="bg-[#f3bfa3] cursor-pointer hover:bg-[#f0b291]
+        className="bg-[#beffd4ff] cursor-pointer hover:bg-[#7ad89aff]
              rounded-[5px] w-fit mt-2 px-4 py-2 font-[700] text-black"
       >
         Send
