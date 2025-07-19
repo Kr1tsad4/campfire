@@ -43,9 +43,7 @@ function Homepage({ openPartyDetails, loginUser }) {
           handleSearchParty={handleSearchParty}
         >
           <div
-            className={`flex flex-row flex-wrap mt-20 gap-2 mb-20 fixed top-0 left-0 right-0 z-10 ${
-              hideNavBar ? "ml-[370px]" : "ml-[370px]"
-            }`}
+            className={`flex flex-row flex-wrap mt-20 gap-2 mb-20 fixed top-0 left-0 right-0 z-10 justify-center overflow-scroll h-auto`}
           >
             {baseTags.map((tag, index) => (
               <div key={index}>
