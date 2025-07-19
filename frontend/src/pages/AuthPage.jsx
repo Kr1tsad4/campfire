@@ -237,12 +237,12 @@ function AuthPage() {
           </div>
         )}
         {!isLogin && (
-          <div className="flex">
+          <div className="flex flex-wrap gap-2">
             {baseTags.map((tag, index) => {
               return (
                 <div
                   key={index}
-                  className={`mr-2 border-[1.5px] border-[] rounded-[10px] px-2 py-[2px] text-[16px] cursor-default}`}
+                  className={`cursor-pointer border-[1.5px] border-[] rounded-[10px] px-2 py-[2px] text-[16px]}`}
                   style={{
                     borderColor: colorTheme.style1,
                     backgroundColor: baseTags[index].selected
