@@ -29,11 +29,15 @@ function MyPartyPage({ loginUser }) {
     <>
       <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
+
           <div className={``}>
             <p className={` text-[32px] text-black mt-20 ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}>My parties</p>
             <div
               className={`-mt-[80px]`}
             >
+              My parties
+            </p>
+            <div className={`-mt-[80px] `}>
               {userParties && (
                 <ListParty
                   parties={userParties}

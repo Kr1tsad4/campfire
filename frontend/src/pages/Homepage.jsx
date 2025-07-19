@@ -4,7 +4,7 @@ import { useNavigationBar } from "../contexts/NavigationContext";
 import { useEffect, useState } from "react";
 import PartyDetailsPopup from "../components/PartyDetailsPopup";
 import Layout from "../components/Layout";
-
+import { useTags } from "../hooks/useTags";
 function Homepage({ openPartyDetails, loginUser }) {
   const {
     parties,
@@ -14,15 +14,25 @@ function Homepage({ openPartyDetails, loginUser }) {
     handleSearchParty,
     searchValue,
     setSearchValue,
+    selectedTags,
+    setSelectedTags,
   } = useParty();
-
+  const { fetchBaseTags, baseTags } = useTags();
   const { hideNavBar } = useNavigationBar();
 
-
   useEffect(() => {
-    fetchParties(loginUser, searchValue);
-  }, [loginUser]);
-  
+    fetchParties(loginUser, searchValue, selectedTags);
+    fetchBaseTags();
+  }, [loginUser, searchValue, selectedTags]);
+
+  const handleClickTagFilter = (tagName) => {
+    setSelectedTags((prev) =>
+      prev.includes(tagName)
+        ? prev.filter((tag) => tag !== tagName)
+        : [...prev, tagName]
+    );
+  };
+
   return (
     <>
       <div>
@@ -32,7 +42,28 @@ function Homepage({ openPartyDetails, loginUser }) {
           setSearchValue={setSearchValue}
           handleSearchParty={handleSearchParty}
         >
-          <ListParty
+          <div
+            className={`flex flex-row flex-wrap mt-20 gap-2 mb-20 fixed top-0 left-0 right-0 z-10 ${
+              hideNavBar ? "ml-[370px]" : "ml-[370px]"
+            }`}
+          >
+            {baseTags.map((tag, index) => (
+              <div key={index}>
+                <button
+                  className={`border-1 px-3 py-1 rounded-2xl cursor-pointer ${
+                    selectedTags.includes(tag.name)
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  }`}
+                  onClick={() => handleClickTagFilter(tag.name)}
+                >
+                  {tag.name}
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="mt-20">
+            <ListParty
             parties={parties}
             hideNavBar={hideNavBar}
             joinParty={joinParty}
@@ -40,6 +71,8 @@ function Homepage({ openPartyDetails, loginUser }) {
             viewPartyDetails={viewPartyDetails}
             openPartyDetails={openPartyDetails}
           />
+          </div>
+          
         </Layout>
       </div>
 

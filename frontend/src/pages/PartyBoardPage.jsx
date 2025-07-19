@@ -1,10 +1,11 @@
 import Layout from "../components/Layout";
 import { usePosts } from "../hooks/usePosts";
 import { useEffect, useState } from "react";
-import { FaRegComment } from "react-icons/fa6";
+import { FaRegCommentAlt } from "react-icons/fa";
 import { IoTrashBinOutline } from "react-icons/io5";
 import { useNavigationBar } from "../contexts/NavigationContext";
-
+import Avatar from "@mui/material/Avatar";
+import { deepOrange, deepPurple } from "@mui/material/colors";
 import socket from "../socket";
 function PartyBoardPage({ loginUser }) {
   const {
@@ -25,7 +26,7 @@ function PartyBoardPage({ loginUser }) {
   }, []);
 
   const { hideNavBar } = useNavigationBar();
-  
+
   const toggleComments = (postId) => {
     setShowCommentPostId((prevId) => (prevId === postId ? null : postId));
   };
@@ -64,16 +65,17 @@ function PartyBoardPage({ loginUser }) {
 
         <div className="w-[95vw] md:w-[85vw] lg:w-[60vw] h-auto p-5">
           <div className="border-1 p-5 mb-4 rounded-xl">
+
             <input
               type="text"
-              placeholder="content"
+              placeholder="What's on your mind ?"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="outline-none w-[380px] "
+              className="outline-none border-1 border-gray-400 w-full p-2 rounded-lg"
             />
             <div className="mt-5 flex justify-end">
               <button
-                className={` px-4 py-1 rounded-xl  ${
+                className={` px-4 py-1 rounded-md  ${
                   content ? "cursor-pointer bg-blue-500" : "bg-gray-400"
                 }`}
                 disabled={!content}
@@ -86,61 +88,86 @@ function PartyBoardPage({ loginUser }) {
           {posts?.map((post, index) => (
             <div
               key={post._id || index}
-              className="border-1 p-5 mb-4 rounded-xl"
+              className="border border-gray-300 mb-4 rounded-xl p-4 bg-white shadow-sm cursor-pointer hover:bg-gray-100 transition-all duration-100"
             >
-              <div className="flex justify-between">
-                <h1 className="text-2xl font-bold">{post.authorId.penName}</h1>
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4">
+                  <Avatar
+                    sx={{
+                      bgcolor: deepOrange[500],
+                      width: 40,
+                      height: 40,
+                      fontSize: 18,
+                    }}
+                  >
+                    {post.authorId.penName?.charAt(0).toUpperCase()}
+                  </Avatar>
+                  <div>
+                    <h1 className="text-lg font-semibold">
+                      {post.authorId.penName}
+                    </h1>
+                    <p className="text-sm mt-1 text-gray-700">{post.content}</p>
+
+                    <div className="flex items-center justify-between mt-3 w-full">
+                      <div className="flex items-center gap-2 text-sm text-gray-500 mr-70">
+                        <FaRegCommentAlt size={14} />
+                        <span>{post.comments.length}</span>
+                      </div>
+
+                      <button
+                        className="flex items-center gap-1 text-sm text-blue-600 hover:underline cursor-pointer"
+                        onClick={() => toggleComments(post._id)}
+                      >
+                        <FaRegCommentAlt size={14} />
+                        <span>Comment</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 {post?.authorId?._id === loginUser?._id && (
                   <button
-                    className="cursor-pointer"
+                    className="text-gray-600 hover:text-red-600"
                     onClick={() => openConfirmDeletePopup(post._id)}
                   >
-                    <IoTrashBinOutline size={20} />
+                    <IoTrashBinOutline size={18} />
                   </button>
                 )}
               </div>
-              <p>{post.content}</p>
-              <div className="flex gap-3 mt-2">
-                <button
-                  className="text-blue-500 underline cursor-pointer"
-                  onClick={() => toggleComments(post._id)}
-                >
-                  <FaRegComment size={20} color="black" />
-                </button>
-                <p>{post.comments.length}</p>
-              </div>
 
               {showCommentPostId === post._id && (
-                <div className="border-t-1 mt-2 pt-2">
-                  <div className="border-1 p-4 mb-4 rounded-xl h-15">
-                    <input
-                      type="text"
-                      placeholder="comment"
-                      value={commentContent}
-                      onChange={(e) => setCommentContent(e.target.value)}
-                      className="outline-none w-[380px] overflow-scroll"
-                    />
+                <div className="mt-4 pt-2 border-t border-gray-200">
+                  <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    value={commentContent}
+                    onChange={(e) => setCommentContent(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleComment(post._id);
+                      }
+                    }}
+                    className="w-full border border-gray-300 p-2 rounded-lg outline-none text-sm"
+                  />
+
+                  <div className="mt-3 space-y-2">
+                    {post.comments?.map((comment, cIndex) => (
+                      <div key={cIndex} className="pl-1">
+                        <p className="text-sm font-semibold">
+                          {comment.commentedBy.penName}
+                        </p>
+                        <p className="text-sm text-gray-700">
+                          {comment.content}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                  <div className=" flex justify-end">
-                    <button
-                      className="bg-blue-500 px-4 py-1 rounded-xl cursor-pointer"
-                      onClick={() => handleComment(post._id)}
-                    >
-                      Comment
-                    </button>
-                  </div>
-                  {post.comments?.map((comment, cIndex) => (
-                    <div key={cIndex}>
-                      <h1 className="text-xl font-bold">
-                        {comment.commentedBy.penName}
-                      </h1>
-                      <p>{comment.content}</p>
-                    </div>
-                  ))}
                 </div>
               )}
             </div>
           ))}
+
           {showConfirmPopup && (
             <div className="bg-opacity-40  inset-0 fixed flex justify-center items-center z-50 left-20">
               <div className="bg-white p-6 rounded-xl w-[300px] text-center shadow-lg">

@@ -35,8 +35,8 @@ function Layout({
             >
               <FaBars size={25} color="black" />
             </button>
-            {/* overflow-x-hidden */}
-            <p className="font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden">
+
+            <p className="font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden text-black ">
               MAAM PARTY
             </p>
           </div>

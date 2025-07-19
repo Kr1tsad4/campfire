@@ -39,12 +39,12 @@ function CreateUpdatePartyPage({ type, loginUser }) {
   const [enableCreateButton, setEnableCreateButton] = useState(false);
 
   useEffect(() => {
-    if (partyName.trim() && selectedDate && startTime) {
+    if (partyName.trim() && selectedDate) {
       setEnableCreateButton(true);
     } else {
       setEnableCreateButton(false);
     }
-  }, [partyName, selectedDate, startTime]);
+  }, [partyName, selectedDate]);
 
   useEffect(() => {
     if (id) {

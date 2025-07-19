@@ -49,7 +49,6 @@ function TimePicker({ label, selectedTime, setSelectedTime }) {
     <div className="mb-4 w-[500px] max-[321px]:-ml-5">
       <label className="block font-medium mb-1">
         {label}
-        {label === "Start Time" && <span className="text-red-500"> *</span>}
       </label>
       <div className="flex gap-2 max-[426px]:pl-4">
         <select

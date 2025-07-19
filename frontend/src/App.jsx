@@ -8,6 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import CreateUpdatePartyPage from "./pages/CreateUpdatePartyPage";
 import PartyLobbyPage from "./pages/PartyLobbyPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import LandingPage from "./pages/LandingPage";
 import { useUser } from "./hooks/useUser";
 import { useEffect } from "react";
 import { NavigationProvider } from "./contexts/NavigationContext";
@@ -21,7 +22,8 @@ function App() {
     <NavigationProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<AuthPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/auth" element={<AuthPage />} />
           <Route
             path="/home"
             element={
