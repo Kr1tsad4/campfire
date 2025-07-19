@@ -22,24 +22,36 @@ export const useParty = () => {
   const [userParties, setUserParties] = useState(null);
   const [joinedParties, setJoinedParties] = useState(null);
   const [isMember, setIsMember] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const navigator = useNavigate();
   const fetchParties = useCallback(
-    async (user, keyword = "") => {
+    async (user, keyword = "", selectedTags = []) => {
       try {
         const res = await getParties(API_URL);
         if (res) {
           let filtered = res;
 
           if (keyword.trim()) {
-            filtered = res.filter((p) =>
+            filtered = filtered.filter((p) =>
               p.name.toLowerCase().includes(keyword.toLowerCase())
             );
           }
+
+          if (selectedTags.length > 0) {
+            filtered = filtered.filter((p) =>
+              selectedTags.every((tag) =>
+                p.tags.some((partyTag) => partyTag.name === tag)
+              )
+            );
+          }
+
           filtered = filtered.filter((p) => {
             return !p.members?.some((m) => m._id === user?._id);
           });
+
           setParties(filtered);
+          console.log(parties);
         }
       } catch (error) {
         console.log(`Failed to fetch party.`);
@@ -65,6 +77,16 @@ export const useParty = () => {
     },
     [setParty]
   );
+
+  const handleTagsFilter = (selectedTags) => {
+    if (!Array.isArray(selectedTags)) return;
+
+    const filtered = parties?.filter((party) =>
+      selectedTags.every((tag) => party.tags.includes(tag))
+    );
+
+    setParties(filtered);
+  };
 
   const handleSearchParty = async (value, user) => {
     await fetchParties(user, value);
@@ -120,12 +142,14 @@ export const useParty = () => {
     const party = await getPartyById(API_URL, partyId);
 
     if (party) {
-      const isUserInParty = party.members.includes(userId);
+      const isUserInParty = party.members.some((m) => m._id === userId);
       if (isUserInParty) {
         const updatedMembers = party.members.filter(
-          (member) => member !== userId
+          (member) => member._id !== userId
         );
         await updateParty(API_URL, partyId, { members: updatedMembers });
+        await getUserJoinedParties(userId);
+
         navigator("/my-party");
       }
     }
@@ -177,6 +201,7 @@ export const useParty = () => {
     await getUserParties(userId);
     navigator("/my-party");
   };
+
   return {
     parties,
     fetchParties,
@@ -208,5 +233,8 @@ export const useParty = () => {
     deleteMyParty,
     updateMyParty,
     leaveParty,
+    handleTagsFilter,
+    selectedTags,
+    setSelectedTags,
   };
 };

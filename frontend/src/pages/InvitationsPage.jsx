@@ -74,9 +74,18 @@ function InvitationsPage({ loginUser }) {
         <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
             className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
-              hideNavBar ? "pl-5" : "pl-[380px]"
+              hideNavBar ? "ml-[500px]" : "pl-[0px]"
             } max-[769px]:pl-0`}
           >
+            <h1 className="text-black font-bold text-4xl mb-10">
+              Your Invitations
+            </h1>
+            {!parties ||
+              (parties.length === 0 && (
+                <p className="ml-[400px] text-lg text-black mt-10">
+                  You don’t have any invitations yet.
+                </p>
+              ))}
             {parties.map((party, index) => (
               <div
                 key={index}
@@ -108,9 +117,12 @@ function InvitationsPage({ loginUser }) {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 ml-[400px]">
                   <button
-                    className={buttonClass + " bg-green-200 border-green-800"}
+                    className={
+                      buttonClass +
+                      " bg-green-200 border-green-800 cursor-pointer"
+                    }
                     onClick={async () => {
                       handleDeleteInvite(party?.inviteId);
                       const tmp = await getPartyById(API_URL, party?._id);
@@ -123,7 +135,9 @@ function InvitationsPage({ loginUser }) {
                     accept
                   </button>
                   <button
-                    className={buttonClass + " bg-red-200 border-red-800"}
+                    className={
+                      buttonClass + " bg-red-200 border-red-800 cursor-pointer"
+                    }
                     onClick={() => handleDeleteInvite(party.inviteId)}
                   >
                     decline

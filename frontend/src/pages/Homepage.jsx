@@ -4,7 +4,7 @@ import { useNavigationBar } from "../contexts/NavigationContext";
 import { useEffect, useState } from "react";
 import PartyDetailsPopup from "../components/PartyDetailsPopup";
 import Layout from "../components/Layout";
-
+import { useTags } from "../hooks/useTags";
 function Homepage({ openPartyDetails, loginUser }) {
   const {
     parties,
@@ -14,15 +14,25 @@ function Homepage({ openPartyDetails, loginUser }) {
     handleSearchParty,
     searchValue,
     setSearchValue,
+    selectedTags,
+    setSelectedTags,
   } = useParty();
-
+  const { fetchBaseTags, baseTags } = useTags();
   const { hideNavBar } = useNavigationBar();
-
-
-  useEffect(() => {
-    fetchParties(loginUser, searchValue);
-  }, [loginUser]);
   
+  useEffect(() => {
+    fetchParties(loginUser, searchValue, selectedTags);
+    fetchBaseTags();
+  }, [loginUser, searchValue, selectedTags]);
+
+  const handleClickTagFilter = (tagName) => {
+    setSelectedTags((prev) =>
+      prev.includes(tagName)
+        ? prev.filter((tag) => tag !== tagName)
+        : [...prev, tagName]
+    );
+  };
+
   return (
     <>
       <div>
@@ -32,6 +42,22 @@ function Homepage({ openPartyDetails, loginUser }) {
           setSearchValue={setSearchValue}
           handleSearchParty={handleSearchParty}
         >
+          <div className="flex flex-row mt-25 -mb-20 gap-2">
+            {baseTags.map((tag, index) => (
+              <div key={index}>
+                <button
+                  className={`border-1 px-3 py-1 rounded-2xl cursor-pointer ${
+                    selectedTags.includes(tag.name)
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  }`}
+                  onClick={() => handleClickTagFilter(tag.name)}
+                >
+                  {tag.name}
+                </button>
+              </div>
+            ))}
+          </div>
           <ListParty
             parties={parties}
             hideNavBar={hideNavBar}

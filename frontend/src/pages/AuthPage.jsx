@@ -34,6 +34,8 @@ function AuthPage() {
     `bg-gray-300 text-gray-900 rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default`
   );
 
+  const [invalidUserNameOrPassword, setInvalidUserNameOrPassword] =
+    useState(false);
   const clearInput = () => {
     setUsername("");
     setPassword("");
@@ -117,7 +119,6 @@ function AuthPage() {
 
   const signIn = async () => {
     if (!isValidSignIn) {
-      console.log(`data incompleted`);
       return;
     }
     const data = {
@@ -128,9 +129,9 @@ function AuthPage() {
     if (user && user._id) {
       saveLoginUserSession(user);
       window.location.href = "/home";
+    }else{
+      setInvalidUserNameOrPassword(true)
     }
-    // const storage = sessionStorage.getItem('user');
-    // const storageObj = JSON.parse(storage);
     return;
   };
 
@@ -151,6 +152,11 @@ function AuthPage() {
     fetchBaseTags();
   }, []); // [] ทำให้รันแค่ครั้งเดียวเมื่อ component mount
 
+  useEffect(() =>{
+    if(!isLogin){
+      setInvalidUserNameOrPassword(false)
+    }
+  },[isLogin])
   return (
     <div
       className={` min-h-screen text-[] flex items-center justify-center`}
@@ -181,6 +187,9 @@ function AuthPage() {
           value={password}
           handleInput={(e) => setPassword(e)}
         />
+        {invalidUserNameOrPassword && (
+          <p className="text-red-500">Invalid username or password</p>
+        )}
         <div className="flex flex-row">
           {!isLogin && (
             <InputComponent

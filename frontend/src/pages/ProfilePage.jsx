@@ -5,6 +5,7 @@ import colorTheme from "../libs/colorTheme";
 import EditableText from "../components/editableText";
 import { useParams } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
+import { FaBars, FaHome } from "react-icons/fa";
 
 function ProfilePage() {
   const { id } = useParams();
