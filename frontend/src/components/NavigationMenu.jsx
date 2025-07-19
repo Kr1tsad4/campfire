@@ -59,7 +59,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
               }`}
             >
               <MdForum size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Party Board</h1>
+              <h1 className="font-bold text-[22px] -mt-1">Board</h1>
             </button>
           </div>
           <div className="mt-5">

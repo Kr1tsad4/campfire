@@ -23,7 +23,7 @@ function Header({
         className={`h-[88px]  top-0 left-0 w-[100vw] fixed box-border backdrop-blur-2xl z-10  
         `}
       >
-        <p className="text-black -ml-28 pt-5 font-bold text-[23px]">MAAM PARTY</p>
+        <p className="text-black ml-15 pt-6 font-bold text-[23px]">MAAM PARTY</p>
         <div
           className={`${
             hideNavBar ? "-ml-[50px]" : "ml-[80px]"
@@ -34,7 +34,7 @@ function Header({
           <div className={`flex mr-20 ${hideSearchBar ? "hidden" : ""}`}>
             <div
               className={`flex items-center w-[200px] md:w-[250px] lg:w-[500px] xl:w-[800px]
-            bg-[#EDE7F6] rounded-full px-4 py-2 fixed top-[6vw] md:top-[2vw] lg:top-[1.5vw] right-[22vw] md:right-[16vw] z-50`}
+            bg-[#EDE7F6] rounded-full px-4 py-2 fixed top-[6vw] md:top-[2vw] lg:top-[1.5vw] right-[22vw] md:right-[22vw] z-50`}
             >
               <input
                 type="text"
@@ -52,7 +52,7 @@ function Header({
           </div>
 
           <div
-            className={` pr-5 cursor-pointer fixed top-[6vw] right-[0vw] md:top-[1.75vw] md:right-[4vw] z-50 -mr-30 backdrop-blur-md`}
+            className={` pr-5 cursor-pointer fixed top-[6vw] right-[0vw] md:top-[1.75vw] md:right-[4vw] z-50 backdrop-blur-md`}
           >
             <div
               className="avatar "

@@ -60,12 +60,12 @@ function PartyForm({
 
   return (
     <div
-
-    // transition-all duration-300
+      // transition-all duration-300
       className={`flex flex-col text-black gap-3 pt-[88px] mt-6 mb-6   ${
-        hideNavBar ? "ml-10 sm:ml-25 lg:ml-250 xl:ml-235" : "xl:ml-75 lg:ml-20 sm:ml-25 ml-10 "
+        hideNavBar
+          ? "ml-10 sm:ml-25 lg:ml-250 xl:ml-235"
+          : "xl:ml-75 lg:ml-20 sm:ml-25 ml-10 "
       } `}
-
     >
       <div className="flex justify-start mb-5 ">
         {type === "create" && (
@@ -124,10 +124,11 @@ function PartyForm({
             setSelectedTime={setEndTime}
           />
         </div>
-        <label className="-ml-[390px] mb-2 max-[321px]:mr-12">Select party tags</label>
+        <label className="-ml-[390px] mb-2 max-[321px]:mr-12">
+          Select party tags
+        </label>
 
-        <div className="flex self-start max-[321px]:-ml-5">
-
+        <div className="flex self-start flex-wrap gap-3 w-full max-w-[500px] ">
           {baseTags.map((tag, index) => {
             return (
               <div
@@ -142,7 +143,15 @@ function PartyForm({
             );
           })}
         </div>
-        <div className={`${type === "create" ? "ml-[420px]" : type === "update" ? "ml-[320px]" : ""} mt-5 max-[426px]:-ml-45 max-[321px]:-ml-70`}>
+        <div
+          className={`${
+            type === "create"
+              ? "ml-[420px]"
+              : type === "update"
+              ? "ml-[320px]"
+              : ""
+          } mt-5 max-[426px]:-ml-45 max-[321px]:-ml-70`}
+        >
           {type === "create" && (
             <button
               onClick={() => createNewParty()}

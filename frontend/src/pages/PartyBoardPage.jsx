@@ -60,12 +60,17 @@ function PartyBoardPage({ loginUser }) {
   };
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
-      <div className={`${hideNavBar ? " md:ml-[30px] lg:ml-[920px] xl:ml-[640px]" : " md:ml-[30px] lg:ml-[0px]"} overflow-x-hidden mt-25 text-black relative `}>
-        <h1 className="text-4xl mb-2 ml-4 md:ml-0">Board</h1>
+      <div
+        className={`${
+          hideNavBar
+            ? " md:ml-[30px] lg:ml-[920px] xl:ml-[640px]"
+            : " md:ml-[30px] lg:ml-[0px]"
+        } overflow-x-hidden mt-25 text-black relative border-1 border-gray-300 rounded-xl bg-white shadow-sm`}
+      >
+        <h1 className="text-4xl ml-4 md:ml-0 pt-5 pl-6">Board</h1>
 
         <div className="w-[95vw] md:w-[85vw] lg:w-[60vw] h-auto p-5">
-          <div className="border-1 p-5 mb-4 rounded-xl">
-
+          <div className="p-2 mb-4 rounded-xl">
             <input
               type="text"
               placeholder="What's on your mind ?"
@@ -88,7 +93,7 @@ function PartyBoardPage({ loginUser }) {
           {posts?.map((post, index) => (
             <div
               key={post._id || index}
-              className="border border-gray-300 mb-4 rounded-xl p-4 bg-white shadow-sm cursor-pointer hover:bg-gray-100 transition-all duration-100"
+              className="border border-gray-300 mb-4 rounded-xl p-4 bg-white shadow-sm cursor-pointer"
             >
               <div className="flex justify-between items-start">
                 <div className="flex gap-4">
@@ -107,21 +112,6 @@ function PartyBoardPage({ loginUser }) {
                       {post.authorId.penName}
                     </h1>
                     <p className="text-sm mt-1 text-gray-700">{post.content}</p>
-
-                    <div className="flex items-center justify-between mt-3 w-full">
-                      <div className="flex items-center gap-2 text-sm text-gray-500 mr-70">
-                        <FaRegCommentAlt size={14} />
-                        <span>{post.comments.length}</span>
-                      </div>
-
-                      <button
-                        className="flex items-center gap-1 text-sm text-blue-600 hover:underline cursor-pointer"
-                        onClick={() => toggleComments(post._id)}
-                      >
-                        <FaRegCommentAlt size={14} />
-                        <span>Comment</span>
-                      </button>
-                    </div>
                   </div>
                 </div>
 
@@ -135,6 +125,20 @@ function PartyBoardPage({ loginUser }) {
                 )}
               </div>
 
+              <div className="flex items-center justify-between  mt-3">
+                <div className="flex items-center gap-2 text-sm text-gray-500 ">
+                  <FaRegCommentAlt size={14} />
+                  <span>{post.comments.length}</span>
+                </div>
+
+                <button
+                  className="flex items-center self-end gap-1 text-sm text-blue-600 hover:underline cursor-pointer"
+                  onClick={() => toggleComments(post._id)}
+                >
+                  <FaRegCommentAlt size={14} />
+                  <p>Comment</p>
+                </button>
+              </div>
               {showCommentPostId === post._id && (
                 <div className="mt-4 pt-2 border-t border-gray-200">
                   <input
@@ -153,13 +157,25 @@ function PartyBoardPage({ loginUser }) {
 
                   <div className="mt-3 space-y-2">
                     {post.comments?.map((comment, cIndex) => (
-                      <div key={cIndex} className="pl-1">
-                        <p className="text-sm font-semibold">
-                          {comment.commentedBy.penName}
-                        </p>
-                        <p className="text-sm text-gray-700">
-                          {comment.content}
-                        </p>
+                      <div key={cIndex} className="pl-1 flex gap-3">
+                        <Avatar
+                          sx={{
+                            bgcolor: deepOrange[500],
+                            width: 25,
+                            height: 25,
+                            fontSize: 10,
+                          }}
+                        >
+                          {post.authorId.penName?.charAt(0).toUpperCase()}
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-semibold">
+                            {comment.commentedBy.penName}
+                          </p>
+                          <p className="text-sm text-gray-700">
+                            {comment.content}
+                          </p>
+                        </div>
                       </div>
                     ))}
                   </div>

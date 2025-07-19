@@ -11,7 +11,7 @@ function LandingPage({ loginUser }) {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a onClick={() => navigator("/create-party")} className="text-white">Login / Register</a>
+              <a onClick={() => navigator("/auth")} className="text-white">Login / Register</a>
             </li>
           </ul>
         </div>
