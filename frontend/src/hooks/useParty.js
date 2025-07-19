@@ -51,7 +51,6 @@ export const useParty = () => {
           });
 
           setParties(filtered);
-          console.log(parties);
         }
       } catch (error) {
         console.log(`Failed to fetch party.`);
@@ -120,7 +119,7 @@ export const useParty = () => {
     };
     const newParty = await createParty(API_URL, partyData);
     if (newParty) {
-      await fetchParties();
+      await fetchParties(userId, "", []);
       navigator("/my-party");
     }
   };

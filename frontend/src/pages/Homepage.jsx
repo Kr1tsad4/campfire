@@ -19,7 +19,7 @@ function Homepage({ openPartyDetails, loginUser }) {
   } = useParty();
   const { fetchBaseTags, baseTags } = useTags();
   const { hideNavBar } = useNavigationBar();
-  
+
   useEffect(() => {
     fetchParties(loginUser, searchValue, selectedTags);
     fetchBaseTags();
@@ -42,7 +42,11 @@ function Homepage({ openPartyDetails, loginUser }) {
           setSearchValue={setSearchValue}
           handleSearchParty={handleSearchParty}
         >
-          <div className="flex flex-row mt-25 -mb-20 gap-2">
+          <div
+            className={`flex flex-row flex-wrap mt-20 gap-2 mb-20 fixed top-0 left-0 right-0 z-50 ${
+              hideNavBar ? "ml-[370px]" : "ml-[370px]"
+            }`}
+          >
             {baseTags.map((tag, index) => (
               <div key={index}>
                 <button
@@ -58,7 +62,8 @@ function Homepage({ openPartyDetails, loginUser }) {
               </div>
             ))}
           </div>
-          <ListParty
+          <div className="mt-20">
+            <ListParty
             parties={parties}
             hideNavBar={hideNavBar}
             joinParty={joinParty}
@@ -66,6 +71,8 @@ function Homepage({ openPartyDetails, loginUser }) {
             viewPartyDetails={viewPartyDetails}
             openPartyDetails={openPartyDetails}
           />
+          </div>
+          
         </Layout>
       </div>
 
