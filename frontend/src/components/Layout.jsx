@@ -15,7 +15,7 @@ function Layout({
   const { hideNavBar, toggleSideNavBar } = useNavigationBar();
 
   return (
-    <div className="flex bg-[#fcfff7ff] min-h-screen w-auto ">
+    <div className="flex bg-[#f9fffbff] min-h-screen w-auto ">
       {!hideNavBar && (
         <NavigationMenu
           toggleSideNavBar={toggleSideNavBar}

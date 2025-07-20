@@ -51,7 +51,7 @@ function ListParty({
         {parties.map((party, index) => (
           <div
             key={index}
-            className={`flex flex-col md:flex-row ${
+            className={`flex flex-col md:flex-row bg-[#ffffff] ${
               hideNavBar
                 ? "w-[calc(95vw)]"
                 : "w-[calc(95vw)] lg:w-[calc(100vw-350px)]"

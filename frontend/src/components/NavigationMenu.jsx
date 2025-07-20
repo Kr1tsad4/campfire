@@ -21,7 +21,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   return (
     <>
       <div
-        className="w-[250px] min-h-screen bg-[#8A784E] fixed z-20 
+        className="w-[250px] min-h-screen bg-[#093c1aff] fixed z-20 
           max-[1025px]:min-h-full max-[1025px]:w-[300px] max-[321px]:w-[320px] max-[426px]:w-[250px]"
       >
         <div className="flex gap-4 px-5">
@@ -43,8 +43,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-10">
             <button
               onClick={() => navigator("/home")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isHome ? "bg-[#3B3B1A]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isHome ? "bg-[#041c0cff]" : ""
               }`}
             >
               <MdExplore size={25} />
@@ -54,8 +54,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/party-board")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isPartyBoard ? "bg-[#3B3B1A]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isPartyBoard ? "bg-[#041c0cff]" : ""
               }`}
             >
               <MdForum size={25} />
@@ -65,8 +65,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/my-party")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isParty ? "bg-[#3B3B1A]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isParty ? "bg-[#041c0cff]" : ""
               }`}
             >
               <RiTeamFill size={25} />
@@ -77,8 +77,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/create-party")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isCreateParty ? "bg-[#3B3B1A]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isCreateParty ? "bg-[#041c0cff]" : ""
               }`}
             >
               <TiPlus size={25} />
@@ -88,8 +88,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           <div className="mt-5">
             <button
               onClick={() => navigator("/invitations")}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 ${
-                isInvitations ? "bg-[#3B3B1A]" : ""
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isInvitations ? "bg-[#041c0cff]" : ""
               }`}
             >
               <FcInvite size={25} />
@@ -103,7 +103,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
                 removeLoginUser();
                 navigator("/");
               }}
-              className={`cursor-pointer flex gap-4 hover:bg-[#3B3B1A] transition-all w-full px-5 py-3 `}
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 `}
             >
               <BiLogOut size={25} />
               <h1 className="font-bold text-[22px] -mt-1">Logout</h1>
