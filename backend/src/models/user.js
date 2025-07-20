@@ -45,6 +45,13 @@ const UserModelSchema = new Schema(
       trim: true,
       default: "",
     },
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null,
+      },
+    ],
     interestedTag: [
       {
         type: mongoose.Schema.Types.ObjectId,
