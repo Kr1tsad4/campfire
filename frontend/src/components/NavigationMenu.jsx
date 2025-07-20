@@ -7,6 +7,7 @@ import { FcInvite } from "react-icons/fc";
 import { BiLogOut } from "react-icons/bi";
 import { useUser } from "../hooks/useUser";
 import { MdExplore } from "react-icons/md";
+import { FaUserFriends } from "react-icons/fa";
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
@@ -16,6 +17,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const isCreateParty = location.pathname === "/create-party";
   const isParty = location.pathname === "/my-party";
   const isInvitations = location.pathname === "/invitations";
+  const isFriends = location.pathname === "/friends";
 
   const { removeLoginUser } = useUser();
   return (
@@ -73,7 +75,17 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
               <h1 className="font-bold text-[22px] -mt-1">My Party</h1>
             </button>
           </div>
-
+          <div className="mt-5">
+            <button
+              onClick={() => navigator("/friends")}
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isFriends ? "bg-[#041c0cff]" : ""
+              }`}
+            >
+              <FaUserFriends size={25} />
+              <h1 className="font-bold text-[22px] -mt-1">Friends</h1>
+            </button>
+          </div>
           <div className="mt-5">
             <button
               onClick={() => navigator("/create-party")}
@@ -96,7 +108,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
               <h1 className="font-bold text-[22px] -mt-1">Invitations</h1>
             </button>
           </div>
-  
+
           <div className="mt-5">
             <button
               onClick={() => {

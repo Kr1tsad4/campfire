@@ -9,6 +9,7 @@ import CreateUpdatePartyPage from "./pages/CreateUpdatePartyPage";
 import PartyLobbyPage from "./pages/PartyLobbyPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LandingPage from "./pages/LandingPage";
+import FriendsPage from "./pages/FriendsPage";
 import { useUser } from "./hooks/useUser";
 import { useEffect } from "react";
 import { NavigationProvider } from "./contexts/NavigationContext";
@@ -61,6 +62,14 @@ function App() {
             element={
               <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
                 <MyPartyPage loginUser={loginUser} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/friends"
+            element={
+              <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+                <FriendsPage loginUser={loginUser} />
               </ProtectedRoute>
             }
           />

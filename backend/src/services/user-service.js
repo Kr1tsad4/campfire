@@ -3,17 +3,29 @@ const bcrypt = require("bcryptjs");
 const createError = require("http-errors");
 
 const findAll = async () => {
-  return await User.find().select("-__v").populate({
-    path: "interestedTag",
-    select: "_id name", 
-  });;
+  return await User.find()
+    .select("-__v")
+    .populate({
+      path: "interestedTag",
+      select: "_id name",
+    })
+    .populate({
+      path: "friends",
+      select: "_id penName interestedTag aboutMe",
+    });
 };
 
 const findById = async (id) => {
-  const user = await User.findById(id).select("-__v").populate({
-    path: "interestedTag",
-    select: "_id name", 
-  });;
+  const user = await User.findById(id)
+    .select("-__v")
+    .populate({
+      path: "interestedTag",
+      select: "_id name",
+    })
+    .populate({
+      path: "friends",
+      select: "_id penName interestedTag aboutMe",
+    });
   if (!user) {
     throw createError(404, `User not found with id ${id}.`);
   }
@@ -53,12 +65,13 @@ const update = async (id, userData) => {
     dob,
     interestedTag,
     aboutMe,
+    friends,  
   } = userData;
 
   let isUpdated = false;
   const user = await User.findById(id);
   if (!user) throw createError(404, `User not found with id ${id}.`);
-  console.log(user.aboutMe);
+
   const updateData = {};
   if (username && user.username !== username) {
     const existingUsername = await User.findOne({ username: username });
@@ -107,10 +120,17 @@ const update = async (id, userData) => {
     updateData.aboutMe = aboutMe;
     isUpdated = true;
   }
+  if (friends !== undefined) {
+    updateData.friends = friends;
+    isUpdated = true;
+  }
+
   if (!isUpdated) throw createError(400, "Does not have any different data.");
-  const updatedUser = await User.findByIdAndUpdate(id, updateData);
+
+  const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
   return updatedUser;
 };
+
 
 const deleteUser = async (id) => {
   const existingUser = await User.findById(id);
