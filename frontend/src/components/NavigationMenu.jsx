@@ -19,7 +19,12 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const isInvitations = location.pathname === "/invitations";
   const isFriends = location.pathname === "/friends";
 
-  const { removeLoginUser } = useUser();
+  const { removeLoginUser, setLoginUser } = useUser();
+  const handleLogout = async () => {
+    removeLoginUser();
+    setLoginUser(null);
+    window.location.href = "/";
+  };
   return (
     <>
       <div
@@ -111,10 +116,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
 
           <div className="mt-5">
             <button
-              onClick={() => {
-                removeLoginUser();
-                navigator("/");
-              }}
+              onClick={() => handleLogout()}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 `}
             >
               <BiLogOut size={25} />
