@@ -8,7 +8,6 @@ const {
   invitationSocketHandler,
 } = require("./src/sockets/invitation-socket.js");
 const { commentSocketHandler } = require("./src/sockets/comment-socket.js");
-const { friendSocketHandler } = require("./src/sockets/friend-socket.js");
 connectDB();
 const port = process.env.PORT;
 
@@ -25,7 +24,6 @@ io.on("connection", (socket) => {
   chatSocketHandler(io, socket);
   invitationSocketHandler(io, socket);
   commentSocketHandler(io, socket);
-  friendSocketHandler(io, socket);
 });
 
 server.listen(port, () => {

@@ -2,8 +2,8 @@ const FriendRequest = require("../models/friend-request");
 const createError = require("http-errors");
 const User = require("../models/user");
 
-
-const create = async ({ fromUser, toUser }) => {
+const create = async (requestData) => {
+  const { fromUser, toUser } = requestData;
   const createdRequest = await FriendRequest.create({ fromUser, toUser });
   return await createdRequest.populate({
     path: "fromUser",
@@ -11,15 +11,16 @@ const create = async ({ fromUser, toUser }) => {
   });
 };
 
-const getUserRequests = async (userId) => {
-  return await FriendRequest.find({ toUser: userId }).populate({
-    path: "fromUser",
-    select: "_id penName",
-  });
+const getRequests = async (userId) => {
+  return await FriendRequest.find({ toUser: userId })
+    .populate({
+      path: "fromUser",
+      select: "_id penName",
+    })
+    .populate({ path: "toUser", select: "_id penName" });
 };
 
-
-const acceptRequest = async (userId, requestId) => {
+const acceptRequest = async (requestId) => {
   const request = await FriendRequest.findById(requestId);
   if (!request) throw createError(404, "Friend request not found");
 
@@ -43,4 +44,4 @@ const deleteById = async (requestId) => {
   }
 };
 
-module.exports = { create, getUserRequests, deleteById, acceptRequest};
+module.exports = { create, getRequests, deleteById, acceptRequest };

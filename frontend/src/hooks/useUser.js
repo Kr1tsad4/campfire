@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { getUser, getUserById, updateUser } from "../libs/fetchUsersUtils";
+import {
+  acceptFriendRequest,
+  createFriendRequest,
+  deleteFriendRequest,
+  getUser,
+  getUserById,
+  getUserRequests,
+  updateUser,
+} from "../libs/fetchUsersUtils";
 import { API_URL } from "../libs/api";
 import { getPartyById } from "../libs/fetchPartyUtils";
 
@@ -10,7 +18,7 @@ export const useUser = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [user, setUser] = useState(null);
   const [friends, setFriends] = useState([]);
-
+  const [requests, setRequests] = useState([]);
   const getAllUser = async () => {
     const users = await getUser(API_URL);
     setAllUsers(users || []);
@@ -22,7 +30,10 @@ export const useUser = () => {
 
   const getUserFriends = async (userId) => {
     const user = await getUserById(API_URL, userId);
-    setFriends(user.friends);
+    setFriends(user.friends || []);
+
+    setLoginUser(user);
+    saveLoginUserSession(user);
   };
   const saveLoginUserSession = (user) => {
     sessionStorage.setItem("user", JSON.stringify(user));
@@ -51,8 +62,6 @@ export const useUser = () => {
     await updateUser(API_URL, friendId, { friends: updatedFriendFriends });
 
     const updatedLoginUser = await getUserById(API_URL, userId);
-
-    setLoginUser(updatedLoginUser);
     saveLoginUserSession(updatedLoginUser);
   };
 
@@ -68,7 +77,7 @@ export const useUser = () => {
 
       const result = allUsers.filter((user) => {
         const isAlreadyMember = members.some(
-          (member) => member._id.toString() === user._id.toString()
+          (member) => member._id === user._id
         );
         return (
           user.penName.toLowerCase().includes(searchValue.toLowerCase()) &&
@@ -77,15 +86,11 @@ export const useUser = () => {
       });
       setSearchResult(result);
     } else if (from === "friends" && loginUser) {
-      const userFriends = loginUser?.friends?.map((friend) => friend);
       const result = allUsers.filter((user) => {
         const isLoginUser = user._id === loginUser._id;
-        const isAlreadyFriend = userFriends?.some(
-          (friendId) => friendId === user._id
-        );
+
         return (
           user.penName.toLowerCase().includes(searchValue.toLowerCase()) &&
-          !isAlreadyFriend &&
           !isLoginUser
         );
       });
@@ -93,6 +98,32 @@ export const useUser = () => {
     }
   };
 
+  const createRequest = async (fromUserId, toUserId) => {
+    await createFriendRequest(API_URL, {
+      fromUser: fromUserId,
+      toUser: toUserId,
+    });
+  };
+
+  const acceptUserRequest = async (requestId, userId) => {
+    await acceptFriendRequest(API_URL, requestId);
+
+    const updatedLoginUser = await getUserById(API_URL, userId);
+    saveLoginUserSession(updatedLoginUser);
+  };
+
+  const getUserRequest = async (userId) => {
+    const req = await getUserRequests(API_URL, userId);
+    if (req) {
+      setRequests(req);
+    } else {
+      setRequests([]);
+    }
+  };
+
+  const deleteUserRequest = async (requestId) => {
+    await deleteFriendRequest(API_URL, requestId);
+  };
   return {
     loginUser,
     getLoginUser,
@@ -107,5 +138,13 @@ export const useUser = () => {
     getUserFriends,
     friends,
     deleteUserFriend,
+    setLoginUser,
+    createRequest,
+    requests,
+    getUserRequest,
+    deleteUserRequest,
+    acceptUserRequest,
+    setFriends,
+    setSearchResult,
   };
 };
