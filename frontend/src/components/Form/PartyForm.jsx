@@ -61,7 +61,7 @@ function PartyForm({
   return (
     <div
       // transition-all duration-300
-      className={`flex flex-col text-black gap-3 mt-[88px] mt-6 mb-6 md:bg-[#ffffff] md:p-4 md:border-2 md:rounded-xl ${
+      className={`flex flex-col text-black shadow-xl gap-3 mt-[88px] mb-6 md:bg-[#ffffff] md:p-4 md:rounded-xl ${
         hideNavBar
           ? "ml-10 sm:ml-25 lg:ml-250 xl:ml-235"
           : "xl:ml-75 lg:ml-20 sm:ml-25 ml-10 "

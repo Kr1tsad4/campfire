@@ -16,7 +16,7 @@ function InvitePopup({
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    searchUserByName(value, partyId);
+    searchUserByName("party",value, partyId,null);
   };
   useEffect(() => {
     getAllUser();
