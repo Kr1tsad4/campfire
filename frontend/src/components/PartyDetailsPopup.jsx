@@ -30,10 +30,17 @@ function PartyDetailsPopup() {
   if (!party) return <div>Loading...</div>;
 
   return (
-    <div className="flex bg-[#c86e5a] h-[650px] w-[800px] max-[1025px]:w-[700px] max-[1025px]:h-[600px] max-[769px]:w-[600px] max-[426px]:w-[380px] max-[321px]:w-[300px] rounded-2xl m-5">
+    <div className="mt-10 flex bg-[#beffd4ff] xl:w-[800px] lg:w-[600px] md:w-[600px] w-[90vw] rounded-2xl max-[426px]:ml-5 box-border overflow-y-auto scrollbar-hide h-[85vh]">
       <div className="text-black">
-        <div className="h-[250px] w-[800px] bg-[#FEF3C7] rounded-t-2xl max-[1025px]:w-[700px] max-[769px]:w-[600px] max-[426px]:w-[380px] max-[321px]:w-[300px]"></div>
-        <div className="ml-10 mt-5 text-[18px]">
+        <div
+          className="max-[426px]:h-[52vw] max-[426px]:w-[80vw]
+         xl:h-[330px] xl:w-[800px]
+         lg:h-[250px] lg:w-[600px]
+         md:h-[250px] md:w-[600px]
+         h-[30vh] w-[90vw] max-[426px]:w-[90vw]
+        bg-[#e3ffecff] rounded-t-2xl "
+        ></div>
+        <div className="ml-5 mt-5 text-[18px] p-5 max-[426px]:p-1">
           <h1 className="">Party name : {party.name}</h1>
           <h1>Owner : {party.ownerName}</h1>
           <h1>Description : {party.description}</h1>
@@ -63,7 +70,7 @@ function PartyDetailsPopup() {
             {!isMember && (
               <button
                 onClick={() => joinParty(loginUser._id, party._id)}
-                className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#f0b291] "
+                className="bg-[#63b77fff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#2f9952ff] "
               >
                 Join
               </button>
@@ -71,14 +78,14 @@ function PartyDetailsPopup() {
             {isMember && (
               <button
                 onClick={() => navigator(`/party/${partyId}/lobby`)}
-                className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#f0b291] "
+                className="bg-[#63b77fff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#2f9952ff] "
               >
                 view
               </button>
             )}
             <button
               onClick={() => navigator(-1)}
-              className="bg-[#f3bfa3] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#f0b291] "
+              className="bg-[#7ad89aff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#63b77fff] "
             >
               Close
             </button>

@@ -26,7 +26,7 @@ function Layout({
         <div
           className={`${
             hideNavBar ? "block" : ""
-          } pt-7 pl-5 z-50 fixed `}
+          } pt-7 pl-5 z-15 fixed `}
         >
           <div className="flex gap-4 w-[200px] ">
             <button
