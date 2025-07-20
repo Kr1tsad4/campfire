@@ -3,13 +3,15 @@ import Layout from "../components/Layout";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../libs/fetchUsersUtils";
+import { useFriend } from "../hooks/useFriend";
+import { deleteFriendRequest } from "../libs/fetchFriendsUtil";
+import { API_URL } from "../libs/api";
 function FriendsPage({ loginUser }) {
   const {
     getLoginUser,
     searchUserByName,
     searchResult,
     getAllUser,
-    getUserFriends,
     friends,
     createRequest,
     requests,
@@ -20,6 +22,13 @@ function FriendsPage({ loginUser }) {
     setFriends,
     setSearchResult,
   } = useUser();
+  const {
+    acceptStatusFriends,
+    pendingStatusFriends,
+    getUserFriends,
+    setAcceptStatusFriends,
+    setPendingStatusFriends,
+  } = useFriend();
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [section, setSection] = useState("my-friends");
@@ -39,9 +48,9 @@ function FriendsPage({ loginUser }) {
     await getUserRequest(loginUser._id);
   };
 
-  const handleDeleteFriend = async (userId, friendId) => {
-    await deleteUserFriend(userId, friendId);
-    setFriends((prevFriends) => prevFriends.filter((f) => f._id !== friendId));
+  const handleDeleteFriend = async (API_URL, userId, friendId) => {
+    const result = await deleteFriendRequest(API_URL, userId, friendId);
+    setAcceptStatusFriends((prevFriends) => prevFriends.filter((f) => f.fromUser._id !== friendId));
   };
 
   const handleAcceptFriend = async (requestId) => {
@@ -56,20 +65,18 @@ function FriendsPage({ loginUser }) {
   useEffect(() => {
     if (loginUser?._id) {
       getUserFriends(loginUser._id);
-      getUserRequest(loginUser._id);
+      // getUserRequest(loginUser._id);
+    }
+  }, [loginUser]);
+  useEffect(() => {
+    if (loginUser?._id) {
+      getUserFriends(loginUser._id);
+      // getUserRequest(loginUser._id);
     }
   }, [loginUser]);
 
   useEffect(() => {
-    getLoginUser();
-    getAllUser();
-    setInputValue("");
-    setSearchResult([]);
-    if (loginUser?._id) {
-      getUserRequest(loginUser._id);
-      getUserFriends(loginUser._id);
-    }
-  }, [section]);
+  }, [acceptStatusFriends]);
 
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
@@ -122,7 +129,7 @@ function FriendsPage({ loginUser }) {
         <div className="mt-5 p-5">
           {section === "my-friends" && (
             <div>
-              {friends.length === 0 && (
+              {acceptStatusFriends.length === 0 && (
                 <div className="text-center mb-5">
                   Looks like your friend list is empty.{" "}
                   <span
@@ -133,17 +140,17 @@ function FriendsPage({ loginUser }) {
                   </span>
                 </div>
               )}
-              {friends?.map((friend, index) => (
+              {acceptStatusFriends?.map((friend, index) => (
                 <div key={index}>
                   <div
                     className="flex justify-between mb-3"
-                    onClick={() => navigate(`/profile/${friend._id}`)}
+                    onClick={() => navigate(`/profile/${friend.fromUser._id}`)}
                   >
-                    <p>{friend.penName}</p>
+                    <p>{friend.fromUser.penName}</p>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteFriend(loginUser._id, friend._id);
+                        handleDeleteFriend(API_URL, loginUser._id, friend.fromUser._id);
                       }}
                       className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
                     >
@@ -154,8 +161,8 @@ function FriendsPage({ loginUser }) {
               ))}
             </div>
           )}
-          {/*friend req section */}
-          {section === "friend-request" && (
+          {/*friend req section  -------------------------x--------------------*/} 
+          {/* {section === "friend-request" && (
             <div className="p-5 pt-0 text-center">
               {requests?.length === 0 && (
                 <div className="text-center">
@@ -184,9 +191,10 @@ function FriendsPage({ loginUser }) {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
+          
           {/* find friends section */}
-          {section === "find-friends" && (
+          {/* {section === "find-friends" && (
             <div>
               <input
                 type="text"
@@ -218,7 +226,7 @@ function FriendsPage({ loginUser }) {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </Layout>

@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import {
-  acceptFriendRequest,
-  createFriendRequest,
-  deleteFriendRequest,
   getUser,
   getUserById,
-  getUserRequests,
   updateUser,
 } from "../libs/fetchUsersUtils";
 import { API_URL } from "../libs/api";
@@ -98,28 +94,28 @@ export const useUser = () => {
     }
   };
 
-  const createRequest = async (fromUserId, toUserId) => {
-    await createFriendRequest(API_URL, {
-      fromUser: fromUserId,
-      toUser: toUserId,
-    });
-  };
+  // const createRequest = async (fromUserId, toUserId) => {
+  //   await createFriendRequest(API_URL, {
+  //     fromUser: fromUserId,
+  //     toUser: toUserId,
+  //   });
+  // };
 
-  const acceptUserRequest = async (requestId, userId) => {
-    await acceptFriendRequest(API_URL, requestId);
+  // const acceptUserRequest = async (requestId, userId) => {
+  //   await acceptFriendRequest(API_URL, requestId);
 
-    const updatedLoginUser = await getUserById(API_URL, userId);
-    saveLoginUserSession(updatedLoginUser);
-  };
+  //   const updatedLoginUser = await getUserById(API_URL, userId);
+  //   saveLoginUserSession(updatedLoginUser);
+  // };
 
-  const getUserRequest = async (userId) => {
-    const req = await getUserRequests(API_URL, userId);
-    if (req) {
-      setRequests(req);
-    } else {
-      setRequests([]);
-    }
-  };
+  // const getUserRequest = async (userId) => {
+  //   const req = await getUserRequests(API_URL, userId);
+  //   if (req) {
+  //     setRequests(req);
+  //   } else {
+  //     setRequests([]);
+  //   }
+  // };
 
   const deleteUserRequest = async (requestId) => {
     await deleteFriendRequest(API_URL, requestId);
@@ -139,11 +135,11 @@ export const useUser = () => {
     friends,
     deleteUserFriend,
     setLoginUser,
-    createRequest,
+    // createRequest,
     requests,
-    getUserRequest,
+    // getUserRequest,
     deleteUserRequest,
-    acceptUserRequest,
+    // acceptUserRequest,
     setFriends,
     setSearchResult,
   };
