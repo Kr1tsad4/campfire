@@ -64,7 +64,7 @@ function DateOfBirth({
   ];
 
   return (
-    <div>
+    <div className="max-[426px]:flex max-[426px]:flex-col">
       {/* year */}
       <div className="text-[16px] text-gray-700 font-[500] mb-2">
         Date of birth

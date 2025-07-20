@@ -94,7 +94,7 @@ function App() {
             path="/invitations"
             element={
               <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
-                <InvitationsPage loginUser={loginUser} />
+                <InvitationsPage openPartyDetails={true} loginUser={loginUser} />
               </ProtectedRoute>
             }
           />

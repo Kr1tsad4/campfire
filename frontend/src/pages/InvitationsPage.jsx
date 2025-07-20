@@ -9,12 +9,15 @@ import Layout from "../components/Layout";
 import { useParty } from "../hooks/useParty";
 import PartyDeletedPopup from "../components/PartyDeletePopup";
 
-function InvitationsPage({ loginUser }) {
+function InvitationsPage({ openPartyDetails, loginUser }) {
   const { hideNavBar } = useNavigationBar();
-  const { joinParty } = useParty();
+  const { joinParty, viewPartyDetails } = useParty();
   const { userInvitation, setUserInvitation, fetchUserInvitation } =
     useInvitation();
-
+  const openDetailsPopup = (partyId) => {
+    openPartyDetails = true;
+    viewPartyDetails(partyId);
+  };
   const getPartyByArr = async () => {
     const partyArr = await Promise.all(
       userInvitation.map(async (invite) => {
@@ -73,9 +76,9 @@ function InvitationsPage({ loginUser }) {
       <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
         <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
-            className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 transition-all duration-300 ${
-              hideNavBar ? "ml-[500px]" : "pl-[0px]"
-            } max-[769px]:pl-0`}
+            className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 ${
+              hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : ""
+            }`}
           >
             <h1 className="text-black font-bold text-4xl mb-10">
               Your Invitations
@@ -89,41 +92,54 @@ function InvitationsPage({ loginUser }) {
             {parties.map((party, index) => (
               <div
                 key={index}
-                className={`flex w-[1120px] max-[1441px]:w-[1000px] max-[1025px]:w-[750px] max-[769px]:w-[700px] max-[376px]:w-[300px]  
-              max-[426px]:w-[400px] max-[426px]:h-[180px] border-1 border-gray-200 h-[200px] rounded-2xl relative
+                className={`flex flex-col md:flex-row bg-[#ffffff] ${
+                  hideNavBar
+                    ? "w-[calc(95vw)]"
+                    : "w-[calc(95vw)] lg:w-[calc(100vw-350px)]"
+                }
+              border border-gray-200 rounded-2xl relative
               p-3 cursor-pointer text-black hover:bg-gray-100 transition-all`}
+                onClick={() => openDetailsPopup(party._id)}
               >
-                <div className="h-full w-[300px] max-[426px]:w-[150px] max-[426px]:h-[150px] max-[376px]:pt-[20px] max-[376px]:w-[150px] bg-[#FEF3C7] rounded-2xl"></div>
-                <div className="p-2 pl-15 pt-1 max-[321px]:-mt-2 max-[769px]:pt-2 max-[426px]:text-[10px] max-[376px]:text-[10px] max-[426px]:pt-2 max-[376px]:pt-2 max-[376px]:pl-10">
-                  <p className="font-bold text-[17px]">{party.name}</p>
-                  <p className="pb-2 text-gray-500">{party.description}</p>
+                <div
+                  className="self-center shrink-0 w-[96px] h-[96px]
+                  md:w-[180px] md:h-[180px] 
+                  lg:w-[180px] lg:h-[180px] 
+                  xl:w-[180px] xl:h-[180px] bg-[#FEF3C7] rounded-2xl"
+                ></div>
+                <div className="flex flex-col p-2 md:pl-15 pt-1">
+                  <p className="mt-2 font-bold xl:text-[28px] lg:text-[24px] text-[22px]">
+                    {party.name}
+                  </p>
+                  <p
+                    className="pb-2 mb-2 text-gray-500 line-clamp-4 overflow-hidden w-auto break-words xl:text-[18px] text-[14px]
+              max-h-[5.2rem] xl:max-h-[7rem]"
+                  >
+                    {party.description}
+                  </p>
                   <p>Date : {party.date}</p>
                   <p>
                     Time : {party.startTime} - {party.endTime}{" "}
                   </p>
-
-                  <div className="flex gap-2 pt-2  mt-5">
-                    <div
-                      key={index}
-                      className="flex gap-2 max-[376px]:flex-wrap"
-                    >
-                      {party.tagNames?.map((tagName, index) => (
-                        <div key={index}>
-                          <p className="bg-blue-200 px-2 rounded-2xl">
-                            {tagName}
-                          </p>
-                        </div>
+                  <p>Members : {party.members.length}</p>
+                  <div className="flex gap-2 pt-2 mt-1">
+                    <div className="flex gap-2 max-[376px]:flex-wrap">
+                      {party.tags?.map((tag, index) => (
+                        <p key={index} className="bg-blue-200 px-2 rounded-2xl">
+                          {tag.name}
+                        </p>
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-4 ml-[400px]">
+                <div className="flex flex-col self-center max-[426px]:ml-0 ml-auto gap-5 mr-3">
                   <button
                     className={
                       buttonClass +
                       " bg-green-200 border-green-800 cursor-pointer"
                     }
-                    onClick={async () => {
+                    onClick={async (event) => {
+                      event.stopPropagation();
                       handleDeleteInvite(party?.inviteId);
                       const tmp = await getPartyById(API_URL, party?._id);
                       if (tmp.message) setIsAcceptError(true);
@@ -138,7 +154,10 @@ function InvitationsPage({ loginUser }) {
                     className={
                       buttonClass + " bg-red-200 border-red-800 cursor-pointer"
                     }
-                    onClick={() => handleDeleteInvite(party.inviteId)}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleDeleteInvite(party.inviteId)}
+                    }
                   >
                     decline
                   </button>

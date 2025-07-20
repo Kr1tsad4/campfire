@@ -17,6 +17,7 @@ function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,22 +37,43 @@ function AuthPage() {
 
   const [invalidUserNameOrPassword, setInvalidUserNameOrPassword] =
     useState(false);
+
+  const usernameRegex = /^.{6,}$/;
+  const passwordRegex = /^.{8,}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [isUsernameValid, setIsUsernameValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const validateForm = (input) => {
+    if (input === "username") setIsUsernameValid(usernameRegex.test(username));
+    if (input === "password") setIsPasswordValid(passwordRegex.test(password));
+    if (input === "email") setIsEmailValid(usernameRegex.test(email));
+    return;
+  };
   const clearInput = () => {
     setUsername("");
     setPassword("");
+    setConfirmPassword("");
     setFirstName("");
     setLastName("");
     setEmail("");
     setSelectedYear("");
     setSelectedMonth("");
     setSelectedDay("");
-    console.log("clear");
+    setIsUsernameValid(true);
+    setIsPasswordValid(true);
+    setIsEmailValid(true);
+    setIsConfirmPasswordValid(true);
+
+    // console.log("clear");
   };
   const signUpButtonChecker = () => {
     // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
     if (
       !username ||
       !password ||
+      !confirmPassword ||
       !firstName ||
       !lastName ||
       !email ||
@@ -66,7 +88,7 @@ function AuthPage() {
     }
     setIsValidSignUp(true);
     return setSignUpButton(
-      `bg-[#f8d6db] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#f3bfa3]`
+      `bg-[#7ad89aff] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#63b77fff]`
     );
   };
   const signInButtonChecker = () => {
@@ -79,13 +101,22 @@ function AuthPage() {
     }
     setIsValidSignIn(true);
     return setSignInButton(
-      `bg-[#f8d6db] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#f3bfa3]`
+      `bg-[#7ad89aff] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#63b77fff]`
     );
   };
-
+  const notificationCheck = () => {
+    if (username === "") setIsUsernameValid(true);
+    if (password === "") setIsPasswordValid(true);
+    if (confirmPassword === "") setIsConfirmPasswordValid(true);
+    if (email === "") setIsEmailValid(true);
+  };
   const signUp = async () => {
     if (!isValidSignUp) {
       console.log(`data incompleted`);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setIsConfirmPasswordValid(false);
       return;
     }
     const user = {
@@ -129,18 +160,22 @@ function AuthPage() {
     if (user && user._id) {
       saveLoginUserSession(user);
       window.location.href = "/home";
-    }else{
-      setInvalidUserNameOrPassword(true)
+    } else {
+      setInvalidUserNameOrPassword(true);
     }
     return;
   };
 
   useEffect(() => {
     if (isLogin) signInButtonChecker();
-    else signUpButtonChecker();
+    else {
+      signUpButtonChecker();
+      notificationCheck();
+    }
   }, [
     username,
     password,
+    confirmPassword,
     firstName,
     lastName,
     email,
@@ -152,25 +187,21 @@ function AuthPage() {
     fetchBaseTags();
   }, []); // [] ทำให้รันแค่ครั้งเดียวเมื่อ component mount
 
-  useEffect(() =>{
-    if(!isLogin){
-      setInvalidUserNameOrPassword(false)
+  useEffect(() => {
+    if (!isLogin) {
+      setInvalidUserNameOrPassword(false);
     }
-  },[isLogin])
+  }, [isLogin]);
   return (
     <div
-      className={` min-h-screen text-[] flex items-center justify-center`}
-      style={{
-        backgroundColor: colorTheme.background,
-        color: colorTheme.text,
-      }}
+      className={` min-h-screen text-[#041c0cff] bg-[#e3ffecff] flex items-center justify-center`}
     >
       <div
         id="auth-container"
         className="bg-white p-6 rounded-lg shadow-md w-120"
       >
         {/* {console.log(baseTags)} */}
-        <div className="text-[32px] font-[700] pl-0 mb-5">
+        <div className="text-[32px] pl-0 mb-5">
           {isLogin ? "Login" : "Register"}
         </div>
         <InputComponent
@@ -179,18 +210,44 @@ function AuthPage() {
           placeholder="Username"
           value={username}
           handleInput={(e) => setUsername(e)}
+          handleBlur={() => validateForm("username")}
         />
+        {!isUsernameValid && !isLogin && (
+          <div className="text-red-500 -mt-3 mb-1">
+            Please enter a username with at least 6 characters.
+          </div>
+        )}
         <InputComponent
           type="password"
           id="password"
           placeholder="Password"
           value={password}
           handleInput={(e) => setPassword(e)}
+          handleBlur={() => validateForm("password")}
         />
+        {!isPasswordValid && !isLogin && (
+          <div className="text-red-500 -mt-3 mb-1">
+            Please enter a password with at least 8 characters.
+          </div>
+        )}
+        {!isLogin && (
+          <InputComponent
+            type="password"
+            id="confirm-password"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            handleInput={(e) => setConfirmPassword(e)}
+          />
+        )}
+        {!isConfirmPasswordValid && !isLogin && (
+          <div className="text-red-500 -mt-3 mb-1">
+            Password and confirm password must be the same.
+          </div>
+        )}
         {invalidUserNameOrPassword && (
           <p className="text-red-500">Invalid username or password</p>
         )}
-        <div className="flex flex-row">
+        <div className="flex flex-row max-[426px]:flex-col">
           {!isLogin && (
             <InputComponent
               type="text"
@@ -219,7 +276,13 @@ function AuthPage() {
             placeholder="Email"
             value={email}
             handleInput={(e) => setEmail(e)}
+            handleBlur={() => validateForm("email")}
           />
+        )}
+        {!isEmailValid && (
+          <div className="text-red-500 -mt-3 mb-1">
+            Please enter a valid email address.
+          </div>
         )}
         {!isLogin && (
           <DateOfBirth
@@ -242,11 +305,10 @@ function AuthPage() {
               return (
                 <div
                   key={index}
-                  className={`cursor-pointer border-[1.5px] border-[] rounded-[10px] px-2 py-[2px] text-[16px]}`}
+                  className={`cursor-pointer border-[1.5px] border-[#041c0cff] rounded-[10px] px-2 py-[2px] text-[16px]}`}
                   style={{
-                    borderColor: colorTheme.style1,
                     backgroundColor: baseTags[index].selected
-                      ? colorTheme.style1
+                      ? colorTheme.new2
                       : "",
                   }}
                   onClick={() => handleSelectedTag(index)}
