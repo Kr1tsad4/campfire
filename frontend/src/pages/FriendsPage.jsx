@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Layout from "../components/Layout";
 import { useUser } from "../hooks/useUser";
-import socket from "../socket";
-
+import { useNavigate } from "react-router-dom";
+import { getUser } from "../libs/fetchUsersUtils";
 function FriendsPage({ loginUser }) {
   const {
     getLoginUser,
@@ -11,71 +11,64 @@ function FriendsPage({ loginUser }) {
     getAllUser,
     getUserFriends,
     friends,
+    createRequest,
+    requests,
+    getUserRequest,
+    deleteUserRequest,
     deleteUserFriend,
+    acceptUserRequest,
+    setFriends,
+    setSearchResult,
   } = useUser();
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [section, setSection] = useState("my-friends");
-  const [requests, setRequests] = useState([]);
-  const [alreadyRequest, setAlreadyRequest] = useState([]);
-
-  useEffect(() => {
-    getLoginUser();
-    getAllUser();
-  }, []);
-
-  useEffect(() => {
-    if (loginUser?._id) {
-      getUserFriends(loginUser._id);
-    }
-  }, [loginUser]);
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
     searchUserByName("friends", value, null, loginUser);
   };
 
-  const sendFriendRequest = (fromUserId, toUserId) => {
-    socket.emit("send-request", { fromUser: fromUserId, toUser: toUserId });
+  const handleSendRequest = async (fromUser, toUser) => {
+    await createRequest(fromUser, toUser);
+    await getUserRequest(loginUser._id);
   };
 
-  const rejectFriendRequest = (userId, requestId) => {
-    socket.emit("reject-request", { userId, requestId });
-
+  const handleDeleteRequest = async (requestId) => {
+    await deleteUserRequest(requestId);
+    await getUserRequest(loginUser._id);
   };
 
-  const acceptFriendRequest = (userId, requestId) => {
-    socket.emit("accept-request", { userId, requestId });
-  };
-
-  const deleteFriend = async (userId, friendId) => {
+  const handleDeleteFriend = async (userId, friendId) => {
     await deleteUserFriend(userId, friendId);
-    getUserFriends(userId);
+    setFriends((prevFriends) => prevFriends.filter((f) => f._id !== friendId));
   };
+
+  const handleAcceptFriend = async (requestId) => {
+    await acceptUserRequest(requestId, loginUser._id);
+    await getUserRequest(loginUser._id);
+  };
+
+  useEffect(() => {
+    getLoginUser();
+    getAllUser();
+  }, []);
   useEffect(() => {
     if (loginUser?._id) {
-      socket.emit("join-room", loginUser._id);
-      socket.emit("get-requests", loginUser._id);
+      getUserFriends(loginUser._id);
+      getUserRequest(loginUser._id);
     }
-  }, [loginUser?._id]);
+  }, [loginUser]);
 
   useEffect(() => {
-    socket.on("requests-data", (data) => {
-      setRequests(data);
-    });
-
-    socket.on("receive-request", (request) => {
-      setRequests((prev) => [...prev, request]);
-    });
-    return () => {
-      socket.off("receive-request");
-      socket.off("requests-data");
-    };
-  }, []);
-
-  useEffect(() => {
-    getUserFriends(loginUser._id);
+    getLoginUser();
+    getAllUser();
     setInputValue("");
+    setSearchResult([]);
+    if (loginUser?._id) {
+      getUserRequest(loginUser._id);
+      getUserFriends(loginUser._id);
+    }
   }, [section]);
 
   return (
@@ -125,7 +118,7 @@ function FriendsPage({ loginUser }) {
             </div>
           </div>
         </div>
-
+        {/* my-friends */}
         <div className="mt-5 p-5">
           {section === "my-friends" && (
             <div>
@@ -142,10 +135,16 @@ function FriendsPage({ loginUser }) {
               )}
               {friends?.map((friend, index) => (
                 <div key={index}>
-                  <div className="flex justify-between mb-3">
+                  <div
+                    className="flex justify-between mb-3"
+                    onClick={() => navigate(`/profile/${friend._id}`)}
+                  >
                     <p>{friend.penName}</p>
                     <button
-                      onClick={() => deleteFriend(loginUser?._id, friend._id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteFriend(loginUser._id, friend._id);
+                      }}
                       className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
                     >
                       Delete
@@ -163,23 +162,19 @@ function FriendsPage({ loginUser }) {
                   You don't have any request yet.
                 </div>
               )}
-              {requests.map((request, index) => (
+              {requests?.map((request, index) => (
                 <div key={index}>
                   <div className="flex justify-between items-center p-2 mb-2">
                     <p className="text-xl">{request?.fromUser?.penName}</p>
                     <div className="flex gap-3">
                       <button
-                        onClick={() =>
-                          acceptFriendRequest(loginUser._id, request._id)
-                        }
+                        onClick={() => handleAcceptFriend(request._id)}
                         className="cursor-pointer bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-400"
                       >
                         Accept
                       </button>
                       <button
-                        onClick={() =>
-                          rejectFriendRequest(loginUser?._id, request._id)
-                        }
+                        onClick={() => handleDeleteRequest(request._id)}
                         className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
                       >
                         Reject
@@ -208,13 +203,17 @@ function FriendsPage({ loginUser }) {
                 <div key={index}>
                   <div className="flex justify-between mt-4 pl-5 hover:bg-gray-200 transition-all duration-200 rounded-xl p-2">
                     <p className="text-xl">{user.penName}</p>
-                    <button
-                      onClick={() => sendFriendRequest(loginUser._id, user._id)}
-                      className={`bg-blue-500 hover:bg-blue-400 cursor-pointer
+                    {!user.friends.find((f) => f._id === loginUser._id) && (
+                      <button
+                        onClick={() =>
+                          handleSendRequest(loginUser._id, user._id)
+                        }
+                        className={`bg-blue-500 hover:bg-blue-400 cursor-pointer
                        text-white px-3 rounded-md`}
-                    >
-                      Add
-                    </button>
+                      >
+                        Add
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
