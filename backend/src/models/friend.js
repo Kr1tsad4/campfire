@@ -1,6 +1,6 @@
   const mongoose = require("mongoose");
 
-  const friendRequestSchema = new mongoose.Schema(
+  const friendSchema = new mongoose.Schema(
     {
       fromUser: {
         type: mongoose.Schema.Types.ObjectId,
@@ -21,4 +21,4 @@
     { timestamps: true }
   );
 
-  module.exports = mongoose.model("FriendRequest", friendRequestSchema);
+  module.exports = mongoose.model("Friend", friendSchema);

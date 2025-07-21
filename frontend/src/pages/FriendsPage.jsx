@@ -3,13 +3,22 @@ import Layout from "../components/Layout";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../libs/fetchUsersUtils";
+import { useFriend } from "../hooks/useFriend";
+import {
+  getToUserRequests,
+  getFromUserRequests,
+  createFriendRequest,
+  acceptFriendRequest,
+  deleteFriendRequestById,
+  deleteFriendRequest,
+} from "../libs/fetchFriendsUtil";
+import { API_URL } from "../libs/api";
 function FriendsPage({ loginUser }) {
   const {
     getLoginUser,
     searchUserByName,
     searchResult,
     getAllUser,
-    getUserFriends,
     friends,
     createRequest,
     requests,
@@ -20,33 +29,79 @@ function FriendsPage({ loginUser }) {
     setFriends,
     setSearchResult,
   } = useUser();
+  const {
+    statusMap,
+    setStatusMap,
+    acceptStatusFriends,
+    pendingStatusFriends,
+    getUserFriends,
+    setAcceptStatusFriends,
+    setPendingStatusFriends,
+  } = useFriend();
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [section, setSection] = useState("my-friends");
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
     searchUserByName("friends", value, null, loginUser);
   };
 
+  const removeStatusMap = (userIdToRemoveOnMap) => {
+    setStatusMap((prev) => {
+      const newMap = { ...prev };
+      delete newMap[userIdToRemoveOnMap];
+      return newMap;
+    });
+  };
+  const addStatusMap = (userIdToAddOnMap, status) => {
+    setStatusMap((prevMap) => ({
+      ...prevMap,
+      [userIdToAddOnMap]: status,
+    }));
+  };
   const handleSendRequest = async (fromUser, toUser) => {
-    await createRequest(fromUser, toUser);
-    await getUserRequest(loginUser._id);
+    const result = await createFriendRequest(API_URL, {
+      fromUser,
+      toUser,
+    });
+    console.log(result);
+    if (
+      result.message &&
+      result.message === "The pending is exist, auto accept"
+    ) {
+      setAcceptStatusFriends((prevFriends) => [...prevFriends, result.populated]);
+      addStatusMap(toUser, "accepted");
+      return;
+    }
+    setPendingStatusFriends((prevFriends) => [...prevFriends, result]);
+    addStatusMap(toUser, "pending");
+    return;
+  };
+  const handleDeleteRequest = async (requestId, userIdToRemoveOnMap) => {
+    await deleteFriendRequestById(API_URL, requestId);
+    setPendingStatusFriends((prevFriends) =>
+      prevFriends.filter((f) => f._id !== requestId)
+    );
+    removeStatusMap(userIdToRemoveOnMap);
   };
 
-  const handleDeleteRequest = async (requestId) => {
-    await deleteUserRequest(requestId);
-    await getUserRequest(loginUser._id);
+  const handleDeleteFriend = async (API_URL, userId, friendId) => {
+    const result = await deleteFriendRequest(API_URL, userId, friendId);
+    setAcceptStatusFriends((prevFriends) =>
+      prevFriends.filter((f) => f.fromUser._id !== friendId)
+    );
+    removeStatusMap(userIdToRemoveOnMap);
   };
 
-  const handleDeleteFriend = async (userId, friendId) => {
-    await deleteUserFriend(userId, friendId);
-    setFriends((prevFriends) => prevFriends.filter((f) => f._id !== friendId));
-  };
-
-  const handleAcceptFriend = async (requestId) => {
-    await acceptUserRequest(requestId, loginUser._id);
-    await getUserRequest(loginUser._id);
+  const handleAcceptFriend = async (requestId, userIdToAddOnMap) => {
+    const result = await acceptFriendRequest(API_URL, requestId);
+    setAcceptStatusFriends((prevFriends) => [...prevFriends, result]);
+    setPendingStatusFriends((prevFriends) =>
+      prevFriends.filter((f) => f._id !== requestId)
+    );
+    addStatusMap(userIdToAddOnMap, "accepted");
   };
 
   useEffect(() => {
@@ -56,20 +111,10 @@ function FriendsPage({ loginUser }) {
   useEffect(() => {
     if (loginUser?._id) {
       getUserFriends(loginUser._id);
-      getUserRequest(loginUser._id);
     }
   }, [loginUser]);
 
-  useEffect(() => {
-    getLoginUser();
-    getAllUser();
-    setInputValue("");
-    setSearchResult([]);
-    if (loginUser?._id) {
-      getUserRequest(loginUser._id);
-      getUserFriends(loginUser._id);
-    }
-  }, [section]);
+  useEffect(() => {}, [acceptStatusFriends]);
 
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
@@ -122,7 +167,7 @@ function FriendsPage({ loginUser }) {
         <div className="mt-5 p-5">
           {section === "my-friends" && (
             <div>
-              {friends.length === 0 && (
+              {acceptStatusFriends.length === 0 && (
                 <div className="text-center mb-5">
                   Looks like your friend list is empty.{" "}
                   <span
@@ -133,17 +178,21 @@ function FriendsPage({ loginUser }) {
                   </span>
                 </div>
               )}
-              {friends?.map((friend, index) => (
+              {acceptStatusFriends?.map((friend, index) => (
                 <div key={index}>
                   <div
-                    className="flex justify-between mb-3"
-                    onClick={() => navigate(`/profile/${friend._id}`)}
+                    className="flex justify-between mb-3 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
+                    onClick={() => navigate(`/profile/${friend.fromUser._id}`)}
                   >
-                    <p>{friend.penName}</p>
+                    <p>{friend.fromUser.penName}</p>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteFriend(loginUser._id, friend._id);
+                        handleDeleteFriend(
+                          API_URL,
+                          loginUser._id,
+                          friend.fromUser._id
+                        );
                       }}
                       className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
                     >
@@ -154,27 +203,36 @@ function FriendsPage({ loginUser }) {
               ))}
             </div>
           )}
-          {/*friend req section */}
+          {/*friend req section*/}
           {section === "friend-request" && (
             <div className="p-5 pt-0 text-center">
-              {requests?.length === 0 && (
+              {pendingStatusFriends?.length === 0 && (
                 <div className="text-center">
                   You don't have any request yet.
                 </div>
               )}
-              {requests?.map((request, index) => (
+              {pendingStatusFriends?.map((request, index) => (
                 <div key={index}>
                   <div className="flex justify-between items-center p-2 mb-2">
                     <p className="text-xl">{request?.fromUser?.penName}</p>
                     <div className="flex gap-3">
                       <button
-                        onClick={() => handleAcceptFriend(request._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAcceptFriend(request._id, request.fromUser._id);
+                        }}
                         className="cursor-pointer bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-400"
                       >
                         Accept
                       </button>
                       <button
-                        onClick={() => handleDeleteRequest(request._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteRequest(
+                            request._id,
+                            request.fromUser._id
+                          );
+                        }}
                         className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
                       >
                         Reject
@@ -185,6 +243,7 @@ function FriendsPage({ loginUser }) {
               ))}
             </div>
           )}
+
           {/* find friends section */}
           {section === "find-friends" && (
             <div>
@@ -201,19 +260,27 @@ function FriendsPage({ loginUser }) {
 
               {searchResult?.map((user, index) => (
                 <div key={index}>
-                  <div className="flex justify-between mt-4 pl-5 hover:bg-gray-200 transition-all duration-200 rounded-xl p-2">
+                  <div
+                    className="flex justify-between mt-4 pl-5 hover:bg-gray-200 transition-all duration-200 rounded-xl p-2"
+                    onClick={() => navigate(`/profile/${user._id}`)}
+                  >
                     <p className="text-xl">{user.penName}</p>
-                    {!user.friends.find((f) => f._id === loginUser._id) && (
+                    {!(user._id in statusMap) && (
                       <button
-                        onClick={() =>
-                          handleSendRequest(loginUser._id, user._id)
-                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSendRequest(loginUser._id, user._id);
+                        }}
                         className={`bg-blue-500 hover:bg-blue-400 cursor-pointer
                        text-white px-3 rounded-md`}
                       >
                         Add
                       </button>
                     )}
+                    {user._id in statusMap &&
+                      statusMap[user._id] === "pending" && (
+                        <div>on request</div>
+                      )}
                   </div>
                 </div>
               ))}
