@@ -19,15 +19,6 @@ function FriendsPage({ loginUser }) {
     searchUserByName,
     searchResult,
     getAllUser,
-    friends,
-    createRequest,
-    requests,
-    getUserRequest,
-    deleteUserRequest,
-    deleteUserFriend,
-    acceptUserRequest,
-    setFriends,
-    setSearchResult,
   } = useUser();
   const {
     statusMap,

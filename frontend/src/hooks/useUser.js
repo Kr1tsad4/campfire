@@ -13,8 +13,6 @@ export const useUser = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [user, setUser] = useState(null);
-  const [friends, setFriends] = useState([]);
-  const [requests, setRequests] = useState([]);
   const getAllUser = async () => {
     const users = await getUser(API_URL);
     setAllUsers(users || []);
@@ -24,13 +22,6 @@ export const useUser = () => {
     setUser(user);
   };
 
-  const getUserFriends = async (userId) => {
-    const user = await getUserById(API_URL, userId);
-    setFriends(user.friends || []);
-
-    setLoginUser(user);
-    saveLoginUserSession(user);
-  };
   const saveLoginUserSession = (user) => {
     sessionStorage.setItem("user", JSON.stringify(user));
   };
@@ -43,22 +34,6 @@ export const useUser = () => {
 
   const removeLoginUser = () => {
     sessionStorage.removeItem("user");
-  };
-
-  const deleteUserFriend = async (userId, friendId) => {
-    const user = await getUserById(API_URL, userId);
-    const friend = await getUserById(API_URL, friendId);
-
-    const updatedUserFriends = user.friends.filter((f) => f._id !== friend._id);
-    const updatedFriendFriends = friend.friends.filter(
-      (f) => f._id !== user._id
-    );
-
-    await updateUser(API_URL, userId, { friends: updatedUserFriends });
-    await updateUser(API_URL, friendId, { friends: updatedFriendFriends });
-
-    const updatedLoginUser = await getUserById(API_URL, userId);
-    saveLoginUserSession(updatedLoginUser);
   };
 
   const searchUserByName = async (from, searchValue, partyId, loginUser) => {
@@ -94,32 +69,6 @@ export const useUser = () => {
     }
   };
 
-  // const createRequest = async (fromUserId, toUserId) => {
-  //   await createFriendRequest(API_URL, {
-  //     fromUser: fromUserId,
-  //     toUser: toUserId,
-  //   });
-  // };
-
-  // const acceptUserRequest = async (requestId, userId) => {
-  //   await acceptFriendRequest(API_URL, requestId);
-
-  //   const updatedLoginUser = await getUserById(API_URL, userId);
-  //   saveLoginUserSession(updatedLoginUser);
-  // };
-
-  // const getUserRequest = async (userId) => {
-  //   const req = await getUserRequests(API_URL, userId);
-  //   if (req) {
-  //     setRequests(req);
-  //   } else {
-  //     setRequests([]);
-  //   }
-  // };
-
-  const deleteUserRequest = async (requestId) => {
-    await deleteFriendRequest(API_URL, requestId);
-  };
   return {
     loginUser,
     getLoginUser,
@@ -131,16 +80,7 @@ export const useUser = () => {
     getAllUser,
     fetchUser,
     user,
-    getUserFriends,
-    friends,
-    deleteUserFriend,
     setLoginUser,
-    // createRequest,
-    requests,
-    // getUserRequest,
-    deleteUserRequest,
-    // acceptUserRequest,
-    setFriends,
     setSearchResult,
   };
 };
