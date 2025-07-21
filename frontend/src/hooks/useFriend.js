@@ -9,19 +9,32 @@ import {
 import { API_URL } from "../libs/api";
 
 export const useFriend = () => {
+  const [statusMap, setStatusMap] = useState({});
   const [acceptStatusFriends, setAcceptStatusFriends] = useState([]);
   const [pendingStatusFriends, setPendingStatusFriends] = useState([]);
   const getUserFriends = async (userId) => {
-    const users = await getToUserRequests(API_URL, userId);
-    const accepted = users.filter((user) => user.status === "accepted");
-    console.log(accepted);
+    const requests = await getToUserRequests(API_URL, userId);
+    const pendingFromTo = await getFromUserRequests(API_URL, userId);
+    const mapping = {};
+    requests.forEach((request) => {
+      mapping[request.fromUser._id] = request.status;
+    });
+    pendingFromTo.forEach((request) => {
+      mapping[request.toUser._id] = request.status;
+    });
+    setStatusMap(mapping);
+    console.log(mapping);
+    const accepted = requests.filter((request) => request.status === "accepted");
+    // console.log(accepted);
     setAcceptStatusFriends(accepted);
 
-    const pending = users.filter((user) => user.status === "pending");
-    console.log(pending);
+    const pending = requests.filter((request) => request.status === "pending");
+    // console.log(pending);
     setPendingStatusFriends(pending);
   };
   return {
+    statusMap,
+    setStatusMap,
     acceptStatusFriends,
     pendingStatusFriends,
     getUserFriends,

@@ -17,8 +17,9 @@ const getUserRequestsByFromUser = asyncHandler(async (req, res) => {
 
 const acceptUserRequest = asyncHandler(async (req, res) => {
   const { requestId } = req.body;
-  await friendService.acceptRequest(requestId);
-  res.status(200).json({ message: "Friend request accepted" });
+  const result = await friendService.acceptRequest(requestId);
+  // res.status(200).json({ message: "Friend request accepted" });
+  res.status(200).json(result);
 });
 
 const deleteUserRequest = asyncHandler(async (req, res) => {
