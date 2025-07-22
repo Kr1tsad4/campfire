@@ -6,6 +6,7 @@ import { IoTrashBinOutline } from "react-icons/io5";
 import { useNavigationBar } from "../contexts/NavigationContext";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import ConfirmPopup from "../components/ConfirmPopup";
 import socket from "../socket";
 function PartyBoardPage({ loginUser }) {
   const {
@@ -16,11 +17,16 @@ function PartyBoardPage({ loginUser }) {
     setContent,
     content,
     deleteUserPost,
+    deleteUserComment,
   } = usePosts();
   const [showCommentPostId, setShowCommentPostId] = useState(null);
   const [commentContent, setCommentContent] = useState("");
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showConfirmDeletePostPopup, setShowConfirmDeletePostPopup] =
+    useState(false);
+  const [showConfirmDeleteCommentPopup, setShowConfirmDeleteCommentPopup] =
+    useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
+  const [commentToDelete, setCommentToDelete] = useState(null);
   useEffect(() => {
     fetchAllPost();
   }, []);
@@ -41,14 +47,23 @@ function PartyBoardPage({ loginUser }) {
     };
   }, []);
 
-  const openConfirmDeletePopup = (postId) => {
-    setShowConfirmPopup(true);
+  const openConfirmDeletePostPopup = (postId) => {
+    setShowConfirmDeletePostPopup(true);
     setPostToDelete(postId);
+  };
+  const openConfirmDeleteCommentPopup = (commentId) => {
+    setShowConfirmDeleteCommentPopup(true);
+    setCommentToDelete(commentId);
   };
 
   const handleDeletePost = () => {
     deleteUserPost(postToDelete);
-    setShowConfirmPopup(false);
+    setShowConfirmDeletePostPopup(false);
+  };
+
+  const handleDeleteComment = () => {
+    deleteUserComment(commentToDelete);
+    setShowConfirmDeleteCommentPopup(false);
   };
   const handleComment = (postId) => {
     socket.emit("comment", {
@@ -118,7 +133,7 @@ function PartyBoardPage({ loginUser }) {
                 {post?.authorId?._id === loginUser?._id && (
                   <button
                     className="text-gray-600 hover:text-red-600"
-                    onClick={() => openConfirmDeletePopup(post._id)}
+                    onClick={() => openConfirmDeletePostPopup(post._id)}
                   >
                     <IoTrashBinOutline size={18} />
                   </button>
@@ -157,7 +172,10 @@ function PartyBoardPage({ loginUser }) {
 
                   <div className="mt-3 space-y-2">
                     {post.comments?.map((comment, cIndex) => (
-                      <div key={cIndex} className="pl-1 flex gap-3">
+                      <div
+                        key={cIndex}
+                        className="pl-1 flex gap-3 hover:bg-gray-100"
+                      >
                         <Avatar
                           sx={{
                             bgcolor: deepOrange[500],
@@ -168,13 +186,25 @@ function PartyBoardPage({ loginUser }) {
                         >
                           {post.authorId.penName?.charAt(0).toUpperCase()}
                         </Avatar>
-                        <div>
-                          <p className="text-sm font-semibold">
-                            {comment.commentedBy.penName}
-                          </p>
-                          <p className="text-sm text-gray-700">
-                            {comment.content}
-                          </p>
+                        <div className="flex justify-between w-full">
+                          <div>
+                            <p className="text-sm font-semibold">
+                              {comment.commentedBy.penName}
+                            </p>
+                            <p className="text-sm text-gray-700">
+                              {comment.content}
+                            </p>
+                          </div>
+                          {comment?.commentedBy._id === loginUser?._id && (
+                            <button
+                              className="text-gray-600 hover:text-red-600 pb-5 pr-2 cursor-pointer"
+                              onClick={() =>
+                                openConfirmDeleteCommentPopup(comment._id)
+                              }
+                            >
+                              <IoTrashBinOutline size={15} />
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -183,33 +213,24 @@ function PartyBoardPage({ loginUser }) {
               )}
             </div>
           ))}
-
-          {showConfirmPopup && (
-            <div className="bg-opacity-40  inset-0 fixed flex justify-center items-center z-50 left-20">
-              <div className="bg-white p-6 rounded-xl w-[300px] text-center shadow-lg">
-                <h2 className="text-xl font-semibold mb-4">Delete Post?</h2>
-                <p className="text-sm text-gray-600 mb-6">
-                  Are you sure you want to delete this post?
-                </p>
-                <div className="flex justify-center gap-4">
-                  <button
-                    className="bg-red-500 text-white px-4 py-1 rounded cursor-pointer"
-                    onClick={() => {
-                      handleDeletePost();
-                    }}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="bg-gray-300 px-4 py-1 rounded cursor-pointer"
-                    onClick={() => setShowConfirmPopup(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          <ConfirmPopup
+            isOpen={showConfirmDeletePostPopup}
+            title="Delete Post?"
+            message="Are you sure you want to delete this post?"
+            confirmText="Delete"
+            cancelText="Cancel"
+            onConfirm={handleDeletePost}
+            onCancel={() => setShowConfirmDeletePostPopup(false)}
+          />
+          <ConfirmPopup
+            isOpen={showConfirmDeleteCommentPopup}
+            title="Delete Comment?"
+            message="Are you sure you want to delete this comment?"
+            confirmText="Delete"
+            cancelText="Cancel"
+            onConfirm={handleDeleteComment}
+            onCancel={() => setShowConfirmDeleteCommentPopup(false)}
+          />
         </div>
       </div>
     </Layout>

@@ -8,6 +8,8 @@ import { BiLogOut } from "react-icons/bi";
 import { useUser } from "../hooks/useUser";
 import { MdExplore } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
+import ConfirmPopup from "./ConfirmPopup";
+import { useState } from "react";
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
@@ -20,6 +22,8 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const isFriends = location.pathname === "/friends";
 
   const { removeLoginUser, setLoginUser } = useUser();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
   const handleLogout = async () => {
     removeLoginUser();
     setLoginUser(null);
@@ -116,7 +120,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
 
           <div className="mt-5">
             <button
-              onClick={() => handleLogout()}
+              onClick={() => setShowLogoutConfirm(true)}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 `}
             >
               <BiLogOut size={25} />
@@ -124,6 +128,15 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
             </button>
           </div>
         </div>
+        <ConfirmPopup
+          isOpen={showLogoutConfirm}
+          title="Confirm Logout"
+          message="Are you sure you want to logout?"
+          confirmText="Logout"
+          cancelText="Cancel"
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutConfirm(false)}
+        />
       </div>
     </>
   );

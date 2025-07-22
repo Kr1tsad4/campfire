@@ -1,5 +1,10 @@
 import { useCallback, useState } from "react";
-import { createPost, deletePost, getPosts } from "../libs/fetchPostUtils";
+import {
+  createPost,
+  deletePost,
+  getPosts,
+  deleteComment,
+} from "../libs/fetchPostUtils";
 import { API_URL } from "../libs/api";
 
 export const usePosts = () => {
@@ -25,6 +30,12 @@ export const usePosts = () => {
       fetchAllPost();
     }
   };
+  const deleteUserComment = async (commentId) => {
+    const deletedComment = await deleteComment(API_URL, commentId);
+    if (deletedComment) {
+      fetchAllPost();
+    }
+  };
   return {
     posts,
     setPosts,
@@ -33,5 +44,6 @@ export const usePosts = () => {
     setContent,
     content,
     deleteUserPost,
+    deleteUserComment
   };
 };

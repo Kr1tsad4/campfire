@@ -91,8 +91,12 @@ export const useParty = () => {
     await fetchParties(user, value);
   };
 
-  const viewPartyDetails = async (id) => {
-    navigator(`/party/${id}`);
+  const viewPartyDetails = async (id, fromHomePage) => {
+    if (fromHomePage) {
+      navigator(`/party/${id}`);
+    } else if(!fromHomePage){
+      navigator(`/my-party/${id}`);
+    }
   };
 
   const checkUserIsMemberOfParty = async (partyId, user) => {

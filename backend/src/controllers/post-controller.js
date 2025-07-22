@@ -28,6 +28,12 @@ const createComment = asyncHandler(async (req, res) => {
   return res.status(201).json(createdComment);
 });
 
+const deleteComment = asyncHandler(async (req, res) => {
+  await commentService.deleteById(req.params.id);
+  res.status(200).json({ message: "Comment deleted successfully." });
+});
+
+
 const deletePost = asyncHandler(async (req, res) => {
   await postService.deleteById(req.params.id);
   return res.status(200).json({ message: "Post deleted successfully." });
@@ -39,5 +45,6 @@ module.exports = {
   createPost,
   createComment,
   deletePost,
-  getAllComment
+  getAllComment,
+  deleteComment
 };
