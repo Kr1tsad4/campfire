@@ -57,7 +57,6 @@ const getRequestsByFromUser = async (userId) => {
 
 const acceptRequest = async (requestId) => {
   const request = await Friend.findById(requestId);
-  // console.log("Friend found:", request);
   if (!request) throw createError(404, "Friend request not found");
 
   const fromUser = request.fromUser;
@@ -73,12 +72,6 @@ const acceptRequest = async (requestId) => {
     toUser: fromUser,
     status: "accepted",
   });
-  // await User.findByIdAndUpdate(fromUserId, {
-  //   $addToSet: { friends: toUserId },
-  // });
-  // await User.findByIdAndUpdate(toUserId, {
-  //   $addToSet: { friends: fromUserId },
-  // });
 
   await Friend.findByIdAndDelete(requestId);
 
