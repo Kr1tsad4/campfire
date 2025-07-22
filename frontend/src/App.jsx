@@ -13,6 +13,7 @@ import FriendsPage from "./pages/FriendsPage";
 import { useUser } from "./hooks/useUser";
 import { useEffect } from "react";
 import { NavigationProvider } from "./contexts/NavigationContext";
+import InboxPage from "./pages/InboxPage";
 
 function App() {
   const { loginUser, getLoginUser, isLoadingUser } = useUser();
@@ -78,6 +79,14 @@ function App() {
             element={
               <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
                 <FriendsPage loginUser={loginUser} />
+              </ProtectedRoute>
+            }
+          />
+             <Route
+            path="/inbox"
+            element={
+              <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+                <InboxPage loginUser={loginUser} />
               </ProtectedRoute>
             }
           />

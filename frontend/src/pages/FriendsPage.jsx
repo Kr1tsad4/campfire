@@ -17,7 +17,8 @@ import { useNavigationBar } from "../contexts/NavigationContext";
 
 function FriendsPage({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
-  const { getLoginUser, searchUserByName, searchResult, getAllUser } =useUser();
+  const { getLoginUser, searchUserByName, searchResult, getAllUser } =
+    useUser();
   const {
     statusMap,
     setStatusMap,
@@ -108,10 +109,17 @@ function FriendsPage({ loginUser }) {
       getUserFriends(loginUser._id);
     }
   }, [section]);
+  console.log(acceptStatusFriends);
 
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
-      <div className={`${hideNavBar ? "xl:ml-150 lg:ml-180 md:-ml-0 xl:w-[60vw] lg:w-[75vw] w-[95vw]":"xl:ml-15 lg:-ml-3 md:ml-72 lg:w-[68vw] md:w-[56vw] w-[95vw]"} mt-30 text-black w-[60vw] shadow-2xl rounded-xl`}>
+      <div
+        className={`${
+          hideNavBar
+            ? "xl:ml-150 lg:ml-180 md:-ml-0 xl:w-[60vw] lg:w-[75vw] w-[95vw]"
+            : "xl:ml-15 lg:-ml-3 md:ml-72 lg:w-[68vw] md:w-[56vw] w-[95vw]"
+        } mt-30 text-black w-[60vw] shadow-2xl rounded-xl`}
+      >
         <p className="lg:text-4xl md:text-3xl p-5">Friends</p>
         <div>
           <div className="flex justify-between max-w-full lg:text-2xl md:text-xl  border-b-1 border-gray-300 pl-8 pr-8 pb-3">
@@ -272,11 +280,15 @@ function FriendsPage({ loginUser }) {
                     )}
                     {user._id in statusMap &&
                       statusMap[user._id] === "pending" && (
-                        <div className="text-gray-600 bg-gray-100 rounded-md px-3 cursor-default">on request</div>
+                        <div className="text-gray-600 bg-gray-100 rounded-md px-3 cursor-default">
+                          on request
+                        </div>
                       )}
                     {user._id in statusMap &&
                       statusMap[user._id] === "accepted" && (
-                        <div className="text-[#2f9952ff] bg-[#e3ffecff] rounded-md px-3 cursor-default">friend</div>
+                        <div className="text-[#2f9952ff] bg-[#e3ffecff] rounded-md px-3 cursor-default">
+                          friend
+                        </div>
                       )}
                   </div>
                 </div>
