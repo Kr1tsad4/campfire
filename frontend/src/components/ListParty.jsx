@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import ConfirmPopup from "./ConfirmPopup";
 function ListParty({
   parties,
   hideNavBar,
@@ -11,14 +11,22 @@ function ListParty({
   userId,
 }) {
   const navigator = useNavigate();
+  const location = useLocation();
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [selectedPartyId, setSelectedPartyId] = useState(null);
   const [partyNameToDelete, setPartyNameToDelete] = useState("");
   if (!parties) return <div>Loading...</div>;
 
   const openDetailsPopup = (partyId) => {
-    openPartyDetails = true;
-    viewPartyDetails(partyId);
+    console.log('ada');
+    if (location.pathname.includes("/home")) {
+      openPartyDetails = true;
+      viewPartyDetails(partyId, true);
+    } else {
+      openPartyDetails = true;
+
+      viewPartyDetails(partyId, false);
+    }
   };
 
   const handleDeleteClick = (e, party) => {
@@ -116,32 +124,16 @@ function ListParty({
             )}
           </div>
         ))}
-        {showConfirmPopup && (
-          <div className="backdrop-blur-[2px]  fixed inset-0 z-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-xl w-[300px] text-center shadow-lg">
-              <h2 className="text-xl font-semibold mb-4 text-black">
-                Delete Party?
-              </h2>
-              <p className="text-sm text-black mb-6">
-                Are you sure you want to delete "{partyNameToDelete}"?
-              </p>
-              <div className="flex justify-center gap-4">
-                <button
-                  className="bg-red-500 text-white px-4 py-1 rounded cursor-pointer"
-                  onClick={handleDeleteConfirm}
-                >
-                  Delete
-                </button>
-                <button
-                  className="bg-gray-300 px-4 py-1 rounded cursor-pointer"
-                  onClick={handleCancelDelete}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+
+        <ConfirmPopup
+          isOpen={showConfirmPopup}
+          title="Delete Party?"
+          message={`Are you sure you want to delete "${partyNameToDelete}"?`}
+          confirmText="Delete"
+          cancelText="Cancel"
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleCancelDelete}
+        />
       </div>
     </>
   );

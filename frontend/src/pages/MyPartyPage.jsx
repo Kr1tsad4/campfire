@@ -4,8 +4,8 @@ import ListParty from "../components/ListParty";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
-
-function MyPartyPage({ loginUser }) {
+import PartyDetailsPopup from "../components/PartyDetailsPopup";
+function MyPartyPage({ openPartyDetails, loginUser }) {
   const navigator = useNavigate();
 
   const { hideNavBar } = useNavigationBar();
@@ -29,9 +29,14 @@ function MyPartyPage({ loginUser }) {
     <>
       <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
-
           <div className={``}>
-            <p className={` text-[32px] text-black mt-20 ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}>My parties</p>
+            <p
+              className={` text-[32px] text-black mt-20 ${
+                hideNavBar ? " lg:ml-160 xl:ml-100" : ""
+              }`}
+            >
+              My parties
+            </p>
             <div className={`-mt-[80px] `}>
               {userParties && (
                 <ListParty
@@ -58,7 +63,13 @@ function MyPartyPage({ loginUser }) {
             </div>
           </div>
           <div className={``}>
-            <p className={`text-[32px] text-black mt-10 ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}>Joined Parties</p>
+            <p
+              className={`text-[32px] text-black mt-10 ${
+                hideNavBar ? " lg:ml-160 xl:ml-100" : ""
+              }`}
+            >
+              Joined Parties
+            </p>
             <div className={`-mt-[80px]`}>
               {joinedParties && (
                 <ListParty
@@ -81,6 +92,23 @@ function MyPartyPage({ loginUser }) {
             </div>
           </div>
         </Layout>
+        {openPartyDetails && (
+          <>
+            <div
+              className="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-20"
+              style={{ pointerEvents: "auto" }}
+            ></div>
+            <div
+              className={`fixed top-0 left-[360px] z-25 ${
+                hideNavBar
+                  ? "max-[1441px]:top-15 max-[1441px]:left-80 max-[1025px]:left-40 max-[1025px]:top-5 max-[769px]:left-20 max-[426px]:left-0 max-[321px]:-left-3"
+                  : "max-[1441px]:top-15 max-[1025px]:left-60 max-[1025px]:top-5 max-[769px]:left-25 max-[426px]:left-0"
+              }`}
+            >
+              <PartyDetailsPopup />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

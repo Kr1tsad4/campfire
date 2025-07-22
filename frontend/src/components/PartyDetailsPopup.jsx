@@ -33,7 +33,7 @@ function PartyDetailsPopup() {
     <div className="mt-10 flex bg-[#beffd4ff] xl:w-[800px] lg:w-[600px] md:w-[600px] w-[90vw] rounded-2xl max-[426px]:ml-5 box-border overflow-y-auto scrollbar-hide h-[85vh]">
       <div className="text-black">
         <div
-          className="max-[426px]:h-[52vw] max-[426px]:w-[80vw]
+          className="max-[426px]:h-[52vw] 
          xl:h-[330px] xl:w-[800px]
          lg:h-[250px] lg:w-[600px]
          md:h-[250px] md:w-[600px]

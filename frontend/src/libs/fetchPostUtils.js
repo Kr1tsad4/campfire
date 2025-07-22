@@ -48,4 +48,15 @@ const deletePost = async (url, id) => {
   }
 };
 
-export { getPosts,getPostById,createPost,deletePost };
+const deleteComment = async (url, id) => {
+  try {
+    const res = await fetch(`${url}/posts/comment/${id}`, {
+      method: "DELETE",
+    });
+    return res.status;
+  } catch (e) {
+    throw new Error("can not delete comment");
+  }
+};
+
+export { getPosts, getPostById, createPost, deletePost, deleteComment };

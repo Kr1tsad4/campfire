@@ -30,4 +30,11 @@ const create = async (post) => {
   );
   return createdComment;
 };
-module.exports = { findAll, create };
+
+const deleteById = async (commentId) => {
+  const existingComment = await Comment.findById(commentId);
+  if (existingComment) {
+    await Comment.deleteOne(existingComment);
+  }
+};
+module.exports = { findAll, create,deleteById };

@@ -41,6 +41,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+           <Route
+            path="/my-party/:partyId"
+            element={
+              <ProtectedRoute user={loginUser} isLoading={isLoadingUser}>
+                <MyPartyPage openPartyDetails={true} loginUser={loginUser} />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/party/:partyId/lobby"
             element={
