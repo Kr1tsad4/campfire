@@ -9,10 +9,6 @@ const findAll = async () => {
       path: "interestedTag",
       select: "_id name",
     })
-    .populate({
-      path: "friends",
-      select: "_id penName interestedTag aboutMe",
-    });
 };
 
 const findById = async (id) => {
@@ -22,10 +18,6 @@ const findById = async (id) => {
       path: "interestedTag",
       select: "_id name",
     })
-    .populate({
-      path: "friends",
-      select: "_id penName interestedTag aboutMe",
-    });
   if (!user) {
     throw createError(404, `User not found with id ${id}.`);
   }
@@ -64,8 +56,7 @@ const update = async (id, userData) => {
     newPassword,
     dob,
     interestedTag,
-    aboutMe,
-    friends,  
+    aboutMe,  
   } = userData;
 
   let isUpdated = false;
@@ -118,10 +109,6 @@ const update = async (id, userData) => {
   }
   if (user.aboutMe !== aboutMe) {
     updateData.aboutMe = aboutMe;
-    isUpdated = true;
-  }
-  if (friends !== undefined) {
-    updateData.friends = friends;
     isUpdated = true;
   }
 
