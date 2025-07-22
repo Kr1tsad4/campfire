@@ -23,7 +23,6 @@ export const useFriend = () => {
       mapping[request.toUser._id] = request.status;
     });
     setStatusMap(mapping);
-    console.log(mapping);
     const accepted = requests.filter((request) => request.status === "accepted");
     // console.log(accepted);
     setAcceptStatusFriends(accepted);

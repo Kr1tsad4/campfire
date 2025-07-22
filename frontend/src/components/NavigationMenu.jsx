@@ -10,6 +10,7 @@ import { MdExplore } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import ConfirmPopup from "./ConfirmPopup";
 import { useState } from "react";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const navigator = useNavigate();
@@ -20,6 +21,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
   const isParty = location.pathname === "/my-party";
   const isInvitations = location.pathname === "/invitations";
   const isFriends = location.pathname === "/friends";
+  const isInbox = location.pathname === "/inbox";
 
   const { removeLoginUser, setLoginUser } = useUser();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -93,6 +95,17 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
             >
               <FaUserFriends size={25} />
               <h1 className="font-bold text-[22px] -mt-1">Friends</h1>
+            </button>
+          </div>
+          <div className="mt-5">
+            <button
+              onClick={() => navigator("/inbox")}
+              className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
+                isInbox ? "bg-[#041c0cff]" : ""
+              }`}
+            >
+              <IoChatbubbleEllipses size={25} />
+              <h1 className="font-bold text-[22px] -mt-1">Messages</h1>
             </button>
           </div>
           <div className="mt-5">
