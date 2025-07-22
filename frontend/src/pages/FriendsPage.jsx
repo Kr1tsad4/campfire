@@ -13,13 +13,11 @@ import {
   deleteFriendRequest,
 } from "../libs/fetchFriendsUtil";
 import { API_URL } from "../libs/api";
+import { useNavigationBar } from "../contexts/NavigationContext";
+
 function FriendsPage({ loginUser }) {
-  const {
-    getLoginUser,
-    searchUserByName,
-    searchResult,
-    getAllUser,
-  } = useUser();
+  const { hideNavBar } = useNavigationBar();
+  const { getLoginUser, searchUserByName, searchResult, getAllUser } =useUser();
   const {
     statusMap,
     setStatusMap,
@@ -57,16 +55,18 @@ function FriendsPage({ loginUser }) {
       fromUser,
       toUser,
     });
-    console.log(result);
+    // console.log(result);
     if (
       result.message &&
       result.message === "The pending is exist, auto accept"
     ) {
-      setAcceptStatusFriends((prevFriends) => [...prevFriends, result.populated]);
+      setAcceptStatusFriends((prevFriends) => [
+        ...prevFriends,
+        result.populated,
+      ]);
       addStatusMap(toUser, "accepted");
       return;
     }
-    setPendingStatusFriends((prevFriends) => [...prevFriends, result]);
     addStatusMap(toUser, "pending");
     return;
   };
@@ -88,7 +88,6 @@ function FriendsPage({ loginUser }) {
 
   const handleAcceptFriend = async (requestId, userIdToAddOnMap) => {
     const result = await acceptFriendRequest(API_URL, requestId);
-    setAcceptStatusFriends((prevFriends) => [...prevFriends, result]);
     setPendingStatusFriends((prevFriends) =>
       prevFriends.filter((f) => f._id !== requestId)
     );
@@ -104,15 +103,18 @@ function FriendsPage({ loginUser }) {
       getUserFriends(loginUser._id);
     }
   }, [loginUser]);
-
-  useEffect(() => {}, [acceptStatusFriends]);
+  useEffect(() => {
+    if (loginUser?._id) {
+      getUserFriends(loginUser._id);
+    }
+  }, [section]);
 
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
-      <div className="ml-50 mt-30 text-black w-[50vw] shadow-2xl rounded-xl">
-        <p className="text-4xl p-5">Friends</p>
+      <div className={`${hideNavBar ? "xl:ml-150 lg:ml-180 md:-ml-0 xl:w-[60vw] lg:w-[75vw] w-[95vw]":"xl:ml-15 lg:-ml-3 md:ml-72 lg:w-[68vw] md:w-[56vw] w-[95vw]"} mt-30 text-black w-[60vw] shadow-2xl rounded-xl`}>
+        <p className="lg:text-4xl md:text-3xl p-5">Friends</p>
         <div>
-          <div className="flex justify-between max-w-full text-2xl border-b-1 border-gray-300 pl-8 pr-8 pb-3">
+          <div className="flex justify-between max-w-full lg:text-2xl md:text-xl  border-b-1 border-gray-300 pl-8 pr-8 pb-3">
             <div>
               <button
                 className={`${
@@ -240,7 +242,7 @@ function FriendsPage({ loginUser }) {
             <div>
               <input
                 type="text"
-                className="border-2 border-black w-full p-2 rounded-xl"
+                className="border-2 border-black w-full p-2 rounded-xl mb-3"
                 value={inputValue}
                 onChange={handleInputChange}
                 placeholder="Search users"
@@ -252,7 +254,7 @@ function FriendsPage({ loginUser }) {
               {searchResult?.map((user, index) => (
                 <div key={index}>
                   <div
-                    className="flex justify-between mt-4 pl-5 hover:bg-gray-200 transition-all duration-200 rounded-xl p-2"
+                    className="flex justify-between mt-0 pl-5 hover:bg-gray-200  active:bg-gray-200 transition-all duration-200 rounded-xl p-2"
                     onClick={() => navigate(`/profile/${user._id}`)}
                   >
                     <p className="text-xl">{user.penName}</p>
@@ -270,7 +272,11 @@ function FriendsPage({ loginUser }) {
                     )}
                     {user._id in statusMap &&
                       statusMap[user._id] === "pending" && (
-                        <div>on request</div>
+                        <div className="text-gray-600 bg-gray-100 rounded-md px-3 cursor-default">on request</div>
+                      )}
+                    {user._id in statusMap &&
+                      statusMap[user._id] === "accepted" && (
+                        <div className="text-[#2f9952ff] bg-[#e3ffecff] rounded-md px-3 cursor-default">friend</div>
                       )}
                   </div>
                 </div>
