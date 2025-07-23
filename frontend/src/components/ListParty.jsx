@@ -98,11 +98,9 @@ function ListParty({
                 </div>
               </div>
             </div>
-
             {isMyParty && (
               <div
-                className="flex items-center ml-[350px] gap-2 w-[50px] absolute right-30 top-16 max-[1025px]:flex-col 
-              max-[1025px]:right-10 max-[1025px]:top-10 max-[426px]:hidden"
+              className="flex flex-col justify-center items-center mr-5 ml-auto"
               >
                 <button
                   onClick={(e) => {
@@ -120,6 +118,7 @@ function ListParty({
                   Delete
                 </button>
               </div>
+
             )}
           </div>
         ))}

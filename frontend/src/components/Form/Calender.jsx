@@ -34,7 +34,7 @@ function Calender({ selectedDate, setSelectedDate }) {
       <div
         popover=""
         id="cally-popover1"
-        className="dropdown rounded-box shadow-lg bg-[#e1ada1]"
+        className="dropdown rounded-box shadow-lg bg-[#63b77fff]"
         style={{ positionAnchor: "--cally1" }}
       >
         <calendar-date
