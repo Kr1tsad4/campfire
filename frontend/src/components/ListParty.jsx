@@ -18,7 +18,6 @@ function ListParty({
   if (!parties) return <div>Loading...</div>;
 
   const openDetailsPopup = (partyId) => {
-    console.log('ada');
     if (location.pathname.includes("/home")) {
       openPartyDetails = true;
       viewPartyDetails(partyId, true);
