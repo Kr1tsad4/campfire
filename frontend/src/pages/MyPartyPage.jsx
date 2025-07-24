@@ -24,6 +24,7 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
       getUserJoinedParties(loginUser._id);
     }
   }, [loginUser]);
+  if (!userParties) return <div>Loading...</div>;
 
   return (
     <>

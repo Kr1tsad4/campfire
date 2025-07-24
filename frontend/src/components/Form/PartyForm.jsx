@@ -61,13 +61,13 @@ function PartyForm({
   return (
     <div
       // transition-all duration-300
-      className={`flex flex-col text-black md:shadow-xl gap-3 mt-[88px] mb-6 md:bg-[#ffffff] md:p-4 md:rounded-xl ${
+      className={`flex flex-col text-black md:shadow-xl gap-3 mt-[88px] mb-6 md:bg-[#ffffff] md:p-4 md:rounded-xl${
         hideNavBar
-          ? " max-[426px]:ml-0 ml-10 sm:ml-25 lg:ml-250 xl:ml-235"
+          ? " max-[426px]:ml-0 ml-10 sm:ml-25 lg:ml-250 xl:ml-180"
           : "xl:ml-75 lg:ml-20 sm:ml-25 ml-10 "
       } `}
     >
-      <div className="flex justify-start mb-5 ">
+      <div className="flex justify-start mb-5">
         {type === "create" && (
           <h1 className="text-[30px] font-bold">Create your party</h1>
         )}
@@ -125,11 +125,11 @@ function PartyForm({
             setSelectedTime={setEndTime}
           />
         </div>
-        <label className="-ml-[390px] mb-2 max-[321px]:mr-12">
+        <label className="-ml-[390px] mb-2">
           Select party tags
         </label>
 
-        <div className="flex self-start flex-wrap gap-3 max-[426px]:w-[90vw] lg:w-[40vw] max-[769px]:w-[70vw] w-[70vw]">
+        <div className="flex self-start flex-wrap gap-3 max-[426px]:w-[90vw] lg:w-[40vw] max-[769px]:w-[70vw] w-[80vw] pl-6">
           {baseTags.map((tag, index) => {
             return (
               <div

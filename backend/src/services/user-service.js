@@ -13,7 +13,7 @@ const findAll = async () => {
 
 const findById = async (id) => {
   const user = await User.findById(id)
-    .select("-__v")
+    .select("-__v -password -createdAt -updatedAt")
     .populate({
       path: "interestedTag",
       select: "_id name",
