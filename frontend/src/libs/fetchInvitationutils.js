@@ -10,7 +10,7 @@ const getAllInvitation = async (url) => {
 const getUserInvitation = async (url, id) => {
   try {
     const data = await fetch(`${url}/invitations/user/${id}`);
-    const invitations = data.json();
+    const invitations = await data.json();
     return invitations;
   } catch (e) {
     throw new Error(`Can not get invitations`);
@@ -19,7 +19,7 @@ const getUserInvitation = async (url, id) => {
 const getInvitationById = async (url, id) => {
   try {
     const data = await fetch(`${url}/invitations/obj/${id}`);
-    const invitations = data.json();
+    const invitations = await data.json();
     return invitations;
   } catch (e) {
     throw new Error(`Can not get invitations`);
@@ -36,7 +36,7 @@ const createInvitation = async (url, newInvitation) => {
         ...newInvitation,
       }),
     });
-    const invitations = data.json();
+    const invitations = await data.json();
     return invitations;
   } catch (e) {
     throw new Error(`Can not create invitations`);
@@ -47,7 +47,7 @@ const deleteInvitation = async (url, id) => {
     const data = await fetch(`${url}/invitations/${id}`, {
       method: "DELETE",
     });
-    const invitations = data.json();
+    const invitations = await data.json();
     return invitations;
   } catch (e) {
     throw new Error(`Can not create invitations`);
