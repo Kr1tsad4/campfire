@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import NavigationMenu from "../components/NavigationMenu";
 import { useNavigationBar } from "../contexts/NavigationContext";
-import colorTheme from "../libs/colorTheme";
-import EditableText from "../components/editableText";
+import colorTheme from "../libs/colorTheme.js";
+import EditableText from "../components/EditableText";
 import { useParams } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/useUser.js";
 import { FaBars, FaHome } from "react-icons/fa";
 
 function ProfilePage() {

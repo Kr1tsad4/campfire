@@ -1,5 +1,5 @@
 import { useNavigationBar } from "../contexts/NavigationContext";
-import { useParty } from "../hooks/useParty";
+import { useParty } from "../hooks/useParty.js";
 import ListParty from "../components/ListParty";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

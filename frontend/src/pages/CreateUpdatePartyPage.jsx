@@ -1,7 +1,7 @@
 import { useNavigationBar } from "../contexts/NavigationContext";
 import PartyForm from "../components/Form/PartyForm";
-import { useParty } from "../hooks/useParty";
-import { useTags } from "../hooks/useTags";
+import { useParty } from "../hooks/useParty.js";
+import { useTags } from "../hooks/useTags.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";

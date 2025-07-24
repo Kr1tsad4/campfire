@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { CgCheckR } from "react-icons/cg";
-import { updateUser } from "../libs/fetchUsersUtils";
-import { API_URL } from "../libs/api";
+import { updateUser } from "../libs/fetchUsersUtils.js";
+import { API_URL } from "../libs/api.js";
 function EditableText({
   data,
   type,

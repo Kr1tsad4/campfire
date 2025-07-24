@@ -1,10 +1,10 @@
 import ListParty from "../components/ListParty";
-import { useParty } from "../hooks/useParty";
+import { useParty } from "../hooks/useParty.js";
 import { useNavigationBar } from "../contexts/NavigationContext";
 import { useEffect, useState } from "react";
 import PartyDetailsPopup from "../components/PartyDetailsPopup";
 import Layout from "../components/Layout";
-import { useTags } from "../hooks/useTags";
+import { useTags } from "../hooks/useTags.js";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 

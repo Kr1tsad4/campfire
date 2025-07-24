@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import { usePosts } from "../hooks/usePosts";
+import { usePosts } from "../hooks/usePosts.js";
 import { useEffect, useState } from "react";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { IoTrashBinOutline } from "react-icons/io5";
@@ -7,7 +7,7 @@ import { useNavigationBar } from "../contexts/NavigationContext";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import ConfirmPopup from "../components/ConfirmPopup";
-import socket from "../socket";
+import socket from "../socket.js";
 function PartyBoardPage({ loginUser }) {
   const {
     posts,

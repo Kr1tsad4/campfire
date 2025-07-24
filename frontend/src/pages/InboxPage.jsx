@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import Layout from "../components/Layout";
 import { useNavigationBar } from "../contexts/NavigationContext";
-import { useFriend } from "../hooks/useFriend";
+import { useFriend } from "../hooks/useFriend.js";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
-import socket from "../socket";
+import socket from "../socket.js";
 import { useNavigate } from "react-router-dom";
 function InboxPage({ loginUser }) {
   const { hideNavBar } = useNavigationBar();

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import DateOfBirth from "../components/Form/DateOfBirth";
 import InputComponent from "../components/Form/InputComponent";
-import { API_URL } from "../libs/api";
+import { API_URL } from "../libs/api.js";
 import { useEffect } from "react";
-import { createUser } from "../libs/fetchUsersUtils";
+import { createUser } from "../libs/fetchUsersUtils.js";
 import { userLogin } from "../libs/authUtils.js";
-import { useTags } from "../hooks/useTags";
+import { useTags } from "../hooks/useTags.js";
 import colorTheme from "../libs/colorTheme.js";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/useUser.js";
 
 function AuthPage() {
   const { saveLoginUserSession } = useUser();
