@@ -52,7 +52,7 @@ function AuthPage() {
       setIsPasswordValid(passwordRegex.test(password) || password === "");
     if (input === "email")
       setIsEmailValid(emailRegex.test(email) || email === "");
-    if (input === "all"){
+    if (input === "all") {
       setIsUsernameValid(usernameRegex.test(username) || username === "");
       setIsPasswordValid(passwordRegex.test(password) || password === "");
       setIsEmailValid(emailRegex.test(email) || email === "");
@@ -155,7 +155,7 @@ function AuthPage() {
       };
       await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
-      navigator('/home')
+      window.location.href = "/";
     }
     return;
   };
@@ -171,7 +171,7 @@ function AuthPage() {
     const user = await userLogin(API_URL, data);
     if (user && user._id) {
       saveLoginUserSession(user);
-      navigator('/home')
+      window.location.href = "/home";
     } else {
       setInvalidUserNameOrPassword(true);
     }
