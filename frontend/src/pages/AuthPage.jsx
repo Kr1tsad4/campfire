@@ -155,7 +155,7 @@ function AuthPage() {
       };
       await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
-      window.location.href = "/home";
+      navigator('/home')
     }
     return;
   };
