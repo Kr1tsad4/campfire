@@ -138,7 +138,7 @@ function PartyLobby({ loginUser }) {
             </div>
           )}
         </Layout>
-      </div>}
+      </div>)}
     </>
   );
 }
