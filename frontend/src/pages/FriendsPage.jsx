@@ -4,6 +4,8 @@ import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../libs/fetchUsersUtils";
 import { useFriend } from "../hooks/useFriend";
+import ConfirmPopup from "../components/ConfirmPopup";
+
 import {
   getToUserRequests,
   getFromUserRequests,
@@ -31,7 +33,8 @@ function FriendsPage({ loginUser }) {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [section, setSection] = useState("my-friends");
-
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [friendToDelete, setFriendToDelete] = useState(null);
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
@@ -84,7 +87,7 @@ function FriendsPage({ loginUser }) {
     setAcceptStatusFriends((prevFriends) =>
       prevFriends.filter((f) => f.fromUser._id !== friendId)
     );
-    removeStatusMap(userIdToRemoveOnMap);
+    removeStatusMap(friendId);
   };
 
   const handleAcceptFriend = async (requestId, userIdToAddOnMap) => {
@@ -93,6 +96,21 @@ function FriendsPage({ loginUser }) {
       prevFriends.filter((f) => f._id !== requestId)
     );
     addStatusMap(userIdToAddOnMap, "accepted");
+  };
+  const handleConfirmDeleteFriend = async () => {
+    if (!friendToDelete) return;
+    await handleDeleteFriend(
+      API_URL,
+      loginUser._id,
+      friendToDelete.fromUser._id
+    );
+    setShowConfirmPopup(false);
+    setFriendToDelete(null);
+  };
+
+  const handleCancelDeleteFriend = () => {
+    setShowConfirmPopup(false);
+    setFriendToDelete(null);
   };
 
   useEffect(() => {
@@ -189,11 +207,8 @@ function FriendsPage({ loginUser }) {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteFriend(
-                          API_URL,
-                          loginUser._id,
-                          friend.fromUser._id
-                        );
+                        setFriendToDelete(friend);
+                        setShowConfirmPopup(true);
                       }}
                       className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
                     >
@@ -297,6 +312,15 @@ function FriendsPage({ loginUser }) {
           )}
         </div>
       </div>
+      <ConfirmPopup
+        isOpen={showConfirmPopup}
+        title="Remove Friend?"
+        message={`Are you sure you want to remove "${friendToDelete?.fromUser?.penName}" from your friend list?`}
+        confirmText="Remove"
+        cancelText="Cancel"
+        onConfirm={handleConfirmDeleteFriend}
+        onCancel={handleCancelDeleteFriend}
+      />
     </Layout>
   );
 }

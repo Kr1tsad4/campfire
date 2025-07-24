@@ -19,11 +19,8 @@ function ListParty({
 
   const openDetailsPopup = (partyId) => {
     if (location.pathname.includes("/home")) {
-      openPartyDetails = true;
       viewPartyDetails(partyId, true);
     } else {
-      openPartyDetails = true;
-
       viewPartyDetails(partyId, false);
     }
   };
@@ -55,6 +52,14 @@ function ListParty({
           hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : ""
         }`}
       >
+        {parties.length === 0 && location.pathname.includes("/home") && (
+          <div className="absolute left-1/2 transform -translate-x-1/2 mt-10">
+            <p className="text-center text-lg text-gray-500">
+              There are no parties to show.
+            </p>
+          </div>
+        )}
+
         {parties.map((party, index) => (
           <div
             key={index}
@@ -99,9 +104,7 @@ function ListParty({
               </div>
             </div>
             {isMyParty && (
-              <div
-              className="flex flex-col justify-center items-center mr-5 ml-auto"
-              >
+              <div className="flex flex-col justify-center items-center mr-5 ml-auto">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -118,7 +121,6 @@ function ListParty({
                   Delete
                 </button>
               </div>
-
             )}
           </div>
         ))}

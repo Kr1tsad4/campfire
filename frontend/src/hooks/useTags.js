@@ -21,7 +21,7 @@ export const useTags = () => {
           const tags = prev.filter((p) => p !== selectedTag._id);
           return [...tags, selectedTag._id];
         } else {
-          return prev.filter((tag) => tag !== selectedTag._id);
+          return prev.filter((tag) => tag._id !== selectedTag._id);
         }
       });
     },

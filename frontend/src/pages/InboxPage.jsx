@@ -5,7 +5,7 @@ import { useFriend } from "../hooks/useFriend";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
 import socket from "../socket";
-
+import { useNavigate } from "react-router-dom";
 function InboxPage({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
   const [userToChat, setUserToChat] = useState(null);
@@ -13,7 +13,7 @@ function InboxPage({ loginUser }) {
   const [messages, setMessages] = useState([]);
 
   const { getUserFriends, acceptStatusFriends } = useFriend();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (loginUser?._id) {
       getUserFriends(loginUser._id);
@@ -75,14 +75,26 @@ function InboxPage({ loginUser }) {
               <h1 className="p-4 font-bold text-xl">Messages</h1>
               {!acceptStatusFriends ||
                 (acceptStatusFriends.length === 0 && (
-                  <div className="flex justify-center items-center pt-20">
-                    <h1 className="text-xl">No friends found.</h1>
+                  <div className="flex flex-col items-center">
+                    <div className="flex justify-center items-center pt-20">
+                      <h1 className="text-xl">No friends found. </h1>
+                    </div>
+                    <h1
+                      onClick={() => navigate("/friends")}
+                      className="text-xl mt-1 underline text-blue-500 hover:text-blue-400 cursor-pointer"
+                    >
+                      Find now
+                    </h1>
                   </div>
                 ))}
               {acceptStatusFriends?.map((friend, index) => (
                 <div key={index}>
                   <div
-                    className="flex p-4 gap-2 cursor-pointer hover:bg-gray-300 mt-4"
+                    className={`flex p-3 gap-2 cursor-pointer hover:bg-gray-300 mt-4 ${
+                      userToChat?._id === friend.fromUser?._id
+                        ? "bg-gray-300"
+                        : ""
+                    }`}
                     onClick={() => setUserToChat(friend.fromUser)}
                   >
                     <Avatar

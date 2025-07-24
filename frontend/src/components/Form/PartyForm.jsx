@@ -51,7 +51,7 @@ function PartyForm({
 
       const updatedTags = baseTags.map((tag) => ({
         ...tag,
-        selected: myParty.tags.includes(tag._id),
+        selected: myParty.tags.some((t) => t._id === tag._id),
       }));
       setBaseTags(updatedTags);
       setSelectedTags(myParty.tags);
@@ -100,6 +100,7 @@ function PartyForm({
             width="500"
             value={description}
             handleInput={(e) => setDescription(e)}
+            maxLength={200}
           />
         </div>
 
@@ -128,7 +129,7 @@ function PartyForm({
           Select party tags
         </label>
 
-        <div className="flex self-start flex-wrap gap-3 max-[426px]:w-[90vw] lg:w-full max-[769px]:w-[70vw] w-[70vw]">
+        <div className="flex self-start flex-wrap gap-2 max-[426px]:w-[90vw] lg:w-full max-[769px]:w-[70vw] w-[70vw] max-w-[36vw] pl-5">
           {baseTags.map((tag, index) => {
             return (
               <div
