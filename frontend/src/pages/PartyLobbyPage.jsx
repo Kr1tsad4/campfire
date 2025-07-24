@@ -126,7 +126,6 @@ function PartyLobby({ loginUser }) {
               onConfirm={handleConfirmLeave}
               onCancel={handleCancelLeave}
             />
-
             {openInvitePopup && (
               <div className={`absolute right-110 top-30`}>
                 <InvitePopup
@@ -142,6 +141,7 @@ function PartyLobby({ loginUser }) {
       )}
       </>
     );
+
 }
 
 export default PartyLobby;
