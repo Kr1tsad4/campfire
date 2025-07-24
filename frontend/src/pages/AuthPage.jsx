@@ -125,7 +125,6 @@ function AuthPage() {
     validateForm("all");
     notificationCheck();
     if (!signUpButtonChecker()) {
-      console.log(`data incompleted`);
       return;
     }
     if (password !== confirmPassword) {
@@ -147,9 +146,9 @@ function AuthPage() {
     });
     const createdUser = await createUser(API_URL, user);
     if (createdUser && createdUser._id) {
-      console.log(createdUser);
-      console.log(username);
-      console.log(password);
+      // console.log(createdUser);
+      // console.log(username);
+      // console.log(password);
       const data = {
         username,
         password,
