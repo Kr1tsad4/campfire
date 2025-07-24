@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import InputComponent from "./InputComponent";
-import Calender from "./Calender";
-import TimePicker from "./TimePicker";
+import InputComponent from "./InputComponent.jsx";
+import Calender from "./Calender.jsx";
+import TimePicker from "./TimePicker.jsx";
 import { useNavigate } from "react-router-dom";
 
 function PartyForm({

@@ -1,6 +1,6 @@
-import NavigationMenu from "./NavigationMenu";
-import Header from "../components/Header";
-import { useNavigationBar } from "../contexts/NavigationContext";
+import NavigationMenu from "./NavigationMenu.jsx";
+import Header from "../components/Header.jsx";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import { FaBars } from "react-icons/fa";
 import { useEffect } from "react";
 

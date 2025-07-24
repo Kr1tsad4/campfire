@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import socket from "../socket";
-import { useNavigationBar } from "../contexts/NavigationContext";
+import socket from "../socket.js";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 
 function Chat({ partyId, user }) {
   const [message, setMessage] = useState("");

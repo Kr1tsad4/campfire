@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import NavigationMenu from "../components/NavigationMenu";
-import { useNavigationBar } from "../contexts/NavigationContext";
+import NavigationMenu from "../components/NavigationMenu.jsx";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import colorTheme from "../libs/colorTheme.js";
 
-import EditableText from "../components/EditableText";
+import EditableText from "../components/EditableText.jsx";
 import { useParams } from "react-router-dom";
 import { useUser } from "../hooks/useUser.js";
 import { FaBars, FaHome } from "react-icons/fa";
