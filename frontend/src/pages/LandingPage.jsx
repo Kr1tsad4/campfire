@@ -5,8 +5,11 @@ function LandingPage({ loginUser }) {
   return (
     <div>
       <div className="navbar bg-[#2f9952ff] shadow-sm"> 
-        <div className="flex-1">
-          <a className="btn btn-ghost text-xl text-white">MAAM Party</a>
+        <div className="flex flex-1 items-center gap-2">
+          <div>
+            <img src="/favicon.png" alt="" width={40}/>
+          </div>
+          <h1 className="text-2xl text-white ">Campfire</h1>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
