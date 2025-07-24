@@ -48,7 +48,7 @@ function PartyDetailsPopup() {
           <p>
             Time : {party.startTime} - {party.endTime}{" "}
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             Members:{" "}
             {Array.isArray(party.members)
               ? party.members.map((member, index) => (
@@ -57,11 +57,16 @@ function PartyDetailsPopup() {
               : "Loading members..."}
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 mt-1">
             Tags:{" "}
             {Array.isArray(party.tags)
               ? party.tags.map((tag, index) => (
-                  <div key={index}>{tag.name}</div>
+                  <div
+                    key={index}
+                    className="border-1 rounded-2xl px-1 bg-blue-200"
+                  >
+                    {tag.name}
+                  </div>
                 ))
               : "Loading tags..."}
           </div>
@@ -70,7 +75,7 @@ function PartyDetailsPopup() {
             {!isMember && (
               <button
                 onClick={() => joinParty(loginUser._id, party._id)}
-                className="bg-[#63b77fff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#2f9952ff] "
+                className="bg-[#7ad89aff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#63b77fff] "
               >
                 Join
               </button>
@@ -78,7 +83,7 @@ function PartyDetailsPopup() {
             {isMember && (
               <button
                 onClick={() => navigator(`/party/${partyId}/lobby`)}
-                className="bg-[#63b77fff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#2f9952ff] "
+                className="bg-[#63b77fff] rounded-[5px] w-fit mt-2 px-8 py-4 font-[700] cursor-pointer hover:bg-[#63b77fff] "
               >
                 view
               </button>

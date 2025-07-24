@@ -31,7 +31,7 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
         <Layout loginUser={loginUser} hideSearchBar={true}>
           <div className={``}>
             <p
-              className={` text-[32px] text-black mt-20 ${
+              className={` text-[32px] text-black mt-25 ${
                 hideNavBar ? " lg:ml-160 xl:ml-100" : ""
               }`}
             >
@@ -49,24 +49,26 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
                 />
               )}
               {(!userParties || userParties.length === 0) && (
-                <p className={`text-gray-600 text-[18px] `}>
-                  {" "}
-                  You haven’t created any parties yet.{" "}
-                  <span
-                    onClick={() => navigator("/create-party")}
-                    className="text-blue-500 cursor-pointer hover:underline transition-all"
-                  >
-                    Create now ?
-                  </span>
-                </p>
+                <div className="absolute left-1/2 transform -translate-x-1/2">
+                  <p className={`text-gray-600 text-[18px] `}>
+                    {" "}
+                    You haven’t created any parties yet.{" "}
+                    <span
+                      onClick={() => navigator("/create-party")}
+                      className="text-blue-500 cursor-pointer hover:underline transition-all"
+                    >
+                      Create now ?
+                    </span>
+                  </p>
+                </div>
               )}
             </div>
           </div>
           <div className={``}>
             <p
-              className={`text-[32px] text-black mt-10 ${
-                hideNavBar ? " lg:ml-160 xl:ml-100" : ""
-              }`}
+              className={`text-[32px] text-black ${
+                userParties?.length === 0 ? "mt-40" : "mt-20"
+              }  ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}
             >
               Joined Parties
             </p>
@@ -78,16 +80,18 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
                   viewPartyDetails={viewPartyDetails}
                 />
               )}
-              {(!joinedParties || joinedParties.length === 0) && (
-                <p className={`text-gray-600 text-[18px]`}>
-                  You haven’t joined any parties yet.{" "}
-                  <span
-                    onClick={() => navigator("/home")}
-                    className="text-blue-500 cursor-pointer hover:underline transition-all"
-                  >
-                    Explore now
-                  </span>
-                </p>
+              {(!joinedParties || joinedParties?.length === 0) && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-5">
+                  <p className={`text-gray-600 text-[18px]`}>
+                    You haven’t joined any parties yet.{" "}
+                    <span
+                      onClick={() => navigator("/home")}
+                      className="text-blue-500 cursor-pointer hover:underline transition-all"
+                    >
+                      Explore now
+                    </span>
+                  </p>
+                </div>
               )}
             </div>
           </div>
