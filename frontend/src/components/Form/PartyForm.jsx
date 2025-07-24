@@ -128,7 +128,7 @@ function PartyForm({
           Select party tags
         </label>
 
-        <div className="flex self-start flex-wrap gap-3 max-[426px]:w-[90vw] lg:w-full max-[769px]:w-[70vw] w-[70vw]">
+        <div className="flex self-start flex-wrap gap-3 max-[426px]:w-[90vw] lg:w-[40vw] max-[769px]:w-[70vw] w-[70vw]">
           {baseTags.map((tag, index) => {
             return (
               <div

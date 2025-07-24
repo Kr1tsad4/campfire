@@ -26,8 +26,8 @@ function InvitePopup({
     socket.emit("inviteUser", senderId, recipientId, partyId);
   };
   return (
-    <div className="flex flex-col text-black bg-white border-2 border-black h-[500px] w-[450px] rounded-2xl m-5 items-center">
-      <div className="ml-[400px] mt-1">
+    <div className="flex flex-col text-black bg-white border-2 border-black max-[601px]:w-[300px] max-[601px]:h-[400px]  h-[500px] w-[450px] rounded-2xl m-5 items-center">
+      <div className="ml-[400px] max-[601px]:ml-[260px]  mt-1">
         <button
           className="cursor-pointer"
           onClick={() => setOpenInvitePopup(false)}
@@ -38,7 +38,7 @@ function InvitePopup({
       <div className="mt-2">
         <input
           type="text"
-          className="border-2 border-black w-[400px] p-2 rounded-xl"
+          className="border-2 border-black w-[400px] max-[601px]:w-[280px]  p-2 rounded-xl"
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Search users"

@@ -104,7 +104,7 @@ function PartyLobby({ loginUser }) {
           </div>
 
           {openInvitePopup && (
-            <div className={`absolute right-110 top-30`}>
+            <div className={`absolute ${hideNavBar ? "xl:ml-[60vw] lg:ml-[80vw] md:ml-[15vw] max-[768px]:ml-20 max-[600px]:-ml-5 " : "xl:ml-[15.5vw] lg:ml-[5vw] md:ml-[35vw] max-[768px]:ml-20 max-[600px]:-ml-5"} top-30`}>
               <InvitePopup
                 searchResult={searchResult}
                 searchUserByName={searchUserByName}
