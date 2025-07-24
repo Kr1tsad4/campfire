@@ -140,8 +140,8 @@ function PartyLobby({ loginUser }) {
           </Layout>
         </div>
       )}
-    </>
-  );
+      </>
+    );
 }
 
 export default PartyLobby;
