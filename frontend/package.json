@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "serve -s dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -22,6 +23,7 @@
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.3",
+    "serve": "^14.2.4",
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.19",
     "tailwindcss": "^4.1.11"
