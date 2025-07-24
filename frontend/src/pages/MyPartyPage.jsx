@@ -1,10 +1,10 @@
-import { useNavigationBar } from "../contexts/NavigationContext";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import { useParty } from "../hooks/useParty.js";
-import ListParty from "../components/ListParty";
+import ListParty from "../components/ListParty.jsx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
-import PartyDetailsPopup from "../components/PartyDetailsPopup";
+import Layout from "../components/Layout.jsx";
+import PartyDetailsPopup from "../components/PartyDetailsPopup.jsx";
 function MyPartyPage({ openPartyDetails, loginUser }) {
   const navigator = useNavigate();
 

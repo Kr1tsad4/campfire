@@ -1,13 +1,13 @@
-import { useNavigationBar } from "../contexts/NavigationContext";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import { useParams } from "react-router-dom";
 import { useParty } from "../hooks/useParty.js";
 import { useEffect, useState } from "react";
-import Chat from "../components/Chat";
-import InvitePopup from "../components/InvitePopup";
-import Layout from "../components/Layout";
+import Chat from "../components/Chat.jsx";
+import InvitePopup from "../components/InvitePopup.jsx";
+import Layout from "../components/Layout.jsx";
 import { useUser } from "../hooks/useUser.js";
 import { useNavigate } from "react-router-dom";
-import ConfirmPopup from "../components/ConfirmPopup";
+import ConfirmPopup from "../components/ConfirmPopup.jsx";
 function PartyLobby({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
   const { partyId } = useParams();

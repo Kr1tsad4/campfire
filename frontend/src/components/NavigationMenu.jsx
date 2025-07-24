@@ -8,7 +8,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useUser } from "../hooks/useUser";
 import { MdExplore } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
-import ConfirmPopup from "./ConfirmPopup";
+import ConfirmPopup from "./ConfirmPopup.jsx";
 import { useState } from "react";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 

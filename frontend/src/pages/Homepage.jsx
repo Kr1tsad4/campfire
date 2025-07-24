@@ -1,9 +1,9 @@
-import ListParty from "../components/ListParty";
+import ListParty from "../components/ListParty.jsx";
 import { useParty } from "../hooks/useParty.js";
-import { useNavigationBar } from "../contexts/NavigationContext";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import { useEffect, useState } from "react";
-import PartyDetailsPopup from "../components/PartyDetailsPopup";
-import Layout from "../components/Layout";
+import PartyDetailsPopup from "../components/PartyDetailsPopup.jsx";
+import Layout from "../components/Layout.jsx";
 import { useTags } from "../hooks/useTags.js";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";

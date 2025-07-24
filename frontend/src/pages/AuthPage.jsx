@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DateOfBirth from "../components/Form/DateOfBirth";
-import InputComponent from "../components/Form/InputComponent";
+import DateOfBirth from "../components/Form/DateOfBirth.jsx";
+import InputComponent from "../components/Form/InputComponent.jsx";
 import { API_URL } from "../libs/api.js";
 import { useEffect } from "react";
 import { createUser } from "../libs/fetchUsersUtils.js";

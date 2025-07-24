@@ -1,14 +1,13 @@
-import { useNavigationBar } from "../contexts/NavigationContext";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import socket from "../socket";
 import { useEffect, useState } from "react";
-import { useInvitation } from "../hooks/useInvitation";
-import { API_URL } from "../libs/api";
+import { useInvitation } from "../hooks/useInvitation.js";
+import { API_URL } from "../libs/api.js";
 import { getPartyById } from "../libs/fetchPartyUtils.js";
 import { deleteInvitation } from "../libs/fetchInvitationUtils.js";
-import Layout from "../components/Layout";
-import { useParty } from "../hooks/useParty";
-import PartyDeletedPopup from "../components/PartyDeletePopup";
-
+import Layout from "../components/Layout.jsx";
+import { useParty } from "../hooks/useParty.js";
+import PartyDeletedPopup from "../components/PartyDeletePopup.jsx";
 function InvitationsPage({ openPartyDetails, loginUser }) {
   const { hideNavBar } = useNavigationBar();
   const { joinParty, viewPartyDetails } = useParty();

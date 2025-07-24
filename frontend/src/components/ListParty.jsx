@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import ConfirmPopup from "./ConfirmPopup";
+import ConfirmPopup from "./ConfirmPopup.jsx";
 function ListParty({
   parties,
   hideNavBar,

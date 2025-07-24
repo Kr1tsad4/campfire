@@ -1,10 +1,10 @@
-import { useNavigationBar } from "../contexts/NavigationContext";
-import PartyForm from "../components/Form/PartyForm";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
+import PartyForm from "../components/Form/PartyForm.jsx";
 import { useParty } from "../hooks/useParty.js";
 import { useTags } from "../hooks/useTags.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout.jsx";
 
 function CreateUpdatePartyPage({ type, loginUser }) {
   const { hideNavBar } = useNavigationBar();

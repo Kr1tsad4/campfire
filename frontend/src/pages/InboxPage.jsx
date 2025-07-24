@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Layout from "../components/Layout";
-import { useNavigationBar } from "../contexts/NavigationContext";
+import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import { useFriend } from "../hooks/useFriend.js";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
