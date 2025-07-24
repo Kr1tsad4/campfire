@@ -1,11 +1,11 @@
 import { useNavigationBar } from "../contexts/NavigationContext";
 import { useParams } from "react-router-dom";
-import { useParty } from "../hooks/useParty";
+import { useParty } from "../hooks/useParty.js";
 import { useEffect, useState } from "react";
 import Chat from "../components/Chat";
 import InvitePopup from "../components/InvitePopup";
 import Layout from "../components/Layout";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/useUser.js";
 import { useNavigate } from "react-router-dom";
 import ConfirmPopup from "../components/ConfirmPopup";
 function PartyLobby({ loginUser }) {

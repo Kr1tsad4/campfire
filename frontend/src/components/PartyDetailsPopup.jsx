@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useParty } from "../hooks/useParty";
-import { useUser } from "../hooks/useUser";
+import { useParty } from "../hooks/useParty.js";
+import { useUser } from "../hooks/useUser.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 function PartyDetailsPopup() {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useParams } from "react-router-dom";
-import socket from "../socket";
-import { useUser } from "../hooks/useUser";
+import socket from "../socket.js";
+import { useUser } from "../hooks/useUser.js";
 
 function InvitePopup({
   searchResult,

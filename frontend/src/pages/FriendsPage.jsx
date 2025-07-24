@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import Layout from "../components/Layout";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/useUser.js";
 import { useNavigate } from "react-router-dom";
-import { getUser } from "../libs/fetchUsersUtils";
-import { useFriend } from "../hooks/useFriend";
+import { getUser } from "../libs/fetchUsersUtils.js";
+import { useFriend } from "../hooks/useFriend.js";
 import ConfirmPopup from "../components/ConfirmPopup";
 
 import {
