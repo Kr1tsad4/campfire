@@ -46,9 +46,17 @@ function AuthPage() {
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const validateForm = (input) => {
-    if (input === "username") setIsUsernameValid(usernameRegex.test(username));
-    if (input === "password") setIsPasswordValid(passwordRegex.test(password));
-    if (input === "email") setIsEmailValid(usernameRegex.test(email));
+    if (input === "username")
+      setIsUsernameValid(usernameRegex.test(username) || username === "");
+    if (input === "password")
+      setIsPasswordValid(passwordRegex.test(password) || password === "");
+    if (input === "email")
+      setIsEmailValid(emailRegex.test(email) || email === "");
+    if (input === "all"){
+      setIsUsernameValid(usernameRegex.test(username) || username === "");
+      setIsPasswordValid(passwordRegex.test(password) || password === "");
+      setIsEmailValid(emailRegex.test(email) || email === "");
+    }
     return;
   };
   const clearInput = () => {
@@ -65,31 +73,34 @@ function AuthPage() {
     setIsPasswordValid(true);
     setIsEmailValid(true);
     setIsConfirmPasswordValid(true);
-
-    // console.log("clear");
   };
   const signUpButtonChecker = () => {
     // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
     if (
       !username ||
+      !isUsernameValid ||
       !password ||
+      !isPasswordValid ||
       !confirmPassword ||
       !firstName ||
       !lastName ||
       !email ||
+      !isEmailValid ||
       !selectedYear ||
       !selectedMonth ||
       !selectedDay
     ) {
       setIsValidSignUp(false);
-      return setSignUpButton(
+      setSignUpButton(
         `bg-gray-300 text-gray-900 rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default`
       );
+      return false;
     }
     setIsValidSignUp(true);
-    return setSignUpButton(
+    setSignUpButton(
       `bg-[#7ad89aff] rounded-[5px] w-fit mt-2 p-[8px] font-[700] shadow-md cursor-default hover:bg-[#63b77fff]`
     );
+    return true;
   };
   const signInButtonChecker = () => {
     // console.log(username, password, firstName, lastName, email, selectedYear, selectedMonth, selectedDay);
@@ -111,7 +122,9 @@ function AuthPage() {
     if (email === "") setIsEmailValid(true);
   };
   const signUp = async () => {
-    if (!isValidSignUp) {
+    validateForm("all");
+    notificationCheck();
+    if (!signUpButtonChecker()) {
       console.log(`data incompleted`);
       return;
     }
@@ -169,8 +182,9 @@ function AuthPage() {
   useEffect(() => {
     if (isLogin) signInButtonChecker();
     else {
-      signUpButtonChecker();
+      console.log(1);
       notificationCheck();
+      signUpButtonChecker();
     }
   }, [
     username,
@@ -182,6 +196,9 @@ function AuthPage() {
     selectedYear,
     selectedMonth,
     selectedDay,
+    isUsernameValid,
+    isPasswordValid,
+    isEmailValid,
   ]);
   useEffect(() => {
     fetchBaseTags();

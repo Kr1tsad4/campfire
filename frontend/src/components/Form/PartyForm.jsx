@@ -61,9 +61,9 @@ function PartyForm({
   return (
     <div
       // transition-all duration-300
-      className={`flex flex-col text-black shadow-xl gap-3 mt-[88px] mb-6 md:bg-[#ffffff] md:p-4 md:rounded-xl ${
+      className={`flex flex-col text-black md:shadow-xl gap-3 mt-[88px] mb-6 md:bg-[#ffffff] md:p-4 md:rounded-xl ${
         hideNavBar
-          ? "ml-10 sm:ml-25 lg:ml-250 xl:ml-235"
+          ? " max-[426px]:ml-0 ml-10 sm:ml-25 lg:ml-250 xl:ml-235"
           : "xl:ml-75 lg:ml-20 sm:ml-25 ml-10 "
       } `}
     >
@@ -112,7 +112,7 @@ function PartyForm({
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
-        <div className="flex w-[500px] gap-5 max-[426px]:flex-col max-[321px]:-ml-2">
+        <div className="flex w-[500px] gap-5 max-[600px]:flex-col max-[321px]:-ml-2">
           <TimePicker
             label="Start Time"
             selectedTime={startTime}
@@ -128,13 +128,13 @@ function PartyForm({
           Select party tags
         </label>
 
-        <div className="flex self-start flex-wrap gap-3 w-full max-w-[500px] ">
+        <div className="flex self-start flex-wrap gap-3 max-[426px]:w-[90vw] lg:w-full max-[769px]:w-[70vw] w-[70vw]">
           {baseTags.map((tag, index) => {
             return (
               <div
                 key={index}
-                className={`border border-black rounded-[10px] px-2 py-[2px] text-[16px] cursor-pointer select-none ${
-                  baseTags[index].selected ? "bg-[#f4cdb8ff]" : "bg-transparent"
+                className={`border border-[#041c0cff] rounded-[10px] px-2 py-[2px] text-[16px] cursor-pointer select-none ${
+                  baseTags[index].selected ? "bg-[#beffd4ff]" : "bg-transparent"
                 }`}
                 onClick={() => handleSelectedTag(index)}
               >
@@ -157,7 +157,7 @@ function PartyForm({
               onClick={() => createNewParty()}
               className={` ${
                 enableCreateButton
-                  ? "bg-[#f3bfa3] cursor-pointer hover:bg-[#f0b291]"
+                  ? "bg-[#beffd4ff] cursor-pointer hover:bg-[#7ad89aff]"
                   : "bg-[#ccc7c4]"
               } rounded-[5px] w-fit mt-2 px-4 py-2 font-[700] `}
               disabled={!enableCreateButton}
@@ -193,7 +193,7 @@ function PartyForm({
                     myParty._id
                   )
                 }
-                className="bg-[#f3bfa3] cursor-pointer hover:bg-[#f0b291]
+                className="bg-[#beffd4ff] cursor-pointer hover:bg-[#7ad89aff]
              rounded-[5px] w-fit mt-2 px-4 py-2 font-[700]"
               >
                 Update

@@ -6,6 +6,7 @@ import Chat from "../components/Chat";
 import InvitePopup from "../components/InvitePopup";
 import Layout from "../components/Layout";
 import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 function PartyLobby({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
@@ -13,13 +14,34 @@ function PartyLobby({ loginUser }) {
   const { fetchPartyById, party, leaveParty } = useParty();
   const { searchResult, searchUserByName, getAllUser } = useUser();
   const [openInvitePopup, setOpenInvitePopup] = useState(false);
+  const [display, setDisplay] = useState(false);
 
+  const navigator = useNavigate();
   useEffect(() => {
     fetchPartyById(partyId);
   }, []);
+  useEffect(() => {
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+
+    if (!party?.members || !userData?._id) return;
+
+    let checkIsMember = false;
+    if (party?.members?.length && userData?._id) {
+      party.members.forEach((member) => {
+        if (userData._id === member._id) {
+          checkIsMember = true;
+        }
+      });
+    }
+    if(!checkIsMember) {
+      navigator("/home");
+      return;
+    }
+    setDisplay(true);
+  }, [party]);
   return (
     <>
-      <div>
+      {display && <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
             className={`${
@@ -92,7 +114,7 @@ function PartyLobby({ loginUser }) {
             </div>
           )}
         </Layout>
-      </div>
+      </div>}
     </>
   );
 }
