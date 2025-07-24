@@ -37,7 +37,7 @@ function Layout({
             </button>
 
             <p className="font-bold text-[22px] pt-6 max-[426px]:hidden max-[2556px]:hidden text-black ">
-              MAAM PARTY
+               Campfire
             </p>
           </div>
         </div>

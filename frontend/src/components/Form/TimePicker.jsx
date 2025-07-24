@@ -46,7 +46,7 @@ function TimePicker({ label, selectedTime, setSelectedTime }) {
   }, [selectedTime]);
 
   return (
-    <div className="mb-4 w-[500px] max-[321px]:-ml-5">
+    <div className="mb-4 w-[500px]">
       <label className="block font-medium mb-1">
         {label}
       </label>

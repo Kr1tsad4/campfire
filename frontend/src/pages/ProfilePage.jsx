@@ -106,7 +106,7 @@ function ProfilePage() {
           </div>
           <div className="text-[24px] ml-4 mt-4">Interested</div>
           <div className="flex ml-4 cursor-default">
-            {user?.interestedTag.map((tag, index) => (
+            {user?.interestedTag?.map((tag, index) => (
               <div
                 key={index}
                 className={`mr-2 border-[1.5px] border-[] rounded-[10px] px-2 py-[2px] text-[16px] }`}
