@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import NavigationMenu from "../components/NavigationMenu";
 import { useNavigationBar } from "../contexts/NavigationContext";
 import colorTheme from "../libs/colorTheme";
-import EditableText from "../components/editableText";
+import EditableText from "../components/EditableText";
 import { useParams } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { FaBars, FaHome } from "react-icons/fa";
