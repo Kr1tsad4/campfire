@@ -171,7 +171,7 @@ function AuthPage() {
     const user = await userLogin(API_URL, data);
     if (user && user._id) {
       saveLoginUserSession(user);
-      window.location.href = "/home";
+      navigator('/home')
     } else {
       setInvalidUserNameOrPassword(true);
     }
