@@ -7,7 +7,7 @@ import { getPartyById } from "../libs/fetchPartyUtils.js";
 import { deleteInvitation } from "../libs/fetchInvitationUtils.js";
 import Layout from "../components/Layout.jsx";
 import { useParty } from "../hooks/useParty.js";
-import PartyDeletedPopup from "../components/PartyDeletePopup.jsx";
+import PartyDeletePopup from "../components/PartyDeletePopup.jsx";
 function InvitationsPage({ openPartyDetails, loginUser }) {
   const { hideNavBar } = useNavigationBar();
   const { joinParty, viewPartyDetails } = useParty();
@@ -70,7 +70,7 @@ function InvitationsPage({ openPartyDetails, loginUser }) {
   return (
     <>
       {isAcceptError && (
-        <PartyDeletedPopup setIsAcceptError={setIsAcceptError} />
+        <PartyDeletePopup setIsAcceptError={setIsAcceptError} />
       )}
       <div className="flex bg-[#fcfff7ff] min-h-screen w-auto">
         <Layout loginUser={loginUser} hideSearchBar={true}>

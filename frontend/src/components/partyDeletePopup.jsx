@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PartyDeletedPopup = ({ setIsAcceptError }) => {
+const PartyDeletePopup = ({ setIsAcceptError }) => {
   return (
     <>
       {/* Backdrop */}
@@ -53,4 +53,4 @@ const PartyDeletedPopup = ({ setIsAcceptError }) => {
   );
 };
 
-export default PartyDeletedPopup;
+export default PartyDeletePopup;
