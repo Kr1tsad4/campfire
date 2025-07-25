@@ -25,7 +25,7 @@ function Calender({ selectedDate, setSelectedDate }) {
       <button
         popoverTarget="cally-popover1"
         id="cally1"
-        className="input input-bordered border-gray-400 text-base text-gray-500 bg-transparent w-[500px] max-[426px]:w-[300px] max-[321px]:w-[200px] max-[426px]:-ml-45 max-[321px]:-ml-63 mb-5 px-2 py-2"
+        className="input input-bordered border-gray-400 text-base text-gray-500 bg-transparent w-[500px] max-[600px]:w-[300px] max-[426px]:w-[300px] max-[321px]:w-[260px] mb-5 px-2 py-2"
         style={{ anchorName: "--cally1" }}
       >
         {selectedDate || "Select date"}

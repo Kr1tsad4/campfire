@@ -15,6 +15,7 @@ const colorTheme = {
   new7: '#093c1aff',
   new8: '#041c0cff',
   new9: '#f9fffbff',
+  new10: '#b6f8ccff',
 }
 
 

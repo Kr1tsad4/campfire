@@ -23,7 +23,7 @@ function Header({
         className={`h-[88px]  top-0 left-0 w-[100vw] fixed box-border backdrop-blur-2xl z-10  
         `}
       >
-        <p className="text-black ml-15 pt-6 font-bold text-[23px]">Campfire</p>
+        <p className={`text-black ml-15 pt-6 font-bold text-[23px] max-[466px]:hidden`}>Campfire</p>
         <div
           className={`${
             hideNavBar ? "-ml-[50px]" : "ml-[80px]"
