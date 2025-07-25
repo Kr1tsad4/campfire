@@ -181,7 +181,6 @@ function AuthPage() {
   useEffect(() => {
     if (isLogin) signInButtonChecker();
     else {
-      console.log(1);
       notificationCheck();
       signUpButtonChecker();
     }

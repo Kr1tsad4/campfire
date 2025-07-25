@@ -127,7 +127,6 @@ function FriendsPage({ loginUser }) {
       getUserFriends(loginUser._id);
     }
   }, [section]);
-  console.log(acceptStatusFriends);
 
   return (
     <Layout hideSearchBar={true} loginUser={loginUser}>
