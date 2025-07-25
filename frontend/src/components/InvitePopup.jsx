@@ -28,7 +28,6 @@ function InvitePopup({
        ...prev,
       [recipientId]: 1,
     }))
-    console.log(invitedMap);
     socket.emit("inviteUser", senderId, recipientId, partyId);
   };
   return (
