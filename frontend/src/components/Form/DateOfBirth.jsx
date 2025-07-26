@@ -73,7 +73,7 @@ function DateOfBirth({
         id="year"
         name="year"
         className="border border-gray-400 px-2 py-2 rounded-md w-28 mr-2"
-        onClick={handleYearChange}
+        onChange={handleYearChange} 
       >
         <option value="">-- Year --</option>
         {years.map((year) => {
@@ -96,7 +96,7 @@ function DateOfBirth({
             : "bg-white"
         }`}
         disabled={!selectedYear}
-        onClick={handleMonthChange}
+        onChange={handleMonthChange} 
       >
         <option value="">-- Month --</option>
         {months.map((month) => {
