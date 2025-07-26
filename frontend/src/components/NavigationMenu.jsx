@@ -1,6 +1,6 @@
 import { FaBars, FaHome } from "react-icons/fa";
 import { RiTeamFill } from "react-icons/ri";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { MdForum } from "react-icons/md";
 import { TiPlus } from "react-icons/ti";
 import { FcInvite } from "react-icons/fc";
@@ -13,7 +13,6 @@ import { useState } from "react";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 
 function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
-  const navigator = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/home";
   const isPartyBoard = location.pathname === "/party-board";
@@ -55,7 +54,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
         <div>
           <div className="mt-10">
             <button
-              onClick={() => navigator("/home")}
+              onClick={() => (window.location.href = "/home")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isHome ? "bg-[#041c0cff]" : ""
               }`}
@@ -66,7 +65,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
-              onClick={() => navigator("/party-board")}
+              onClick={() => (window.location.href = "/party-board")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isPartyBoard ? "bg-[#041c0cff]" : ""
               }`}
@@ -77,7 +76,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
-              onClick={() => navigator("/my-party")}
+              onClick={() => (window.location.href = "/my-party")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isParty ? "bg-[#041c0cff]" : ""
               }`}
@@ -88,7 +87,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
-              onClick={() => navigator("/friends")}
+              onClick={() => (window.location.href = "/friends")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isFriends ? "bg-[#041c0cff]" : ""
               }`}
@@ -99,7 +98,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
-              onClick={() => navigator("/inbox")}
+              onClick={() => (window.location.href = "/inbox")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isInbox ? "bg-[#041c0cff]" : ""
               }`}
@@ -110,7 +109,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
-              onClick={() => navigator("/create-party")}
+              onClick={() => (window.location.href = "/create-party")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isCreateParty ? "bg-[#041c0cff]" : ""
               }`}
@@ -121,7 +120,7 @@ function NavigationMenu({ toggleSideNavBar, hideNavBar }) {
           </div>
           <div className="mt-5">
             <button
-              onClick={() => navigator("/invitations")}
+              onClick={() => (window.location.href = "/invitations")}
               className={`cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3 ${
                 isInvitations ? "bg-[#041c0cff]" : ""
               }`}
