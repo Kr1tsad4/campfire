@@ -75,7 +75,7 @@ function PartyForm({
           <h1 className="text-[30px] font-bold">Update party</h1>
         )}
       </div>
-      <div className="flex flex-col items-center ">
+      <div className="flex flex-col lg:items-center">
         <label className="-ml-[410px] mb-2 max-[769px]:ml-0">
           Party Name {""}
           <span className="text-red-500">*</span>
