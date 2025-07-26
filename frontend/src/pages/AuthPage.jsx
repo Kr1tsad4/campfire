@@ -169,9 +169,7 @@ function AuthPage({ loginUser }) {
 
     if (user && user._id) {
       saveLoginUserSession(user);
-      if (loginUser) {
-        window.location.href = "/home";
-      }
+      window.location.href = "/home";
     } else {
       setInvalidUserNameOrPassword(true);
     }
