@@ -8,6 +8,7 @@ import Layout from "../components/Layout.jsx";
 import { useUser } from "../hooks/useUser.js";
 import { useNavigate } from "react-router-dom";
 import ConfirmPopup from "../components/ConfirmPopup.jsx";
+
 function PartyLobby({ loginUser }) {
   const { hideNavBar } = useNavigationBar();
   const { partyId } = useParams();
@@ -16,14 +17,20 @@ function PartyLobby({ loginUser }) {
   const [openInvitePopup, setOpenInvitePopup] = useState(false);
   const [display, setDisplay] = useState(false);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigator = useNavigate();
+
   useEffect(() => {
-    fetchPartyById(partyId);
+    const fetchData = async () => {
+      await fetchPartyById(partyId);
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
+
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem("user"));
-
     if (!party?.members || !userData?._id) return;
 
     let checkIsMember = false;
@@ -53,21 +60,22 @@ function PartyLobby({ loginUser }) {
   const handleCancelLeave = () => {
     setShowConfirmPopup(false);
   };
+
   return (
     <>
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white/50 backdrop-blur-sm z-50">
+          <p className="text-gray-700 text-4xl font-medium">
+            Loading party lobby
+            <span className="animate-bounce">...</span>
+          </p>
+        </div>
+      )}
       {display && (
         <div>
           <Layout loginUser={loginUser} hideSearchBar={true}>
-            <div
-              className={`${
-                openInvitePopup ? "pointer-events-none opacity-50" : ""
-              }`}
-            >
-              <div
-                className={`${
-                  hideNavBar ? "lg:ml-165" : "lg:ml-5"
-                } mt-[100px] text-black flex gap-0`}
-              >
+            <div className={`${openInvitePopup ? "pointer-events-none opacity-50" : ""}`}>
+              <div className={`${hideNavBar ? "lg:ml-165" : "lg:ml-5"} mt-[100px] text-black flex gap-0`}>
                 <div className="text-[#041c0cff]">
                   <div className="flex justify-between relative">
                     <h1 className="text-4xl">Welcome to {party?.name} !</h1>
@@ -75,7 +83,7 @@ function PartyLobby({ loginUser }) {
                       <button
                         onClick={() => setOpenInvitePopup(!openInvitePopup)}
                         className={`lg:fixed lg:right-0 lg:top-[17%]
-                     bg-[#7ad89aff] rounded-[5px] w-fit px-4 py-2 cursor-pointer hover:bg-[#63b77fff] mr-2 lg:mr-12`}
+                         bg-[#7ad89aff] rounded-[5px] w-fit px-4 py-2 cursor-pointer hover:bg-[#63b77fff] mr-2 lg:mr-12`}
                       >
                         Invite
                       </button>
@@ -105,9 +113,7 @@ function PartyLobby({ loginUser }) {
                         <div key={index}>
                           <div className="flex justify-between">
                             <p className="text-xl">
-                              {member._id === party.ownerId
-                                ? " "
-                                : member.penName}
+                              {member._id === party.ownerId ? " " : member.penName}
                             </p>
                           </div>
                         </div>
