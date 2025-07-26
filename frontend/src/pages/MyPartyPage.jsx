@@ -85,12 +85,13 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
             <p
               className={`text-[32px] text-black ${
                 userParties?.length === 0 ? "mt-40" : "mt-20"
-              }  ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}
+              }  ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""} ${joinedParties.length >0 ? "-mb-20" :""}`}
             >
               Joined Parties
             </p>
-            <div className={`-mt-[80px]`}>
+            <div>
               {joinedParties && (
+              
                 <ListParty
                   parties={joinedParties}
                   hideNavBar={hideNavBar}
@@ -98,7 +99,7 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
                 />
               )}
               {(!joinedParties || joinedParties?.length === 0) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 mt-5">
+                <div className="absolute left-1/2 transform -translate-x-1/2 -mt-[80px]">
                   <p className={`text-gray-600 text-[18px]`}>
                     You haven’t joined any parties yet.{" "}
                     <span
