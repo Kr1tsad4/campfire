@@ -13,13 +13,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/v1/real-time-party/party", partyRouter);
-app.use("/api/v1/real-time-party/tags", tagRouter);
-app.use("/api/v1/real-time-party/users", userRouter);
-app.use("/api/v1/real-time-party/friends", friendRouter);
-app.use("/api/v1/real-time-party/auth", authRouter);
-app.use("/api/v1/real-time-party/invitations", invitationRouter);
-app.use("/api/v1/real-time-party/posts", postRouter);
+app.use("/api/v1/campfire-app/party", partyRouter);
+app.use("/api/v1/campfire-app/tags", tagRouter);
+app.use("/api/v1/campfire-app/users", userRouter);
+app.use("/api/v1/campfire-app/friends", friendRouter);
+app.use("/api/v1/campfire-app/auth", authRouter);
+app.use("/api/v1/campfire-app/invitations", invitationRouter);
+app.use("/api/v1/campfire-app/posts", postRouter);
 app.use(errorHandler);
 
 module.exports = app;
