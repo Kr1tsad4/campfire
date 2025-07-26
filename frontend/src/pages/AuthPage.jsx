@@ -10,7 +10,7 @@ import colorTheme from "../libs/colorTheme.js";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser.js";
 
-function AuthPage() {
+function AuthPage({ loginUser }) {
   const { saveLoginUserSession } = useUser();
   const { baseTags, handleSelectedTag, fetchBaseTags } = useTags();
   const navigator = useNavigate();
@@ -46,7 +46,7 @@ function AuthPage() {
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [loadingMsg, setLoadingMsg] = useState("Logging in...");
   const validateForm = (input) => {
     if (input === "username")
       setIsUsernameValid(usernameRegex.test(username) || username === "");
@@ -132,7 +132,7 @@ function AuthPage() {
       setIsConfirmPasswordValid(false);
       return;
     }
-
+    setLoadingMsg("Creating account...");
     setIsLoading(true);
     const user = {
       username,
@@ -153,9 +153,9 @@ function AuthPage() {
       const data = { username, password };
       await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
-      window.location.href = "/";
+      window.location.href = "/home";
     }
-
+    setLoadingMsg("Logging in...");
     setIsLoading(false);
   };
 
@@ -169,7 +169,9 @@ function AuthPage() {
 
     if (user && user._id) {
       saveLoginUserSession(user);
-      window.location.href = "/home";
+      if (loginUser) {
+        window.location.href = "/home";
+      }
     } else {
       setInvalidUserNameOrPassword(true);
     }
@@ -212,7 +214,7 @@ function AuthPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm z-50">
           <div className="flex items-center gap-3 text-xl font-medium text-gray-700">
             <div className="h-6 w-6 border-4 border-gray-300 border-t-[#4caf50] rounded-full animate-spin"></div>
-            Logging in...
+            {loadingMsg}
           </div>
         </div>
       )}
@@ -230,6 +232,7 @@ function AuthPage() {
           value={username}
           handleInput={(e) => setUsername(e)}
           handleBlur={() => validateForm("username")}
+          maxLength={22}
         />
         {!isUsernameValid && !isLogin && (
           <div className="text-red-500 -mt-3 mb-1">
@@ -275,6 +278,7 @@ function AuthPage() {
               value={firstName}
               handleInput={(e) => setFirstName(e)}
               width={40}
+              maxLength={50}
             />
           )}
           {!isLogin && (
@@ -285,6 +289,7 @@ function AuthPage() {
               value={lastName}
               handleInput={(e) => setLastName(e)}
               width={40}
+              maxLength={50}
             />
           )}
         </div>

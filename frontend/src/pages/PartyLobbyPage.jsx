@@ -66,7 +66,7 @@ function PartyLobby({ loginUser }) {
             } mt-[100px] text-black flex gap-0`}
           >
             <div className="text-[#041c0cff]">
-              <div className="flex justify-between relative">
+              <div className="flex justify-between relative flex-wrap w-1/2">
                 <h1 className="text-4xl">Welcome to {party?.name} !</h1>
                 <div className="z-8">
                   <button
@@ -95,7 +95,7 @@ function PartyLobby({ loginUser }) {
                   className={`shadow-[#7ad89aff] shadow-sm text-[#041c0cff] rounded-lg h-[300px] md:w-[250px] w-[90vw] ml-2 pl-4 pt-4 md:mt-0 mt-4`}
                 >
                   <h1 className="text-2xl mb-2">Members</h1>
-                  <p className="text-xl">
+                  <p className="text-xl overflow-clip">
                     {party?.ownerName} <span className="pl-8">(Owner)</span>
                   </p>
                   {party?.members?.map((member, index) => (
