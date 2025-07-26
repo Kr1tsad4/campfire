@@ -28,83 +28,88 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
     <>
       <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
-          <div>
-            {!userParties ||
-              (!joinedParties && (
-                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[5px] z-50 gap-5">
-                  <div className="h-6 w-6 border-4 border-gray-300 border-t-[#4caf50] rounded-full animate-spin"></div>
-                  <p className="text-black text-4xl font-medium">
-                    Loading parties...
-                  </p>
-                </div>
-              ))}
+          {!userParties ||
+            (!joinedParties && (
+              <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[5px] z-50 gap-5">
+                <div className="h-6 w-6 border-4 border-gray-300 border-t-[#4caf50] rounded-full animate-spin"></div>
+                <p className="text-black text-4xl font-medium">
+                  Loading parties...
+                </p>
+              </div>
+            ))}
+          {}
 
-            <p
-              className={` text-[32px] text-black mt-25 ${
-                hideNavBar ? " lg:ml-160 xl:ml-100" : ""
-              }`}
-            >
-              My parties
-            </p>
-            <div className={`-mt-[80px] `}>
-              {userParties && (
-                <ListParty
-                  parties={userParties}
-                  hideNavBar={hideNavBar}
-                  viewPartyDetails={viewPartyDetails}
-                  isMyParty={true}
-                  deleteMyParty={deleteMyParty}
-                  userId={loginUser?._id}
-                />
-              )}
+          {userParties && joinedParties && (
+            <div>
+              <div>
+                <p
+                  className={` text-[32px] text-black mt-25 ${
+                    hideNavBar ? " lg:ml-160 xl:ml-100" : ""
+                  }`}
+                >
+                  My parties
+                </p>
+                <div className={`-mt-[80px] `}>
+                  {userParties && (
+                    <ListParty
+                      parties={userParties}
+                      hideNavBar={hideNavBar}
+                      viewPartyDetails={viewPartyDetails}
+                      isMyParty={true}
+                      deleteMyParty={deleteMyParty}
+                      userId={loginUser?._id}
+                    />
+                  )}
 
-              {(!userParties || userParties.length === 0) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2">
-                  <p className={`text-gray-600 text-[18px] `}>
-                    {" "}
-                    You haven’t created any parties yet.{" "}
-                    <span
-                      onClick={() => navigator("/create-party")}
-                      className="text-blue-500 cursor-pointer hover:underline transition-all"
-                    >
-                      Create now ?
-                    </span>
-                  </p>
+                  {(!userParties || userParties.length === 0) && (
+                    <div className="absolute left-1/2 transform -translate-x-1/2">
+                      <p className={`text-gray-600 text-[18px] `}>
+                        {" "}
+                        You haven’t created any parties yet.{" "}
+                        <span
+                          onClick={() => navigator("/create-party")}
+                          className="text-blue-500 cursor-pointer hover:underline transition-all"
+                        >
+                          Create now ?
+                        </span>
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-          <div className={``}>
-            <p
-              className={`text-[32px] text-black ${
-                userParties?.length === 0 ? "mt-40" : "mt-20"
-              }  ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}
-            >
-              Joined Parties
-            </p>
-            <div className={`-mt-[80px]`}>
-              {joinedParties && (
-                <ListParty
-                  parties={joinedParties}
-                  hideNavBar={hideNavBar}
-                  viewPartyDetails={viewPartyDetails}
-                />
-              )}
-              {(!joinedParties || joinedParties?.length === 0) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 mt-5">
-                  <p className={`text-gray-600 text-[18px]`}>
-                    You haven’t joined any parties yet.{" "}
-                    <span
-                      onClick={() => navigator("/home")}
-                      className="text-blue-500 cursor-pointer hover:underline transition-all"
-                    >
-                      Explore now
-                    </span>
-                  </p>
+              </div>
+              <div>
+                <p
+                  className={`text-[32px] text-black ${
+                    userParties?.length === 0 ? "mt-40" : "mt-20"
+                  }  ${hideNavBar ? " lg:ml-160 xl:ml-100" : ""}`}
+                >
+                  Joined Parties
+                </p>
+                <div className={`-mt-[80px]`}>
+                  {joinedParties && (
+                    <ListParty
+                      parties={joinedParties}
+                      hideNavBar={hideNavBar}
+                      viewPartyDetails={viewPartyDetails}
+                    />
+                  )}
+                  {(!joinedParties || joinedParties?.length === 0) && (
+                    <div className="absolute left-1/2 transform -translate-x-1/2 mt-5">
+                      <p className={`text-gray-600 text-[18px]`}>
+                        You haven’t joined any parties yet.{" "}
+                        <span
+                          onClick={() => navigator("/home")}
+                          className="text-blue-500 cursor-pointer hover:underline transition-all"
+                        >
+                          Explore now
+                        </span>
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
-          </div>
+          )}
         </Layout>
         {openPartyDetails && (
           <>

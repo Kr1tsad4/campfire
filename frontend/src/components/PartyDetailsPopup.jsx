@@ -27,7 +27,15 @@ function PartyDetailsPopup() {
   useEffect(() => {
     checkUserIsMemberOfParty(partyId, loginUser);
   }, [loginUser]);
-  if (!party) return <div>Loading...</div>;
+  if (!party)
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm z-50">
+        <div className="flex items-center gap-3 text-xl font-medium text-gray-700">
+          <div className="h-6 w-6 border-4 border-gray-300 border-t-[#4caf50] rounded-full animate-spin"></div>
+          Loading...
+        </div>
+      </div>
+    );
 
   return (
     <div className="mt-10 flex bg-[#beffd4ff] xl:w-[800px] lg:w-[600px] md:w-[600px] w-[500px] max-[700px]:-ml-15 rounded-2xl max-[426px]:w-[90vw] max-[426px]:ml-5 box-border overflow-y-auto scrollbar-hide h-[85vh]">
