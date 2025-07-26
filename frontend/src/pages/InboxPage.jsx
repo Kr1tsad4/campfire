@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import { useNavigationBar } from "../contexts/NavigationContext.jsx";
 import { useFriend } from "../hooks/useFriend.js";
 import Avatar from "@mui/material/Avatar";
+import { FaChevronLeft } from "react-icons/fa";
 import { deepOrange } from "@mui/material/colors";
 import socket from "../socket.js";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ function InboxPage({ loginUser }) {
   const [userToChat, setUserToChat] = useState(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-
+  const [showChat, setShowChat] = useState(false);
   const { getUserFriends, acceptStatusFriends } = useFriend();
   const navigate = useNavigate();
   useEffect(() => {
@@ -71,61 +72,78 @@ function InboxPage({ loginUser }) {
         >
           <div className="flex w-full h-full">
             {/* Friends List */}
-            <div className="w-1/3 border-r-2 bg-gray-100 overflow-y-auto">
-              <h1 className="p-4 font-bold text-xl">Messages</h1>
-              {!acceptStatusFriends ||
-                (acceptStatusFriends.length === 0 && (
-                  <div className="flex flex-col items-center">
-                    <div className="flex justify-center items-center pt-20">
-                      <h1 className="text-xl">No friends found. </h1>
+            {!showChat && (
+              <div className="w-full bg-gray-100 overflow-y-auto">
+                <h1 className="p-6 font-bold text-4xl border-b-1">Messages</h1>
+                {!acceptStatusFriends ||
+                  (acceptStatusFriends.length === 0 && (
+                    <div className="flex flex-col items-center">
+                      <div className="flex justify-center items-center pt-20">
+                        <h1 className="text-xl">It's a little quiet here...</h1>
+                      </div>
+                      <h1>
+                        <span
+                          onClick={() => navigate("/friends")}
+                          className="text-xl mt-1 underline text-blue-500 hover:text-blue-400 cursor-pointer"
+                        >
+                          Find someone
+                        </span>
+                        <span className="text-xl"> to chat with!</span>
+                      </h1>
                     </div>
-                    <h1
-                      onClick={() => navigate("/friends")}
-                      className="text-xl mt-1 underline text-blue-500 hover:text-blue-400 cursor-pointer"
-                    >
-                      Find now
-                    </h1>
-                  </div>
-                ))}
-              {acceptStatusFriends?.map((friend, index) => (
-                <div key={index}>
-                  <div
-                    className={`flex p-3 gap-2 cursor-pointer hover:bg-gray-300 mt-4 ${
-                      userToChat?._id === friend.fromUser?._id
-                        ? "bg-gray-300"
-                        : ""
-                    }`}
-                    onClick={() => setUserToChat(friend.fromUser)}
-                  >
-                    <Avatar
-                      sx={{
-                        bgcolor: deepOrange[500],
-                        width: 35,
-                        height: 35,
-                        fontSize: 17,
+                  ))}
+                {acceptStatusFriends?.map((friend, index) => (
+                  <div key={index}>
+                    <div
+                      className={`flex p-3 gap-2 cursor-pointer hover:bg-gray-300 mt-4 pl-7 ${
+                        userToChat?._id === friend.fromUser?._id
+                          ? "bg-gray-300"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        setUserToChat(friend.fromUser);
+                        setShowChat(true);
                       }}
                     >
-                      {friend.fromUser.penName?.charAt(0).toUpperCase()}
-                    </Avatar>
-                    <div></div>
-                    <p className="text-lg pt-1 text-black">
-                      {friend.fromUser.penName}
-                    </p>
+                      <Avatar
+                        sx={{
+                          bgcolor: deepOrange[500],
+                          width: 40,
+                          height: 40,
+                          fontSize: 18,
+                        }}
+                      >
+                        {friend.fromUser.penName?.charAt(0).toUpperCase()}
+                      </Avatar>
+                      <div></div>
+                      <p className="text-2xl pt-1 text-black">
+                        {friend.fromUser.penName}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             {/* Chat */}
-            {!userToChat && (
+            {/* {!userToChat  && (
               <div className="flex flex-col justify-center items-center w-full text-xl">
                 <h1>Your messages </h1>
                 <p>Send a message to start a chat.</p>
               </div>
-            )}
-            {userToChat && (
+            )} */}
+            {userToChat && showChat && (
               <div className="flex flex-col w-full">
                 <div className="border-b-2 p-4 font-semibold text-lg bg-white flex gap-4">
+                  <div
+                    className="pt-1 cursor-pointer"
+                    onClick={() => {
+                      setShowChat(false);
+                      setUserToChat(null);
+                    }}
+                  >
+                    <FaChevronLeft size={20} />
+                  </div>
                   <Avatar
                     sx={{
                       bgcolor: deepOrange[500],
@@ -187,7 +205,7 @@ function InboxPage({ loginUser }) {
                   />
                   <button
                     onClick={() => sendMessage()}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition max-[321px]:-ml-2 max-[321px]:px-3"
                   >
                     Send
                   </button>

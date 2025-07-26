@@ -45,6 +45,8 @@ function AuthPage() {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
   const validateForm = (input) => {
     if (input === "username")
       setIsUsernameValid(usernameRegex.test(username) || username === "");
@@ -124,13 +126,14 @@ function AuthPage() {
   const signUp = async () => {
     validateForm("all");
     notificationCheck();
-    if (!signUpButtonChecker()) {
-      return;
-    }
+
+    if (!signUpButtonChecker()) return;
     if (password !== confirmPassword) {
       setIsConfirmPasswordValid(false);
       return;
     }
+
+    setIsLoading(true);
     const user = {
       username,
       penName: username,
@@ -139,43 +142,37 @@ function AuthPage() {
       email,
       password,
       dob: new Date(Date.UTC(selectedYear, selectedMonth - 1, selectedDay)),
-      interestedTag: [],
+      interestedTag: baseTags
+        .filter((tag) => tag.selected)
+        .map((tag) => tag._id),
     };
-    baseTags.map((tag, index) => {
-      if (tag.selected) user.interestedTag.push(tag._id);
-    });
+
     const createdUser = await createUser(API_URL, user);
+
     if (createdUser && createdUser._id) {
-      // console.log(createdUser);
-      // console.log(username);
-      // console.log(password);
-      const data = {
-        username,
-        password,
-      };
+      const data = { username, password };
       await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
       window.location.href = "/";
     }
-    return;
+
+    setIsLoading(false);
   };
 
   const signIn = async () => {
-    if (!isValidSignIn) {
-      return;
-    }
-    const data = {
-      username,
-      password,
-    };
+    if (!isValidSignIn) return;
+
+    setIsLoading(true);
+    const data = { username, password };
     const user = await userLogin(API_URL, data);
+    setIsLoading(false);
+
     if (user && user._id) {
       saveLoginUserSession(user);
       window.location.href = "/home";
     } else {
       setInvalidUserNameOrPassword(true);
     }
-    return;
   };
 
   useEffect(() => {
@@ -200,7 +197,7 @@ function AuthPage() {
   ]);
   useEffect(() => {
     fetchBaseTags();
-  }, []); // [] ทำให้รันแค่ครั้งเดียวเมื่อ component mount
+  }, []);
 
   useEffect(() => {
     if (!isLogin) {
@@ -211,11 +208,18 @@ function AuthPage() {
     <div
       className={` min-h-screen text-[#041c0cff] bg-[#e3ffecff] flex items-center justify-center`}
     >
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm z-50">
+          <div className="flex items-center gap-3 text-xl font-medium text-gray-700">
+            <div className="h-6 w-6 border-4 border-gray-300 border-t-[#4caf50] rounded-full animate-spin"></div>
+            Logging in...
+          </div>
+        </div>
+      )}
       <div
         id="auth-container"
         className="bg-white p-6 rounded-lg shadow-md w-120"
       >
-        {/* {console.log(baseTags)} */}
         <div className="text-[32px] pl-0 mb-5">
           {isLogin ? "Login" : "Register"}
         </div>

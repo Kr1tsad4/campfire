@@ -23,7 +23,7 @@ function Homepage({ openPartyDetails, loginUser }) {
   const { fetchBaseTags, baseTags } = useTags();
   const { hideNavBar } = useNavigationBar();
   const [startIndex, setStartIndex] = useState(0);
-  const [tagsPerPage, setTagsPerPage] = useState(6); 
+  const [tagsPerPage, setTagsPerPage] = useState(6);
 
   const updateTagsPerPage = () => {
     const width = window.innerWidth;
@@ -123,6 +123,13 @@ function Homepage({ openPartyDetails, loginUser }) {
             </button>
           </div>
           <div className="mt-20">
+            {!parties && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 gap-5 backdrop-blur-sm">
+                <p className="text-gray-700 text-4xl font-medium">
+                  Loading parties...
+                </p>{" "}
+              </div>
+            )}
             <ListParty
               parties={parties}
               hideNavBar={hideNavBar}

@@ -24,13 +24,21 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
       getUserJoinedParties(loginUser._id);
     }
   }, [loginUser]);
-  if (!userParties) return <div>Loading...</div>;
-
   return (
     <>
       <div>
         <Layout loginUser={loginUser} hideSearchBar={true}>
-          <div className={``}>
+          <div>
+            {!userParties ||
+              (!joinedParties && (
+                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[5px] z-50 gap-5">
+                  <div className="h-6 w-6 border-4 border-gray-300 border-t-[#4caf50] rounded-full animate-spin"></div>
+                  <p className="text-black text-4xl font-medium">
+                    Loading parties...
+                  </p>
+                </div>
+              ))}
+
             <p
               className={` text-[32px] text-black mt-25 ${
                 hideNavBar ? " lg:ml-160 xl:ml-100" : ""
@@ -49,6 +57,7 @@ function MyPartyPage({ openPartyDetails, loginUser }) {
                   userId={loginUser?._id}
                 />
               )}
+
               {(!userParties || userParties.length === 0) && (
                 <div className="absolute left-1/2 transform -translate-x-1/2">
                   <p className={`text-gray-600 text-[18px] `}>
