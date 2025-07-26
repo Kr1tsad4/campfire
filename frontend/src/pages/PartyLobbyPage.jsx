@@ -74,8 +74,8 @@ function PartyLobby({ loginUser }) {
                     <div className="z-8">
                       <button
                         onClick={() => setOpenInvitePopup(!openInvitePopup)}
-                        className={`
-                     bg-[#7ad89aff] rounded-[5px] w-fit px-4 py-2 cursor-pointer hover:bg-[#63b77fff] mr-2`}
+                        className={`lg:fixed lg:right-0 lg:top-[17%]
+                     bg-[#7ad89aff] rounded-[5px] w-fit px-4 py-2 cursor-pointer hover:bg-[#63b77fff] mr-2 lg:mr-12`}
                       >
                         Invite
                       </button>
@@ -126,22 +126,24 @@ function PartyLobby({ loginUser }) {
               onConfirm={handleConfirmLeave}
               onCancel={handleCancelLeave}
             />
-            {openInvitePopup && (
-              <div className={`absolute right-110 top-30`}>
-                <InvitePopup
-                  searchResult={searchResult}
-                  searchUserByName={searchUserByName}
-                  setOpenInvitePopup={setOpenInvitePopup}
-                  getAllUser={getAllUser}
-                />
-              </div>
-            )}
+
+            <div
+              className={`fixed top-32 right-0 transition-transform duration-500 z-10 ${
+                openInvitePopup ? "translate-x-0 mr-2" : "translate-x-full "
+              }`}
+            >
+              <InvitePopup
+                searchResult={searchResult}
+                searchUserByName={searchUserByName}
+                setOpenInvitePopup={setOpenInvitePopup}
+                getAllUser={getAllUser}
+              />
+            </div>
           </Layout>
         </div>
       )}
-      </>
-    );
-
+    </>
+  );
 }
 
 export default PartyLobby;

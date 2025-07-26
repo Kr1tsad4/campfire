@@ -76,7 +76,7 @@ function InvitationsPage({ openPartyDetails, loginUser }) {
         <Layout loginUser={loginUser} hideSearchBar={true}>
           <div
             className={`flex flex-col gap-3 pt-[88px] mt-6 mb-6 ${
-              hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : ""
+              hideNavBar ? "xl:pl-[380px] lg:pl-[620px]" : "max-[1024px]:pl-75 max-[769px]:pl-0"
             }`}
           >
             <h1 className="text-black font-bold text-4xl mb-10">
@@ -84,7 +84,7 @@ function InvitationsPage({ openPartyDetails, loginUser }) {
             </h1>
             {!parties ||
               (parties.length === 0 && (
-                <p className="ml-[400px] text-lg text-black mt-10">
+                <p className={`fixed top-35 ${hideNavBar ? "right-[40vw] max-[1024px]:right-[30vw] max-[426px]:right-[20vw] max-[390px]:right-[10vw]" : "right-[30vw] max-[1024px]:right-[22vw] max-[769px]:right-[30vw] max-[426px]:right-[20vw] max-[390px]:right-[10vw]"} text-lg text-black mt-10`}>
                   You don’t have any invitations yet.
                 </p>
               ))}

@@ -13,6 +13,7 @@ function InvitePopup({
   const { loginUser, getLoginUser } = useUser();
   const [inputValue, setInputValue] = useState("");
   const { partyId } = useParams();
+  const [invitedMap, setInvitedMap] = useState({});
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
@@ -23,11 +24,15 @@ function InvitePopup({
     getLoginUser();
   }, []);
   const inviteUser = async (senderId, recipientId, partyId) => {
+    setInvitedMap((prev) => ({
+       ...prev,
+      [recipientId]: 1,
+    }))
     socket.emit("inviteUser", senderId, recipientId, partyId);
   };
   return (
-    <div className="flex flex-col text-black bg-white border-2 border-black max-[601px]:w-[300px] max-[601px]:h-[400px]  h-[500px] w-[450px] rounded-2xl m-5 items-center">
-      <div className="ml-[400px] max-[601px]:ml-[260px]  mt-1">
+    <div className="flex flex-col text-black bg-white border-2 border-black max-[601px]:w-[400px] max-[601px]:h-[400px]  max-[426px]:w-[90vw] h-[500px] w-[450px] rounded-2xl items-center">
+      <div className="ml-[400px] max-[601px]:ml-[360px] max-[426px]:ml-[80vw] mt-1">
         <button
           className="cursor-pointer"
           onClick={() => setOpenInvitePopup(false)}
@@ -38,7 +43,7 @@ function InvitePopup({
       <div className="mt-2">
         <input
           type="text"
-          className="border-2 border-black w-[400px] max-[601px]:w-[280px]  p-2 rounded-xl"
+          className="border-2 border-black w-[400px] max-[601px]:w-[380px] max-[426px]:w-[84vw]  p-2 rounded-xl"
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Search users"
@@ -50,12 +55,15 @@ function InvitePopup({
               <div className="flex justify-between hover:bg-gray-200 items-center cursor-pointer transition-all duration-100 rounded-md">
                 <h1>{user.penName}</h1>
                 <div className="mb-2 pt-2">
-                  <button
+                  {!(user._id in invitedMap) && <button
                     className="bg-blue-500 rounded-[5px] w-fit px-2 py-[2px]  font-[700] cursor-pointer hover:bg-blue-400 mr-5"
                     onClick={() => inviteUser(loginUser._id, user._id, partyId)}
                   >
                     invite
-                  </button>
+                  </button>}
+                  {
+                    (user._id in invitedMap) && <div className="bg-gray-200 rounded-[5px] w-fit px-2 py-[2px] mr-5"> invited </div>
+                  }
                 </div>
               </div>
             </div>

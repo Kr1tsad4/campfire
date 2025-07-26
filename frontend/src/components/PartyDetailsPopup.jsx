@@ -30,34 +30,39 @@ function PartyDetailsPopup() {
   if (!party) return <div>Loading...</div>;
 
   return (
-    <div className="mt-10 flex bg-[#beffd4ff] xl:w-[800px] lg:w-[600px] md:w-[600px] w-[90vw] rounded-2xl max-[426px]:ml-5 box-border overflow-y-auto scrollbar-hide h-[85vh]">
-      <div className="text-black">
+    <div className="mt-10 flex bg-[#beffd4ff] xl:w-[800px] lg:w-[600px] md:w-[600px] w-[500px] max-[700px]:-ml-15 rounded-2xl max-[426px]:w-[90vw] max-[426px]:ml-5 box-border overflow-y-auto scrollbar-hide h-[85vh]">
+      <div className="text-black w-full">
         <div
           className="max-[426px]:h-[52vw] 
          xl:h-[330px] xl:w-[800px]
          lg:h-[250px] lg:w-[600px]
          md:h-[250px] md:w-[600px]
-         h-[30vh] w-[90vw] max-[426px]:w-[90vw]
+         h-[30vh] w-[500px] max-[426px]:w-[90vw]
         bg-[#e3ffecff] rounded-t-2xl "
         ></div>
-        <div className="ml-5 mt-5 text-[18px] p-5 max-[426px]:p-1">
-          <h1 className="">Party name : {party.name}</h1>
-          <h1>Owner : {party.ownerName}</h1>
-          <h1>Description : {party.description}</h1>
-          <p>Date : {party.date}</p>
-          <p>
-            Time : {party.startTime} - {party.endTime}{" "}
-          </p>
-          <div className="flex gap-2">
-            Members:{" "}
-            {Array.isArray(party.members)
-              ? party.members.map((member, index) => (
-                  <div key={index}>{member.penName}</div>
-                ))
-              : "Loading members..."}
+        <div className="ml-5 mt-5 text-[18px] p-5 max-[426px]:p-1 ">
+          <div className="text-[28px]">{party.name}</div>
+          <div className="text-[#093c1aff] text-[18px] -mt-2 mb-3">
+            Owner : {party.ownerName}
           </div>
-
-          <div className="flex gap-3 mt-1">
+          <div className="">
+            <p className="text-[20px]">Date : {party.date}</p>
+            <p className="text-[20px]">
+              Time : {party.startTime} - {party.endTime}{" "}
+            </p>
+            <div className="line-clamp-4 overflow-y-auto break-words text-[20px] bg-[#b6f8ccff] h-auto  rounded-md ">
+              {party.description}
+            </div>
+          </div>
+          <div className="line-clamp-3 overflow-hidden break-words h-full text-[20px]">
+            <span className="">Members:</span>{" "}
+            <span className="text-gray-600">
+              {Array.isArray(party.members)
+                ? party.members.map((m) => m.penName).join(", ")
+                : "Loading members..."}
+            </span>
+          </div>
+          <div className="flex gap-3 mt-1  text-[20px]">
             Tags:{" "}
             {Array.isArray(party.tags)
               ? party.tags.map((tag, index) => (
