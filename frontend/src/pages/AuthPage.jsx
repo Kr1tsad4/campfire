@@ -153,11 +153,9 @@ function AuthPage({ loginUser }) {
       const data = { username, password };
       await userLogin(API_URL, data);
       saveLoginUserSession(createdUser);
-       if (loginUser) {
-        window.location.href = "/home";
-      }
+      setLoadingMsg("Logging in...");
+      window.location.href = "/home";    
     }
-    setLoadingMsg("Logging in...");
     setIsLoading(false);
   };
 
