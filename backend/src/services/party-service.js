@@ -4,6 +4,7 @@ const createError = require("http-errors");
 
 const findAll = async () => {
   return await Party.find()
+     .sort({ createdAt: -1 }) 
     .populate({
       path: "members",
       select: "-password -__v -createdAt -updatedAt",
