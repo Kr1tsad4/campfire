@@ -88,6 +88,7 @@ function PartyForm({
             width="500"
             value={partyName}
             handleInput={(e) => setPartyName(e)}
+            maxLength={50}
           />
         </div>
 
