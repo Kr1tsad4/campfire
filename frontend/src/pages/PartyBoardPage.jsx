@@ -170,11 +170,11 @@ function PartyBoardPage({ loginUser }) {
                     className="w-full border border-gray-300 p-2 rounded-lg outline-none text-sm"
                   />
 
-                  <div className="mt-3 space-y-2">
+                  <div className="mt-3 space-y-2 w-full">
                     {post.comments?.map((comment, cIndex) => (
                       <div
                         key={cIndex}
-                        className="pl-1 flex gap-3 hover:bg-gray-100"
+                        className="pl-1 flex  gap-3 hover:bg-gray-100"
                       >
                         <Avatar
                           sx={{
@@ -186,12 +186,12 @@ function PartyBoardPage({ loginUser }) {
                         >
                           {post.authorId.penName?.charAt(0).toUpperCase()}
                         </Avatar>
-                        <div className="flex justify-between w-full">
+                        <div className="flex justify-between w-full overflow-clip">
                           <div>
                             <p className="text-sm font-semibold">
                               {comment.commentedBy.penName}
                             </p>
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-gray-700 break-all whitespace-pre-wrap">
                               {comment.content}
                             </p>
                           </div>

@@ -125,12 +125,6 @@ function InboxPage({ loginUser }) {
             )}
 
             {/* Chat */}
-            {/* {!userToChat  && (
-              <div className="flex flex-col justify-center items-center w-full text-xl">
-                <h1>Your messages </h1>
-                <p>Send a message to start a chat.</p>
-              </div>
-            )} */}
             {userToChat && showChat && (
               <div className="flex flex-col w-full">
                 <div className="border-b-2 p-4 font-semibold text-lg bg-white flex gap-4">
