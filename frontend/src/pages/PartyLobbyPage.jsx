@@ -66,35 +66,35 @@ function PartyLobby({ loginUser }) {
             } mt-[100px] text-black flex gap-0`}
           >
             <div className="text-[#041c0cff]">
-              <div className="flex justify-between relative flex-wrap w-1/2">
+              <div className="flex justify-between relative flex-wrap w-full">
                 <h1 className="text-4xl">Welcome to {party?.name} !</h1>
-                <div className="z-8">
-                  <button
-                    onClick={() => setOpenInvitePopup(!openInvitePopup)}
-                    className={`lg:fixed lg:right-0 lg:top-[17%]
-                     bg-[#7ad89aff] rounded-[5px] w-fit px-4 py-2 cursor-pointer hover:bg-[#63b77fff] mr-2 lg:mr-12`}
-                  >
-                    Invite
-                  </button>
 
+                <div className="z-8 flex gap-2 mt-4 lg:mt-0">
                   {loginUser?._id !== party?.ownerId && (
                     <button
-                      className="bg-[#f88f82] cursor-pointer hover:bg-[#f44f39]
-                      rounded-[5px] w-fit mt-2 px-4 py-2 font-[700] text-black"
+                      className="bg-[#f88f82] hover:bg-[#f44f39] rounded-[5px]
+                      w-fit px-3 py-2 font-[700] text-black cursor-pointer"
                       onClick={handleLeaveClick}
                     >
                       Leave
                     </button>
                   )}
+                  <button
+                    onClick={() => setOpenInvitePopup(!openInvitePopup)}
+                    className="bg-[#7ad89aff] hover:bg-[#63b77fff]
+                    rounded-[5px] w-fit px-4 py-2 font-[700] text-black"
+                  >
+                    Invite
+                  </button>
                 </div>
               </div>
 
-              <div className={`flex flex-col md:flex-row mt-10`}>
+              <div className={`flex flex-col md:flex-row mt-10 `}>
                 <Chat partyId={party?._id} user={loginUser} />
                 <div
-                  className={`shadow-[#7ad89aff] shadow-sm text-[#041c0cff] rounded-lg h-[300px] md:w-[250px] w-[90vw] ml-2 pl-4 pt-4 md:mt-0 mt-4`}
+                  className={`shadow-[#7ad89aff] overflow-scroll shadow-sm text-[#041c0cff] rounded-lg h-[300px] md:w-[250px] w-[90vw] ml-2 pl-4 pt-4 md:mt-0 mt-4`}
                 >
-                  <h1 className="text-2xl mb-2">Members</h1>
+                  <h1 className="text-2xl mb-2 ">Members</h1>
                   <p className="text-xl overflow-clip">
                     {party?.ownerName} <span className="pl-8">(Owner)</span>
                   </p>

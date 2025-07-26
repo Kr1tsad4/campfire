@@ -115,7 +115,6 @@ function InboxPage({ loginUser }) {
                       >
                         {friend.fromUser.penName?.charAt(0).toUpperCase()}
                       </Avatar>
-                      <div></div>
                       <p className="text-2xl pt-1 text-black">
                         {friend.fromUser.penName}
                       </p>
