@@ -62,7 +62,7 @@ function NavigationMenu() {
               }`}
             >
               <MdExplore size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Explore</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Explore</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -73,7 +73,7 @@ function NavigationMenu() {
               }`}
             >
               <MdForum size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Board</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Board</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -84,7 +84,7 @@ function NavigationMenu() {
               }`}
             >
               <RiTeamFill size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">My Party</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">My Party</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -95,7 +95,7 @@ function NavigationMenu() {
               }`}
             >
               <FaUserFriends size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Friends</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Friends</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -106,7 +106,7 @@ function NavigationMenu() {
               }`}
             >
               <IoChatbubbleEllipses size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Messages</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Messages</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -117,7 +117,7 @@ function NavigationMenu() {
               }`}
             >
               <TiPlus size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Create party</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Create party</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -128,7 +128,7 @@ function NavigationMenu() {
               }`}
             >
               <FcInvite size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Invitations</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Invitations</h1>
             </button>
           </div>
           <div className="mt-5">
@@ -137,7 +137,7 @@ function NavigationMenu() {
               className="cursor-pointer flex gap-4 hover:bg-[#041c0cff] transition-all w-full px-5 py-3"
             >
               <BiLogOut size={25} />
-              <h1 className="font-bold text-[22px] -mt-1">Logout</h1>
+              <h1 className="font-bold text-[22px] -mt-1 text-white">Logout</h1>
             </button>
           </div>
         </div>
