@@ -22,3 +22,11 @@ Users can create parties, join communities, make friends, and chat in real time.
 - Database: MongoDB
 - Realtime: Socket.IO
 
+## 🧪 Test Account
+
+You can try the app using the following test account:
+
+**User Account**
+- Username: testuser
+- Password: testuser
+
