@@ -63,7 +63,7 @@ function Homepage({ openPartyDetails, loginUser }) {
   useEffect(() => {
     fetchParties(loginUser, searchValue, selectedTags);
     fetchBaseTags();
-  }, [loginUser, searchValue, selectedTags]);
+  }, [loginUser, selectedTags]);
 
   const handleClickTagFilter = (tagName) => {
     setSelectedTags((prev) =>
